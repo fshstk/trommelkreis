@@ -20,11 +20,9 @@
 	<body class="">
 		<div class="container p-1">
 			<nav class="nav">
-				<a class="nav-link text-dark" href="#"><i class="fa fa-home"></i></a>
-				<a class="nav-link text-dark" href="#">Info</a>
-				<a class="nav-link text-dark" href="#">Archiv</a>
-				<a class="nav-link text-primary mr-auto" href="#">Mitmachen</a>
-				<a class="nav-link text-dark" href="#"><i class="fa fa-envelope-o"></i></a>
+				{% for page in pages %}
+				<a class="nav-link {{ page['class'] }}" href="{{ page['url'] }}">{{ page['title'] }}</a>
+				{% endfor %}
 			</nav>
 		</div>
 

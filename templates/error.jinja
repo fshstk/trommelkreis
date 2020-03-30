@@ -1,0 +1,12 @@
+{% extends "layout.jinja" %}
+
+{% block title %}Fehler{% endblock %}
+
+{% block main %}
+<div class="text-center">
+	<h1 class="font-weight-bold">Fehlerhafter Trommelkreis</h1>
+	<h6 class="text-muted">Jeden Montag/Mittwoch/Freitag 19:00-21:00 Uhr</h6>
+	<img src="{{ url_for('static', filename='logo.png') }}" width="700px" class="img-fluid p-3" alt="logo">
+    <p>{{ error }}</p>
+</div>
+{% endblock %}
