@@ -46,19 +46,16 @@ def error(error):
 def global_vars():
     pages = (
         {
-        'title': '<i class="fa fa-home"></i>',
+        'title': '<span class="home"></span>',
         'url': '/',
-        'class': 'text-dark'
         },
         {
         'title': 'Info',
         'url': '/info',
-        'class': 'text-dark'
         },
         {
         'title': 'Archiv',
         'url': '/archiv',
-        'class': 'text-dark'
         },
         {
         'title': 'Mitmachen',
@@ -66,9 +63,9 @@ def global_vars():
         'class': 'text-primary'         # highlight color
         },
         {
-        'title': '<i class="fa fa-envelope-o"></i>',
+        'title': '<span class="abo"></span>',
         'url': '/abo',
-        'class': 'text-dark ml-auto'    # move right
+        'class': 'ml-auto'    # move right
         }
     )
     return dict(pages = pages)
@@ -76,4 +73,4 @@ def global_vars():
 ################################################################################
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(host='0.0.0.0', debug = True)

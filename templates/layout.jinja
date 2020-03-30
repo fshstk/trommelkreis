@@ -5,23 +5,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='stylish.css') }}">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
-		<style>
-			body {
-				font-family: 'Ubuntu', sans-serif !important;
-				background-color: #ddd;
-				}
-		</style>
 
 		<title>Digitaler Trommelkreis: {% block title %}Home{% endblock %}</title>
 	</head>
 
-	<body class="">
+	<body>
 		<div class="container p-1">
-			<nav class="nav">
+			<nav>
 				{% for page in pages %}
-				<a class="nav-link {{ page['class'] }}" href="{{ page['url'] }}">{{ page['title'] }}</a>
+				<a class="{{ page['class'] }}" href="{{ page['url'] }}">{{ page['title'] }}</a>
 				{% endfor %}
 			</nav>
 		</div>
