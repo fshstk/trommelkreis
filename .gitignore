@@ -4,5 +4,8 @@ node_modules
 *.css
 *.map
 
-#fontawesome:
+# fontawesome:
 static/webfonts
+
+# yarn:
+*.log
