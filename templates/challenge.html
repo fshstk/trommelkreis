@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Trommelkreis: Kurt Razelli Challenge</title>
-	<link rel="icon" type="image/png" href="/favicon.png" />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu"/>
-	<link rel="stylesheet" href="stylish.css"/>
-</head>
-<body>
-	<div id="container">
-		<a class="mail" href="/mail.php" title="Abonnieren">Abonnieren</a>
-		<h1 class="nomargin">Digitaler Trommelkreis</h1>
-		<h2 class="nomargin">nächste Session: Montag/Mittwoch/Freitag 19:00-21:00 Uhr</h2>
-		<div id="logo"></div>
-    <hr />
+{% extends "layout.html" %}
 
+{% block title %}Challenge{% endblock %}
+
+{% block main %}
 <h1>Kurt Razelli Type Beat</h1>
 <h2>25.3.2020</h2>
 
@@ -52,8 +41,4 @@ Heute geht es darum, einen Beat im Stile von Kurt Razelli frei nachzuempfinden.
 <h3>Anfang 19:30 Uhr</h3>
 <p>Du hast bis 19:30 Uhr, um dir passende Samples<br>aus dem Internet zu suchen.</p>
 <h3>Ende 21:00 Uhr</h3>
-
-<br><br><br>
-
-</body>
-</html>
+{% endblock %}

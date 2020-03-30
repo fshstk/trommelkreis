@@ -1,28 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Trommelkreis: Upload</title>
-	<link rel="icon" type="image/png" href="/favicon.png" />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu"/>
-	<link rel="stylesheet" href="stylish.css"/>
-</head>
-<body>
-	<div id="container">
-		<a class="mail" href="/mail.php" title="Abonnieren">Abonnieren</a>
-		<h1 class="nomargin">Digitaler Trommelkreis</h1>
-		<h2 class="nomargin">nächste Session: Montag/Mittwoch/Freitag 19:00-21:00 Uhr</h2>
-		<div id="logo"></div>
-    <hr />
+{% extends "layout.html" %}
 
+{% block title %}Upload{% endblock %}
 
-		<form enctype="multipart/form-data" action="index.php" method="POST">
-			<h2>Lade deinen Beat hoch:</h2>
-			<input class="button" type="file" name="uploaded_file"></input>
-			<input class="button" id="submit" type="submit" value="Upload"></input>
-			<a id="pass">Passwort: <input type="text" name="password"></a>
-		</form>
-	</div>
-	<a id="bottomlink" style="text-align: center;" href="/sessions/">Archiv</a>
-	
-</body>
-</html>
+{% block main %}
+<form enctype="multipart/form-data" action="index.php" method="POST">
+	<h2>Lade deinen Beat hoch:</h2>
+	<input class="button" type="file" name="uploaded_file"></input>
+	<input class="button" id="submit" type="submit" value="Upload"></input>
+	<a id="pass">Passwort: <input type="text" name="password"></a>
+</form>
+{% endblock %}

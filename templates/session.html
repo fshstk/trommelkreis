@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}Challenge vom 20200323{% endblock %}
+
+{% block main %}
+<div>
+	<h2 class="filename">Datei</h2>
+	<h2 class="size">Größe</h2>
+	<h2 class="date">Uhrzeit</h2>
+</div>
+
+<ul>
+	<li>
+		<span class="filename"><a href="20200323/animalsession.wav">animalsession.wav</a></span>
+		<span class="size">24.69MB</span>
+		<span class="date">21:02</span>
+	</li>
+	<li>
+		<span class="filename"><a href="20200323/DryasSahara.mp3">DryasSahara.mp3</a></span>
+		<span class="size">2.87MB</span>
+		<span class="date">21:10</span>
+	</li>
+	<li>
+		<span class="filename"><a href="20200323/flying%20rat.mp3">flying rat.mp3</a></span>
+		<span class="size">1.61MB</span>
+		<span class="date">21:03</span>
+	</li>
+</ul>
+
+<hr />
+
+<div>
+	<span><a href="#">Archiv</a> / 20200323</span>
+	<a class="download" title="ZIP Datei Herunterladen" href="#">ZIP Datei Herunterladen</a>
+</div>
+{% endblock %}
