@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="icon" type="image/png" href="/favicon.png">
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
@@ -12,7 +12,7 @@
 				font-family: 'Ubuntu', sans-serif !important;
 				background-color: #ddd;
 				}
-			</style>
+		</style>
 
 		<title>Digitaler Trommelkreis: Home</title>
 	</head>
@@ -32,7 +32,7 @@
 			<h1 class="font-weight-bold">Digitaler Trommelkreis</h1>
 			<h6 class="text-muted">Jeden Montag/Mittwoch/Freitag 19:00-21:00 Uhr</h6>
 
-			<img src="logo.png" width="700px" class="img-fluid p-3" alt="logo">
+			<img src="{{ url_for('static', filename='logo.png') }}" width="700px" class="img-fluid p-3" alt="logo">
 		</div>
 
 		<footer class="container text-center p-1">
