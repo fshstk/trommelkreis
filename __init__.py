@@ -24,7 +24,7 @@ def upload():
 
 @app.route('/abo')
 def subscribe():
-    return render_template('upload.jinja')
+    return render_template('subscribe.jinja')
 
 @app.route('/challenge')
 def challenge():
@@ -67,7 +67,7 @@ def global_vars():
         },
         {
         'title': '<i class="fa fa-envelope-o"></i>',
-        'url': 'subscribe',
+        'url': '/abo',
         'class': 'text-dark ml-auto'    # move right
         }
     )
