@@ -62,9 +62,12 @@ footer {
     @extend .container;
     @extend .text-center;
     @extend .p-1;
-
-    // p {
-        @extend small;
-        @extend .text-dark;
-    // }
+    @extend small;
+    @extend .text-dark;
 }
+
+// img {
+//     @extend .img-fluid;
+//     @extend .p-3;
+//     width: 700px;
+// }
