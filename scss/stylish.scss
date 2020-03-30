@@ -18,30 +18,53 @@ $font-family-sans-serif:    'Ubuntu', sans-serif;
 // @import "../node_modules/@fortawesome/fontawesome-free/scss/regular.scss";
 
 ////////////////////////////////////////////////////////////////////////////////
-// Bootstrap Mixins
+// Mixins
 ////////////////////////////////////////////////////////////////////////////////
 
 nav {
     @extend .nav;
+    @extend .container;
+    @extend .p-1;
 
     a {
         @extend .nav-link;
         @extend .text-dark;
     }
+
+    .home {
+        span {
+            @extend %fa-icon;
+            @extend .fas;
+            &:before { content: fa-content($fa-var-home); }    
+        }
+    }
+    .subscribe {
+        @extend .ml-auto;
+        
+        span {
+            @extend %fa-icon;
+            @extend .fas;
+            &:before { content: fa-content($fa-var-envelope); }
+        }
+    }
+    .upload {
+        @extend .text-primary;
+    }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// FontAwesome Mixins
-////////////////////////////////////////////////////////////////////////////////
-
-span.home {
-    @extend %fa-icon;
-    @extend .fas;
-    &:before { content: fa-content($fa-var-home); }
+main {
+    @extend .container;
+    @extend .bg-white;
+    @extend .p-3;
 }
-  
-span.abo {
-    @extend %fa-icon;
-    @extend .fas;
-    &:before { content: fa-content($fa-var-envelope); }
+
+footer {
+    @extend .container;
+    @extend .text-center;
+    @extend .p-1;
+
+    // p {
+        @extend small;
+        @extend .text-dark;
+    // }
 }

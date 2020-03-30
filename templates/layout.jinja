@@ -11,22 +11,22 @@
 	</head>
 
 	<body>
-		<div class="container p-1">
-			<nav>
-				{% for page in pages %}
-				<a class="{{ page['class'] }}" href="{{ page['url'] }}">{{ page['title'] }}</a>
-				{% endfor %}
-			</nav>
-		</div>
+		<nav>
+			<a class="home" href="/"><span></span></a>
+			<a class="info" href="/info">Info</a>
+			<a class="archive" href="/archiv">Archiv</a>
+			<a class="upload" href="/upload">Mitmachen</a>
+			<a class="subscribe" href="/abo"><span></span></a>
+		</nav>
 
-		<div class="container bg-white p-3">
+		<main>
 			{% block main %}
 			{% endblock %}
-		</div>
+		</main>
 
-		<footer class="container text-center p-1">
+		<footer>
 			{% block footer %}
-			<small class="text-dark">Impressum: &copy; 2020 Fabian Hummel | Wiener Straße 33/8 | 8020 Graz</small>
+			Impressum: &copy; 2020 Fabian Hummel | Wiener Straße 33/8 | 8020 Graz
 			{% endblock %}
 		</footer>
 

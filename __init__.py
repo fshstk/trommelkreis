@@ -44,31 +44,7 @@ def error(error):
 
 @app.context_processor
 def global_vars():
-    pages = (
-        {
-        'title': '<span class="home"></span>',
-        'url': '/',
-        },
-        {
-        'title': 'Info',
-        'url': '/info',
-        },
-        {
-        'title': 'Archiv',
-        'url': '/archiv',
-        },
-        {
-        'title': 'Mitmachen',
-        'url': '/upload',
-        'class': 'text-primary'         # highlight color
-        },
-        {
-        'title': '<span class="abo"></span>',
-        'url': '/abo',
-        'class': 'ml-auto'    # move right
-        }
-    )
-    return dict(pages = pages)
+    return {}
 
 ################################################################################
 
