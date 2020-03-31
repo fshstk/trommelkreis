@@ -2,14 +2,16 @@
 
 {% block title %}Upload{% endblock %}
 
-{% block main %}
+{% block header %}
 <div class="text-center">
 	<h1 class="font-weight-bold text-primary">Mitmachen</h1>
 	<h6 class="text-muted">beim digitalen Trommelkreis</h6>
 	<img src="{{ url_for('static', filename='logo.png') }}" width="500px" class="img-fluid p-3" alt="logo">
 	<hr>
 </div>
+{% endblock %}
 
+{% block main %}
 <form enctype="multipart/form-data" action="index.php" method="POST">
 	<h2>Lade deinen Beat hoch:</h2>
 	<input class="button" type="file" name="uploaded_file"></input>

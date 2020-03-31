@@ -12,7 +12,8 @@ from string import punctuation
 
 class AudioFile():
     def __init__(self):
-        self.url = "#"
+        self.name = "filename"
+        self.size = "1.51 MB"
         self.duration = timedelta(seconds = 135)
 
 class Session():
@@ -58,6 +59,10 @@ class Session():
         return self.date.strftime(self.date_output_format)
 
     @property
+    def yyyymmdd(self):
+        return self.date.strftime("%Y%m%d")
+
+    @property
     def month(self):
         return self.date.strftime("%B")
 
@@ -91,6 +96,13 @@ class SessionCollection():
     def count(self):
         return len(self.sessions)
 
+    def get_session_by_yyyymmdd(self, input):
+        for session in self.sessions:
+            if session.yyyymmdd == str(input):
+                return session
+        else:
+            return None
+            
 ################################################################################
 
 @app.route('/')
@@ -105,7 +117,7 @@ def info():
 @app.route('/archiv')
 @app.route('/archiv/')
 def archive():
-    return render_template('archive.jinja')
+    return render_template('archive.jinja', archive = sessions.grouped_by_month)
 
 @app.route('/upload')
 def upload():
@@ -119,22 +131,29 @@ def subscribe():
 def challenge():
     return render_template('challenge.jinja')
 
-@app.route('/archiv/<int:session>')
-def session(session):
-    if session is not 42:
-        abort(404)
-    return render_template('session.jinja', session = session)
+@app.route('/archiv/<int:number>')
+def session(number):
+    session = sessions.get_session_by_yyyymmdd(number)
+    if session is not None:
+        return render_template('session.jinja', session = session)
+    else:
+        return abort(400)
 
 @app.errorhandler(404) # possibly add more errors (403, 500)
-def error(error):
+def notfound(error):
     return render_template('error.jinja')
+
+@app.errorhandler(400)
+def badrequest(error):
+    return render_template('session_not_found.jinja', archive = sessions.grouped_by_month)
 
 ################################################################################
 
+sessions = SessionCollection()
+
 @app.context_processor
 def global_vars():
-    sessions = SessionCollection()
-    return dict(archive = sessions.grouped_by_month)
+    return {}
 
 ################################################################################
 

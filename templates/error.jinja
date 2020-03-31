@@ -2,11 +2,13 @@
 
 {% block title %}Fehler{% endblock %}
 
-{% block main %}
+{% block header %}
 <div class="text-center">
 	<h1 class="font-weight-bold">Fehler</h1>
 	<h6 class="text-muted">irgendwas lief schief</h6>
 	<img src="{{ url_for('static', filename='logo.png') }}" width="700px" class="img-fluid p-3" alt="logo">
-    <p>{{ error }}</p>
 </div>
+{% endblock %}
+
+{% block main %}
 {% endblock %}

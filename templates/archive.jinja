@@ -2,14 +2,16 @@
 
 {% block title %}Archiv{% endblock %}
 
-{% block main %}
+{% block header %}
 <div class="text-center">
 	<h1 class="font-weight-bold">Archiv</h1>
 	<h6 class="text-muted">des digitalen Trommelkreises</h6>
 	<img src="{{ url_for('static', filename='logo.png') }}" width="500px" class="img-fluid p-3" alt="logo">
 	{# <hr> #}
 </div>
+{% endblock %}
 
+{% block main %}
 <div class="archive">
 {% for month in archive %}
 <hr>
@@ -18,7 +20,7 @@
 	<div class="col-md-6">
 		<div class="list-group text-left">
 			{% for session in month %}
-			<a href="#" class="list-group-item list-group-item-action">
+			<a href="{{ session.yyyymmdd }}" class="list-group-item list-group-item-action">
 				<div class="d-flex justify-content-between">
 					<h5 class="mb-1">{{ session.name }}</h5>
 					<small class="text-muted">{{ session.datestring }}</small>

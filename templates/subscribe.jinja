@@ -2,14 +2,16 @@
 
 {% block title %}Newsletter Abonnieren{% endblock %}
 
-{% block main %}
+{% block header %}
 <div class="text-center">
 	<h1 class="font-weight-bold">Infos abonnieren</h1>
 	<h6 class="text-muted">zum digitalen Trommelkreis</h6>
 	<img src="{{ url_for('static', filename='logo.png') }}" width="500px" class="img-fluid p-3" alt="logo">
 	<hr>
 </div>
+{% endblock %}
 
+{% block main %}
 <div class="text-justify">
 	<h2>Was ist der digitale Trommelkreis?</h2>
 	<p>Maecenas eros orci, dictum id gravida in, dignissim in leo. Aliquam augue libero, ullamcorper quis nulla sit amet, dapibus ornare enim. Nunc non ullamcorper tellus. Duis eu arcu vulputate, lacinia nunc et, sodales ex. Integer vel elementum nibh, sit amet ultrices ante. Aliquam erat volutpat. Cras urna purus, gravida ut tincidunt elementum, consectetur in nulla.</p>
