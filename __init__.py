@@ -145,7 +145,8 @@ def notfound(error):
 
 @app.errorhandler(400)
 def badrequest(error):
-    return render_template('session_not_found.jinja', archive = sessions.grouped_by_month)
+    # return render_template('session_not_found.jinja', archive = sessions.grouped_by_month)
+    return notfound(None)
 
 ################################################################################
 
