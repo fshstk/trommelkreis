@@ -15,17 +15,15 @@ $font-family-sans-serif:    'Ubuntu', sans-serif;
 @import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
 // @import "../node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
-// @import "../node_modules/@fortawesome/fontawesome-free/scss/regular.scss";
 
 ////////////////////////////////////////////////////////////////////////////////
-// Mixins
+// Custom Styling
 ////////////////////////////////////////////////////////////////////////////////
 
 nav {
     @extend .nav;
     @extend .container;
     @extend .p-1;
-
     a {
         @extend .nav-link;
         @extend .text-dark;
@@ -39,8 +37,7 @@ nav {
         }
     }
     .subscribe {
-        @extend .ml-auto;
-        
+        @extend .ml-auto;      
         span {
             @extend %fa-icon;
             @extend .fas;
@@ -56,6 +53,27 @@ main {
     @extend .container;
     @extend .bg-white;
     @extend .p-3;
+
+    .archive {
+        // .month {
+        //     @extend p-2;
+        // }
+        .year {
+            @extend .text-muted;
+            // @extend small;
+        }
+        // .column {
+        //     @extend col-md-6;
+        // }
+        // .list {
+        //     @extend list-group;
+        //     @extend text-left;
+            // a {
+            //     @extend list-group-item;
+            //     @extend list-group-item-action;
+            // }
+        // }
+    }
 }
 
 footer {
@@ -71,3 +89,4 @@ footer {
 //     @extend .p-3;
 //     width: 700px;
 // }
+
