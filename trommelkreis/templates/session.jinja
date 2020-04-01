@@ -1,12 +1,10 @@
 {% extends "layout.jinja" %}
 
 {% block title %}Challenge vom {{ session }}{% endblock %}
-{% block heading %}Challenge{% endblock %}
-{% block subheading %}vom {{ session }}{% endblock %}
+{% block heading %}{{ session.name }}{% endblock %}
+{% block subheading %}{{ session.datestring }}{% endblock %}
 
 {% block main %}
-
-<h2>session: {{ session.datestring }}ljoij</h2>
 
 {% for file in session.files %}
 <p>{{ file.name }}, {{ file.size }}, {{ file.duration }}</p>
