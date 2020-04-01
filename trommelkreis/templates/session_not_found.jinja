@@ -1,11 +1,5 @@
 {% extends "archive.jinja" %}
 
 {% block title %}Fehler{% endblock %}
-
-{% block header %}
-{{ super() }}
-<hr>
-<div class="text-center">
-    <h3>Diese Session wurde nicht gefunden!</h3>
-</div>
-{% endblock %}
+{% block heading %}Fehler{% endblock %}
+{% block subheading %}Session nicht gefunden!{% endblock %}

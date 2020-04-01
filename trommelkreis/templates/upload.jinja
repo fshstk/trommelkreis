@@ -1,7 +1,9 @@
 {% extends "layout.jinja" %}
 
 {% block title %}Upload{% endblock %}
-
+{% block heading %}Mitmachen{% endblock %}
+{% block subheading %}beim digitalen Trommelkreis{% endblock %}
+{# 
 {% block header %}
 <div class="text-center">
 	<h1 class="font-weight-bold text-primary">Mitmachen</h1>
@@ -9,7 +11,7 @@
 	<img src="{{ url_for('static', filename='logo.png') }}" width="500px" class="img-fluid p-3" alt="logo">
 	<hr>
 </div>
-{% endblock %}
+{% endblock %} #}
 
 {% block main %}
 <form enctype="multipart/form-data" action="index.php" method="POST">

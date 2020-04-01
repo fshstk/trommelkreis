@@ -1,14 +1,5 @@
 {% extends "layout.jinja" %}
 
 {% block title %}Fehler{% endblock %}
-
-{% block header %}
-<div class="text-center">
-	<h1 class="font-weight-bold">Fehler</h1>
-	<h6 class="text-muted">irgendwas lief schief</h6>
-	<img src="{{ url_for('static', filename='logo.png') }}" width="700px" class="img-fluid p-3" alt="logo">
-</div>
-{% endblock %}
-
-{% block main %}
-{% endblock %}
+{% block heading %}404{% endblock %}
+{% block subheading %}Seite nicht gefunden…{% endblock %}

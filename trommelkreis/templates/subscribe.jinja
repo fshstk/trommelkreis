@@ -1,15 +1,8 @@
 {% extends "layout.jinja" %}
 
 {% block title %}Newsletter Abonnieren{% endblock %}
-
-{% block header %}
-<div class="text-center">
-	<h1 class="font-weight-bold">Infos abonnieren</h1>
-	<h6 class="text-muted">zum digitalen Trommelkreis</h6>
-	<img src="{{ url_for('static', filename='logo.png') }}" width="500px" class="img-fluid p-3" alt="logo">
-	<hr>
-</div>
-{% endblock %}
+{% block heading %}Newsletter{% endblock %}
+{# {% block subheading %}abonnieren{% endblock %} #}
 
 {% block main %}
 <div class="text-justify">
