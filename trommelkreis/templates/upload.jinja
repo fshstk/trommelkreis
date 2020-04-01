@@ -3,21 +3,38 @@
 {% block title %}Upload{% endblock %}
 {% block heading %}Mitmachen{% endblock %}
 {% block subheading %}beim digitalen Trommelkreis{% endblock %}
-{# 
-{% block header %}
-<div class="text-center">
-	<h1 class="font-weight-bold text-primary">Mitmachen</h1>
-	<h6 class="text-muted">beim digitalen Trommelkreis</h6>
-	<img src="{{ url_for('static', filename='logo.png') }}" width="500px" class="img-fluid p-3" alt="logo">
-	<hr>
-</div>
-{% endblock %} #}
 
 {% block main %}
-<form enctype="multipart/form-data" action="index.php" method="POST">
-	<h2>Lade deinen Beat hoch:</h2>
-	<input class="button" type="file" name="uploaded_file"></input>
-	<input class="button" id="submit" type="submit" value="Upload"></input>
-	<a id="pass">Passwort: <input type="text" name="password"></a>
+<h1>{{ today.name }}:</h1>
+<p>{{ today.challenge }}</p>
+<hr>
+
+<form enctype="multipart/form-data" action="#" method="POST">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				<input type="text" class="form-control" id="name" placeholder="Dein Name">
+				<small class="form-text text-muted">Wenn du anonym bleiben möchtest, lass dieses Feld leer.</small>
+			</div>
+
+			<input type="text" class="form-control" id="password" placeholder="Passwort">
+		</div>
+
+		<div class="col-md-6">
+			<div class="custom-file">
+				<input type="file" class="custom-file-input" id="file">
+				<label class="custom-file-label" for="customFile">Dein Track…</label>
+			</div>
+
+			<div class="row">
+				<div class="form-check col-md-9">
+					<input type="checkbox" class="form-check-input" id="tos">
+					<label class="form-check-label" for="tos">Mein Track ist CC lizensiert.</label>
+				</div>
+				<div class="col-md-3">
+					<button type="submit" class="btn btn-primary">Upload</button>
+				</div>
+		</div>
+	</div>
 </form>
 {% endblock %}
