@@ -1,4 +1,4 @@
-from flask import render_template, abort
+from flask import render_template, abort, request
 
 from . import app
 from .vars import sessions
@@ -41,6 +41,7 @@ def session(number):
 def download_session(number):
     session = sessions.get_session_by_yyyymmdd(number)
     if session is not None:
+        # serve zip file here...
         return render_template('home.jinja')
     else:
         return abort(400)
@@ -51,6 +52,7 @@ def download_file(number, filename):
     if session is not None:
         file = session.get_file_by_name(filename)
         if file is not None:
+            # serve mp3/wav here...
             return render_template('home.jinja')
         else:
             return abort(400)
@@ -61,10 +63,18 @@ def download_file(number, filename):
 
 from .archive import Session
 today = Session("20200401")
+# today = None
 
-@app.route('/upload')
+@app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    return render_template('upload.jinja', today = today)
+    if today is not None:
+        if request.method == "POST":
+            # save uploaded file here...
+            return render_template('home.jinja')
+        else:
+            return render_template('upload.jinja', today = today)
+    else:
+        return render_template('nexttime.jinja')
 
 ################################################################################
 
