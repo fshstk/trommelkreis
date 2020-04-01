@@ -74,6 +74,16 @@ main {
             // }
         // }
     }
+    .download-link {
+        @extend .ml-auto;
+        span {
+            // @extend %fa-icon;
+            @extend .fas;
+            @extend .fa-file-download;
+            @extend .text-dark
+            // &:before { content: fa-content($fa-file-download); }
+        }
+    }
 }
 
 footer {
@@ -89,4 +99,3 @@ footer {
 //     @extend .p-3;
 //     width: 700px;
 // }
-

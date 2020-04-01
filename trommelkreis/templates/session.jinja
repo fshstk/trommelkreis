@@ -5,39 +5,29 @@
 {% block subheading %}{{ session.datestring }}{% endblock %}
 
 {% block main %}
+<p>{{ session.challenge }}</p>
 
-{% for file in session.files %}
-<p>{{ file.name }}, {{ file.size }}, {{ file.duration }}</p>
-{% endfor %}
+<hr>
 
-<div>
-	<h2 class="filename">Datei</h2>
-	<h2 class="size">Größe</h2>
-	<h2 class="date">Uhrzeit</h2>
+<div class="list-group text-left">
+	{% for file in session.files %}
+	<a href="{{ session.yyyymmdd }}/{{ file.name }}" class="list-group-item list-group-item-action">
+		<div class="d-flex justify-content-between">
+			<h5 class="mb-1">{{ file.name }}</h5>
+			<small class="text-muted">{{ file.duration }}</small>
+		</div>
+		<div class="d-flex justify-content-between">
+			<p class="mb-1 text-muted">{{ file.author }}</p>
+			<small class="text-muted">{{ file.size }}</small>
+		</div>
+	</a>
+	{% endfor %}
 </div>
 
-<ul>
-	<li>
-		<span class="filename"><a href="20200323/animalsession.wav">animalsession.wav</a></span>
-		<span class="size">24.69MB</span>
-		<span class="date">21:02</span>
-	</li>
-	<li>
-		<span class="filename"><a href="20200323/DryasSahara.mp3">DryasSahara.mp3</a></span>
-		<span class="size">2.87MB</span>
-		<span class="date">21:10</span>
-	</li>
-	<li>
-		<span class="filename"><a href="20200323/flying%20rat.mp3">flying rat.mp3</a></span>
-		<span class="size">1.61MB</span>
-		<span class="date">21:03</span>
-	</li>
-</ul>
+<hr>
 
-<hr />
-
-<div>
-	<span><a href="#">Archiv</a> / 20200323</span>
-	<a class="download" title="ZIP Datei Herunterladen" href="#">ZIP Datei Herunterladen</a>
+<div class="d-flex justify-content-between">
+	<span><a href="/archiv">Archiv</a> / {{ session.yyyymmdd }}</span>
+	<a class="download-link" title="Download" href="{{ session.yyyymmdd }}.zip"><span></span></a>
 </div>
 {% endblock %}

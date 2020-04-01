@@ -4,7 +4,8 @@ from itertools import groupby
 
 class AudioFile():
     def __init__(self):
-        self.name = "filename"
+        self.name = "filename.mp3"
+        self.author = "fshstk"
         self.size = "1.51 MB"
         self.duration = timedelta(seconds = 135)
 
@@ -65,6 +66,13 @@ class Session():
     @property
     def monthyear(self):
         return self.date.strftime("%B %Y")
+
+    def get_file_by_name(self, filename):
+        for file in self.files:
+            if file.name == filename:
+                return file
+        else:
+            return None
 
 class SessionCollection():
     def __init__(self):
