@@ -41,11 +41,6 @@ def session(number):
 
 ################################################################################
 
-@app.errorhandler(404) # possibly add more errors (403, 500)
+@app.errorhandler(404)
 def notfound(error):
     return render_template('error.jinja')
-
-@app.errorhandler(400)
-def badrequest(error):
-    # return render_template('session_not_found.jinja', archive = sessions.grouped_by_month)
-    return notfound(None)
