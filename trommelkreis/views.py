@@ -1,6 +1,9 @@
 from flask import render_template, abort
+
 from . import app
 from .vars import sessions
+
+################################################################################
 
 @app.route('/')
 @app.route('/home')
@@ -35,6 +38,8 @@ def session(number):
         return render_template('session.jinja', session = session)
     else:
         return abort(400)
+
+################################################################################
 
 @app.errorhandler(404) # possibly add more errors (403, 500)
 def notfound(error):
