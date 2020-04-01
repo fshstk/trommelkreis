@@ -1,12 +1,12 @@
 node_modules
-__pycache__
+**/__pycache__
 
 # compiled css:
 *.css
 *.map
 
 # fontawesome:
-static/webfonts
+trommelkreis/static/webfonts
 
 # yarn:
 *.log

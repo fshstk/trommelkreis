@@ -10,6 +10,10 @@
 
 <h2>session: {{ session.datestring }}ljoij</h2>
 
+{% for file in session.files %}
+<p>{{ file.name }}, {{ file.size }}, {{ file.duration }}</p>
+{% endfor %}
+
 <div>
 	<h2 class="filename">Datei</h2>
 	<h2 class="size">Größe</h2>
