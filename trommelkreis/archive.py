@@ -2,9 +2,11 @@ from datetime import date, datetime, timedelta
 from string import punctuation
 from itertools import groupby
 
+from random import randint
+
 class AudioFile():
     def __init__(self):
-        self.name = "filename.mp3"
+        self.name = "filename" + str(randint(1, 999)) + ".mp3"
         self.author = "fshstk"
         self.size = "1.51 MB"
         self.duration = timedelta(seconds = 135)

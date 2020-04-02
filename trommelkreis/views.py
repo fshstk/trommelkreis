@@ -1,4 +1,5 @@
-from flask import render_template, abort, request
+from flask import render_template, abort, request, send_from_directory
+import os
 
 from . import app
 from .vars import sessions
@@ -82,3 +83,13 @@ def upload():
 @app.errorhandler(404)
 def notfound(error):
     return render_template('error.jinja')
+
+################################################################################
+
+@app.route('/testfile')
+def testfile():
+    return send_from_directory(app.config["ARCHIVE_PATH"], 'test.mp3')
+
+@app.route('/test')
+def testpage():
+    return render_template('test.jinja')
