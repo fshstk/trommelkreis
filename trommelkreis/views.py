@@ -1,5 +1,9 @@
 from flask import render_template, abort, request, send_from_directory, send_file
 import os
+from datetime import datetime
+from zipfile import ZipFile
+import io
+from werkzeug import FileWrapper
 
 from . import app
 from .vars import sessions
@@ -41,11 +45,21 @@ def session(number):
 
 # entire session as zip file:
 @app.route('/archiv/<int:number>.zip')
-def download_session(number):
+# @app.route('/archiv/<int:number>/download/<whatever>') # (debug) chrome likes to cache downloads
+def download_session(number, whatever):
     session = sessions.get_session_by_yyyymmdd(number)
     if session is not None:
-        # serve zip file here...
-        return render_template('home.jinja')
+        data = io.BytesIO()
+        with ZipFile(data, "w") as zipfile:
+            for file in session.files:
+                zipfile.write(file.path, os.path.basename(file.path))
+        data.seek(0)
+        return send_file(
+            data,
+            mimetype="application/zip",
+            as_attachment = True,
+            attachment_filename = str(number) + ".zip"
+            )
     else:
         return abort(400)
 
@@ -70,6 +84,11 @@ today = Session("20200401")
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
+    # try:
+    #     today = sessions.get_session_by_yyyymmdd(datetime.today())
+    # except:
+    #     today = None
+
     if today is not None:
         if request.method == "POST":
             # save uploaded file here...
