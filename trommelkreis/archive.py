@@ -1,30 +1,44 @@
+import os
 from datetime import date, datetime, timedelta
 from string import punctuation
 from itertools import groupby
+from mutagen.mp3 import EasyMP3
+import math
 
-from random import randint
+from .config import ARCHIVE_PATH
 
 class AudioFile():
-    def __init__(self):
-        self.name = "filename" + str(randint(1, 999)) + ".mp3"
-        self.author = "fshstk"
-        self.size = "1.51 MB"
-        self.duration = timedelta(seconds = 135)
+    def __init__(self, path):
+        self.mp3 = EasyMP3(path)
+        self.path = path
+        if self.mp3.info.sketchy:
+            raise ValueError("sketchy mp3") # or whatever error is most appropriate
+
+        if "title" in self.mp3:
+            self.name = self.mp3["title"]
+        else:
+            self.name = os.path.basename(self.path)
+        if "artist" in self.mp3:
+            self.artist = self.mp3["artist"]
+        else:
+            self.artist = ""
+
+        # TODO: properties:
+        self.duration = timedelta(seconds = math.floor(self.mp3.info.length))
+        self.size = os.path.getsize(self.path) # TODO: MB
 
 class Session():
     max_challenge_length = 100
     date_output_format = "%d.%m.%Y"
 
-    def __init__(self, datestring):
-        # example data:
-        self.name = "Kurt Razelli Challenge"
-        # self.date = date.now()
-        # self.date = datetime.strptime(datestring, "%Y%m%d").date() # yyyymmdd
-        self.date = datestring
-        self.challenge = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis augue iaculis, tempor orci non, porta justo. Pellentesque nisi ex, ultrices eget cursus at, fringilla in libero. Ut euismod libero at eros porttitor, in rhoncus augue pellentesque. Quisque auctor nibh pretium elit facilisis feugiat. Cras rhoncus magna sed magna aliquet cursus. Sed et varius quam. Fusce feugiat dolor ac neque hendrerit, non gravida justo aliquet. Donec venenatis vel neque sed consequat. Morbi scelerisque tempus diam. Maecenas ullamcorper laoreet iaculis."
+    def __init__(self, datestring, name = None, challenge = ""):
+        self.date = datetime.strptime(datestring, "%Y%m%d").date() # yyyymmdd
+        if name is None:
+            self.name = datestring
+        else:
+            self.name = name
+        self.challenge = challenge
         self.files = []
-        for _ in range(7):
-            self.files.append(AudioFile())
 
     @property
     def count(self):
@@ -79,6 +93,40 @@ class Session():
 class SessionCollection():
     def __init__(self):
         self.sessions = []
+        tree = os.walk(ARCHIVE_PATH)
+        directories = next(tree)[1]
+
+        # get a list of all top level directories and parse the dates
+        for directory in directories:
+            try:
+                self.sessions.append(Session(directory))
+            except ValueError:
+                directories.remove(directory) # prune all directories that can't be parsed
+
+        for session in self.sessions:
+            _, subdirectories, files = next(tree)
+
+            if "challenge.txt" in files:
+                # session.name = blah
+                # session.challenge = blah
+                pass
+
+            if "files" in subdirectories:
+                subdirectories = ["files"] # ignore everything except files directory
+
+                path, _, tracks = next(tree)
+
+                for trackname in tracks:
+                    trackpath = os.path.join(path, trackname)
+                    try:
+                        track = AudioFile(trackpath)
+                    except:
+                        continue
+                    session.files.append(track)
+            else:
+                subdirectories = []
+
+    def init_with_placeholder_data(self):
         for i in range(20):
             self.sessions.append(Session((datetime.strptime("20190101", "%Y%m%d")-timedelta(days = 4*i)).date()))
 

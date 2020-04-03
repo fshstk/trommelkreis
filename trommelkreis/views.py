@@ -1,4 +1,4 @@
-from flask import render_template, abort, request, send_from_directory
+from flask import render_template, abort, request, send_from_directory, send_file
 import os
 
 from . import app
@@ -30,6 +30,7 @@ def challenge():
 
 ################################################################################
 
+# single session:
 @app.route('/archiv/<int:number>')
 def session(number):
     session = sessions.get_session_by_yyyymmdd(number)
@@ -38,6 +39,7 @@ def session(number):
     else:
         return abort(400)
 
+# entire session as zip file:
 @app.route('/archiv/<int:number>.zip')
 def download_session(number):
     session = sessions.get_session_by_yyyymmdd(number)
@@ -47,14 +49,14 @@ def download_session(number):
     else:
         return abort(400)
 
+# single mp3 from session:
 @app.route('/archiv/<int:number>/<filename>')
 def download_file(number, filename):
     session = sessions.get_session_by_yyyymmdd(number)
     if session is not None:
         file = session.get_file_by_name(filename)
         if file is not None:
-            # serve mp3/wav here...
-            return render_template('home.jinja')
+            return send_file(file.path)
         else:
             return abort(400)
     else:
