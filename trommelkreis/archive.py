@@ -145,11 +145,8 @@ class SessionCollection():
             session = self.get_session_by_yyyymmdd(directory)
             path, subdirectories, files = next(tree)
 
-            # print(files)
             if "sessioninfo.json" in files:
-                print("we have session infos in " + directory)
                 jsonpath = os.path.join(path, "sessioninfo.json")
-                print(jsonpath)
                 with open(jsonpath, 'r') as jsonfile:
                     data = jsonfile.read()
                     try:
@@ -157,11 +154,10 @@ class SessionCollection():
                         session.name = sessioninfo["name"]
                         session.challenge = sessioninfo["challenge"]
                     except:
-                        print("something happened")
+                        # TODO: bad practice to ignore all exceptions
+                        pass
             if "challenge.html" in files:
-                print("we have a challenge.html in " + directory)
                 htmlpath = os.path.join(path, "challenge.html")
-                print(htmlpath)
                 with open(htmlpath, 'r') as htmlfile:
                     data = htmlfile.read()
                     # TODO: check if valid html file
