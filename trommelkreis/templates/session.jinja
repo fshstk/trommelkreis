@@ -11,7 +11,6 @@
 
 <div class="list-group text-left">
 	{% for file in session.files %}
-	{# <a href="{{ session.yyyymmdd }}/{{ file.name }}" class="list-group-item list-group-item-action"> #}
 	<a href="#{{ file.name }}" class="list-group-item list-group-item-action" data-toggle="collapse">
 		<div class="d-flex justify-content-between">
 			<h5 class="mb-1">{{ file.name }}</h5>
@@ -26,6 +25,7 @@
 	<div class="collapse" id="{{ file.name }}">
 		<div class="card card-body">
 			<audio src="/testfile" style="width: 100%;" preload="none" controls>
+			{# <audio src="{{ session.yyyymmdd }}/{{ file.name }}" style="width: 100%;" preload="none" controls> #}
 				<p>Dein browser unterstützt das <em>audio</em> Element nicht.
 				<p>Du kannst stattdessen die <a href="/testfile">Datei Herunterladen</a>.</p>
 			</audio>

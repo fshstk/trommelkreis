@@ -9,12 +9,15 @@
 <p>{{ today.challenge }}</p>
 <hr>
 
-<h2>Teile deinen Track:</h2>
+<h2 class="pb-2">Teile deinen Track:</h2>
 <form enctype="multipart/form-data" action="#" method="POST">
 	<div class="row">
-		<div class="form-group col-md-6">
-			<input type="text" class="form-control" id="name" placeholder="Dein Name">
-			<small class="form-text text-muted">Wenn du anonym bleiben möchtest, lass dieses Feld leer.</small>
+		<div class="col-md-6">
+			<div class="custom-file">
+				<input type="file" class="custom-file-input" id="file">
+				<label class="custom-file-label" for="customFile">Dein Track… (nur MP3 erlaubt)</label>
+			</div>
+			<small class="form-text text-muted pb-3">Trommelkreis liest deine ID3 Metadaten, um deinen Namen anzuzeigen.</small>
 		</div>
 
 		<div class="col-md-6">
@@ -22,25 +25,14 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<div class="custom-file col-md-6">
-			{# <div class="custom-file"> #}
-				<input type="file" class="custom-file-input" id="file">
-				<label class="custom-file-label" for="customFile">Dein Track…</label>
-			{# </div> #}
+	<div class="row pl-4">
+		<div class="col-md-6 mt-3">
+			<input type="checkbox" class="form-check-input" id="tos">
+			<label class="form-check-label" for="tos">Mein Track ist CC lizensiert.</label>
 		</div>
 
-		<div class="col-md-6">
-			<div class="row">
-				<div class="form-check col-md-9">
-					<input type="checkbox" class="form-check-input" id="tos">
-					<label class="form-check-label" for="tos">Mein Track ist CC lizensiert.</label>
-				</div>
-
-				<div class="col-md-3 text-right">
-					<button type="submit" class="btn btn-primary">Upload</button>
-				</div>
-			</div>
+		<div class="col-md-6 text-right mt-2">
+			<button type="submit" style="width: 100%;" class="btn btn-primary">Upload</button>
 		</div>
 	</div>
 </form>
