@@ -4,6 +4,7 @@ from string import punctuation
 from itertools import groupby
 from mutagen.mp3 import EasyMP3
 import math
+import json
 
 from .config import ARCHIVE_PATH
 
@@ -14,7 +15,7 @@ class AudioFile():
         if self.mp3.info.sketchy:
             raise ValueError("sketchy mp3") # or whatever error is most appropriate
         if artist is not None:
-            self.mp3["artist"] = artist
+            self.mp3["artist"][0] = artist
             self.mp3.save()
 
     @property
@@ -53,13 +54,15 @@ class AudioFile():
 class Session():
     max_challenge_length = 100
     date_output_format = "%d.%m.%Y"
+    default_challenge_text = "Zu dieser Challenge sind keine Informationen verfügbar."
 
-    def __init__(self, datestring, name = None, challenge = ""):
+    def __init__(self, datestring, name = None, challenge = default_challenge_text, html = None):
         self.date = datetime.strptime(datestring, "%Y%m%d").date() # yyyymmdd
         if name is None:
             self.name = datestring
         else:
             self.name = name
+        self.html = html
         self.challenge = challenge
         self.files = []
 
@@ -78,13 +81,22 @@ class Session():
 
     @property
     def challenge_short(self):
-        if len(self.challenge) > self.max_challenge_length:
+        if self.challenge == self.default_challenge_text:
+            return ""
+        elif len(self.challenge) > self.max_challenge_length:
             challenge_short = self.challenge[:self.max_challenge_length]
             while challenge_short[-1] in punctuation:
                 self.challenge = self.challenge[:-1]
             return self.challenge[:self.max_challenge_length] + "…"
         else:
             return self.challenge
+
+    @property
+    def html_or_text(self):
+        if self.html is not None:
+            return self.html
+        else:
+            return "<p>" + self.challenge + "</p>"
 
     @property
     def datestring(self):
@@ -131,13 +143,29 @@ class SessionCollection():
 
         for directory in directories:
             session = self.get_session_by_yyyymmdd(directory)
-            _, subdirectories, files = next(tree)
+            path, subdirectories, files = next(tree)
 
-            if "challenge.txt" in files:
-                # session.name = "blah"
-                # session.challenge = blah
-                # session.challenge_short = blah
-                pass
+            # print(files)
+            if "sessioninfo.json" in files:
+                print("we have session infos in " + directory)
+                jsonpath = os.path.join(path, "sessioninfo.json")
+                print(jsonpath)
+                with open(jsonpath, 'r') as jsonfile:
+                    data = jsonfile.read()
+                    try:
+                        sessioninfo = json.loads(data)
+                        session.name = sessioninfo["name"]
+                        session.challenge = sessioninfo["challenge"]
+                    except:
+                        print("something happened")
+            if "challenge.html" in files:
+                print("we have a challenge.html in " + directory)
+                htmlpath = os.path.join(path, "challenge.html")
+                print(htmlpath)
+                with open(htmlpath, 'r') as htmlfile:
+                    data = htmlfile.read()
+                    # TODO: check if valid html file
+                    session.html = data
 
             for subdirectory in subdirectories:
                 if subdirectory != "files":
@@ -146,9 +174,9 @@ class SessionCollection():
             if "files" in subdirectories:
                 path, _, tracks = next(tree)
 
-                print(directory)
+                # print(directory)
                 for trackname in tracks:
-                    print("----> " + trackname)
+                    # print("----> " + trackname)
                     trackpath = os.path.join(path, trackname)
                     try:
                         track = AudioFile(trackpath)
