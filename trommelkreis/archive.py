@@ -20,14 +20,14 @@ class AudioFile():
     @property
     def name(self):
         if "title" in self.mp3:
-            return self.mp3["title"]
+            return self.mp3["title"][0]
         else:
             return os.path.basename(self.path)
 
     @property
     def artist(self):
         if "artist" in self.mp3:
-            return self.mp3["artist"]
+            return self.mp3["artist"][0]
         else:
             return ""
 
@@ -136,14 +136,19 @@ class SessionCollection():
             if "challenge.txt" in files:
                 # session.name = "blah"
                 # session.challenge = blah
+                # session.challenge_short = blah
                 pass
 
-            if "files" in subdirectories:
-                subdirectories = ["files"] # ignore everything except files directory
+            for subdirectory in subdirectories:
+                if subdirectory != "files":
+                    subdirectories.remove(subdirectory)
 
+            if "files" in subdirectories:
                 path, _, tracks = next(tree)
 
+                print(directory)
                 for trackname in tracks:
+                    print("----> " + trackname)
                     trackpath = os.path.join(path, trackname)
                     try:
                         track = AudioFile(trackpath)
