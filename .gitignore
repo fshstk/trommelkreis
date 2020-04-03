@@ -10,3 +10,6 @@ trommelkreis/static/webfonts
 
 # yarn:
 *.log
+
+# mp3s
+archive/
