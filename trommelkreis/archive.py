@@ -8,24 +8,47 @@ import math
 from .config import ARCHIVE_PATH
 
 class AudioFile():
-    def __init__(self, path):
+    def __init__(self, path, artist = None):
         self.mp3 = EasyMP3(path)
         self.path = path
         if self.mp3.info.sketchy:
             raise ValueError("sketchy mp3") # or whatever error is most appropriate
+        if artist is not None:
+            self.mp3["artist"] = artist
+            self.mp3.save()
 
+    @property
+    def name(self):
         if "title" in self.mp3:
-            self.name = self.mp3["title"]
+            return self.mp3["title"]
         else:
-            self.name = os.path.basename(self.path)
-        if "artist" in self.mp3:
-            self.artist = self.mp3["artist"]
-        else:
-            self.artist = ""
+            return os.path.basename(self.path)
 
-        # TODO: properties:
-        self.duration = timedelta(seconds = math.floor(self.mp3.info.length))
-        self.size = os.path.getsize(self.path) # TODO: MB
+    @property
+    def artist(self):
+        if "artist" in self.mp3:
+            return self.mp3["artist"]
+        else:
+            return ""
+
+    @property
+    def duration(self):
+        return timedelta(seconds = math.floor(self.mp3.info.length))
+
+    @property
+    def size(self):
+        # kB = 1024
+        kB = 1000
+        MB = kB**2
+        precision = 2
+
+        filesize = os.path.getsize(self.path)
+        if filesize > MB:
+            filesize = round(filesize/MB, precision)
+            return str(filesize) + " MB"
+        else:
+            filesize = round(filesize/kB, precision)
+            return str(filesize) + " kB"
 
 class Session():
     max_challenge_length = 100
@@ -97,17 +120,21 @@ class SessionCollection():
         directories = next(tree)[1]
 
         # get a list of all top level directories and parse the dates
-        for directory in directories:
+        # NOTE: it's very important to have "directories[:]" instead of just
+        # "directories" here since this creates a safe copy of the array we are
+        # iterating over while we are removing elements from it
+        for directory in directories[:]:
             try:
                 self.sessions.append(Session(directory))
             except ValueError:
                 directories.remove(directory) # prune all directories that can't be parsed
 
-        for session in self.sessions:
+        for directory in directories:
+            session = self.get_session_by_yyyymmdd(directory)
             _, subdirectories, files = next(tree)
 
             if "challenge.txt" in files:
-                # session.name = blah
+                # session.name = "blah"
                 # session.challenge = blah
                 pass
 
@@ -125,10 +152,6 @@ class SessionCollection():
                     session.files.append(track)
             else:
                 subdirectories = []
-
-    def init_with_placeholder_data(self):
-        for i in range(20):
-            self.sessions.append(Session((datetime.strptime("20190101", "%Y%m%d")-timedelta(days = 4*i)).date()))
 
     @property
     def sorted_by_date(self):
