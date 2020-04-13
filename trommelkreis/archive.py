@@ -135,6 +135,8 @@ class SessionCollection():
         # NOTE: it's very important to have "directories[:]" instead of just
         # "directories" here since this creates a safe copy of the array we are
         # iterating over while we are removing elements from it
+
+        # TODO: maybe this entire function should be outside the class?
         for directory in directories[:]:
             try:
                 self.sessions.append(Session(directory))
