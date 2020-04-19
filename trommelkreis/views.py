@@ -3,48 +3,56 @@ import os
 from datetime import datetime
 from zipfile import ZipFile
 import io
-from werkzeug import FileWrapper
+
+# from werkzeug import FileWrapper
 
 from . import app
 from .vars import sessions
 
 ################################################################################
 
-@app.route('/')
-@app.route('/home')
+
+@app.route("/")
+@app.route("/home")
 def home():
-    return render_template('home.jinja')
+    return render_template("home.jinja")
 
-@app.route('/info')
+
+@app.route("/info")
 def info():
-    return render_template('info.jinja')
+    return render_template("info.jinja")
 
-@app.route('/archiv')
-@app.route('/archiv/')
+
+@app.route("/archiv")
+@app.route("/archiv/")
 def archive():
-    return render_template('archive.jinja', archive = sessions.grouped_by_month)
+    return render_template("archive.jinja", archive=sessions.grouped_by_month)
 
-@app.route('/abo')
+
+@app.route("/abo")
 def subscribe():
-    return render_template('subscribe.jinja')
+    return render_template("subscribe.jinja")
 
-@app.route('/challenge')
+
+@app.route("/challenge")
 def challenge():
-    return render_template('challenge.jinja')
+    return render_template("challenge.jinja")
+
 
 ################################################################################
 
 # single session:
-@app.route('/archiv/<int:number>')
+@app.route("/archiv/<int:number>")
 def session(number):
     session = sessions.get_session_by_yyyymmdd(number)
     if session is not None:
-        return render_template('session.jinja', session = session)
+        return render_template("session.jinja", session=session)
     else:
         return abort(400)
 
+
 # entire session as zip file:
-@app.route('/archiv/<int:number>.zip')
+@app.route("/archiv/<int:number>.zip")
 # @app.route('/archiv/<int:number>/download/<whatever>') # (debug) chrome likes to cache downloads
 def download_session(number, whatever):
     session = sessions.get_session_by_yyyymmdd(number)
@@ -57,14 +65,15 @@ def download_session(number, whatever):
         return send_file(
             data,
             mimetype="application/zip",
-            as_attachment = True,
-            attachment_filename = str(number) + ".zip"
-            )
+            as_attachment=True,
+            attachment_filename=str(number) + ".zip",
+        )
     else:
         return abort(400)
 
+
 # single mp3 from session:
-@app.route('/archiv/<int:number>/<filename>')
+@app.route("/archiv/<int:number>/<filename>")
 def download_file(number, filename):
     session = sessions.get_session_by_yyyymmdd(number)
     if session is not None:
@@ -76,13 +85,16 @@ def download_file(number, filename):
     else:
         return abort(400)
 
+
 ################################################################################
 
 from .archive import Session
+
 today = Session("20200401")
 # today = None
 
-@app.route('/upload', methods=['GET', 'POST'])
+
+@app.route("/upload", methods=["GET", "POST"])
 def upload():
     # try:
     #     today = sessions.get_session_by_yyyymmdd(datetime.today())
@@ -92,25 +104,31 @@ def upload():
     if today is not None:
         if request.method == "POST":
             # save uploaded file here...
-            return render_template('home.jinja')
+            return render_template("home.jinja")
         else:
-            return render_template('upload.jinja', today = today)
+            return render_template("upload.jinja", today=today)
     else:
-        return render_template('nexttime.jinja')
+        return render_template("nexttime.jinja")
+
 
 ################################################################################
+
 
 @app.errorhandler(400)
 @app.errorhandler(404)
 def notfound(error):
-    return render_template('error.jinja')
+    return render_template("error.jinja")
+
 
 ################################################################################
 
-@app.route('/testfile')
-def testfile():
-    return send_from_directory(app.config["ARCHIVE_PATH"], 'test.mp3')
 
-@app.route('/test')
+@app.route("/testfile")
+def testfile():
+    return send_from_directory(app.config["ARCHIVE_PATH"], "test.mp3")
+
+
+@app.route("/test")
 def testpage():
-    return render_template('test.jinja')
+    return render_template("test.jinja")
+
