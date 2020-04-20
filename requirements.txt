@@ -2,3 +2,5 @@ flask
 mutagen
 zipfile
 werkzeug
+sqlalchemy
+mysqlclient
