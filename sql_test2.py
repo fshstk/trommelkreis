@@ -1,22 +1,19 @@
-import mysql.connector
+from mysql.connector.connection import MySQLConnection
 from datetime import datetime
-
-# from cached_property import cached_property
 
 
 class DatabaseObject:
-    sql_host = "data.trommelkreis.club"
-    sql_db = "trommelkreis"
+    sql_config = {
+        # NOTE: User only has SELECT/INSERT access:
+        "user": "trommelkreis_api",
+        "password": "scan1ken_PLIF",
+        "host": "data.trommelkreis.club",
+        "database": "trommelkreis",
+    }
 
-    # User only has SELECT/INSERT access:
-    sql_user = "trommelkreis_api"
-    sql_pass = "scan1ken_PLIF"
-
-    # TODO: context manager?
-    db = mysql.connector.connect(
-        host=sql_host, user=sql_user, passwd=sql_pass, database=sql_db
-    )
-    cursor = db.cursor()
+    # NOTE: Connection stays open indefinitely.
+    db = MySQLConnection(**sql_config)
+    cursor = db.cursor(buffered=True)
 
     def __init__(self, id):
         self.id = id
@@ -27,6 +24,8 @@ class DatabaseObject:
 
     @classmethod
     def all(cls, limit=1000):
+        if not cls.db.is_connected():
+            cls.db.connect()
         cls.cursor.execute(
             "SELECT {} FROM {} LIMIT {}".format(cls.idstring, cls.table, limit)
         )
@@ -37,6 +36,8 @@ class DatabaseObject:
 
     @classmethod
     def query(cls, attributes, table, key, val, limit=1000):
+        if not cls.db.is_connected():
+            cls.db.connect()
         cls.cursor.execute(
             "SELECT {} FROM {} WHERE {}={} LIMIT {}".format(
                 attributes, table, key, val, limit
@@ -47,12 +48,15 @@ class DatabaseObject:
     def column(self, col, table=None, limit=1):
         if table is None:
             table = self.table
-        self.cursor.execute(
-            "SELECT {} FROM {} WHERE {}={} LIMIT {}".format(
-                col, table, self.idstring, self.id, limit
-            )
+        return self.query(
+            attributes=col, table=table, key=self.idstring, val=self.id, limit=limit
         )
-        return self.unpack(self.cursor.fetchall())
+        # self.cursor.execute(
+        #     "SELECT {} FROM {} WHERE {}={} LIMIT {}".format(
+        #         col, table, self.idstring, self.id, limit
+        #     )
+        # )
+        # return self.unpack(self.cursor.fetchall())
 
     @classmethod
     def unpack(cls, response):
