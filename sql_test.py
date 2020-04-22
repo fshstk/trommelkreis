@@ -4,12 +4,20 @@ from sqlalchemy import Integer, String, LargeBinary, Date
 
 from sqlalchemy.ext.declarative import declarative_base
 
-sql_host = "data.trommelkreis.club"
-sql_user = "trommelkreis"
-sql_pass = "firm!TWAD5baub"
-sql_db = "trommelkreis_test"
+sql_config = {
+    # NOTE: User only has SELECT/INSERT access:
+    "user": "trommelkreis_api",
+    "password": "scan1ken_PLIF",
+    "host": "data.trommelkreis.club",
+    "database": "trommelkreis",
+}
 
-sql_url = "mysql://{}:{}@{}/{}".format(sql_user, sql_pass, sql_host, sql_db)
+sql_url = "mysql://{}:{}@{}/{}".format(
+    sql_config["user"],
+    sql_config["password"],
+    sql_config["host"],
+    sql_config["database"],
+)
 
 engine = create_engine(sql_url)
 engine.echo = True  # debug

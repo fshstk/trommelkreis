@@ -14,6 +14,7 @@ class DatabaseObject:
     # NOTE: Connection stays open indefinitely.
     db = MySQLConnection(**sql_config)
     cursor = db.cursor(buffered=True)
+    # TODO: unicode strings?
 
     def __init__(self, id):
         self.id = id
@@ -29,10 +30,11 @@ class DatabaseObject:
         cls.cursor.execute(
             "SELECT {} FROM {} LIMIT {}".format(cls.idstring, cls.table, limit)
         )
-        objects = []
-        for id in cls.unpack(cls.cursor.fetchall()):
-            objects.append(cls(id))
-        return objects
+        # objects = []
+        # for id in cls.unpack(cls.cursor.fetchall()):
+        #     objects.append(cls(id))
+        # return objects
+        return [cls(id) for id in cls.unpack(cls.cursor.fetchall())]
 
     @classmethod
     def query(cls, attributes, table, key, val, limit=1000):
@@ -79,7 +81,13 @@ class AudioFile(DatabaseObject):
 
     @classmethod
     def create(cls, data):
-        # TODO
+        # TODO: requires:
+        # *session_id
+        # *filename
+        # *duration_seconds
+        # data (optional)
+        # trackname (optional)
+        # artist_id (optional)
         raise NotImplementedError
 
     @property
@@ -103,6 +111,8 @@ class AudioFile(DatabaseObject):
     @property
     def duration(self):
         return self.column("duration_seconds")[0]
+        # TODO: or maybe implement the one below?
+        # return timedelta(seconds=self.column("duration_seconds")[0])
 
     @property
     def duration_string(self):
@@ -162,7 +172,9 @@ class Session(DatabaseObject):
 
     @classmethod
     def create(cls, data):
-        # TODO
+        # TODO: requires:
+        # *date
+        # challenge_id (optional)
         raise NotImplementedError
 
     @property
@@ -196,7 +208,8 @@ class Artist(DatabaseObject):
 
     @classmethod
     def create(cls, data):
-        # TODO
+        # TODO: requires:
+        # *name
         raise NotImplementedError
 
     @property
@@ -232,7 +245,10 @@ class Challenge(DatabaseObject):
 
     @classmethod
     def create(cls, data):
-        # TODO
+        # TODO: requires:
+        # *name
+        # text_short (optional)
+        # text_html (optional)
         raise NotImplementedError
 
     @property
