@@ -24,18 +24,16 @@ class AudioFile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Required:
     session_id = db.Column(db.Integer, db.ForeignKey("sessions.id"), nullable=False)
+    name = db.Column(db.Unicode(255), nullable=False)
     filename = db.Column(db.Unicode(255), nullable=False)
     filesize = db.Column(db.Integer, nullable=False)
     duration = db.Column(db.Integer, nullable=False)
-    data = deferred(db.Column(db.LargeBinary(length=(1e8)), nullable=False))  # 100 MB
+    data = deferred(db.Column(db.LargeBinary(length=(30e6)), nullable=False))  # 30 MB
     # Optional:
-    trackname = db.Column(db.Unicode(255), nullable=True)
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"), nullable=True)
 
     @classmethod
     def from_mp3(cls, filepath, artistname=None):
-        # TODO: check if (a) import works, (b) artist tag is updated
-        # TODO: check if it works without session argument if using Session.files.append()
         mp3 = EasyMP3(filepath)
         filename = os.path.basename(filepath)
 
@@ -43,19 +41,20 @@ class AudioFile(db.Model):
             raise ValueError("input file may not be a valid MP3")
 
         # If we pass in a value for artist, write it to the MP3 metadata:
+        # (overwrite existing tag if necessary)
         if artistname is not None:
-            mp3["artist"][0] = artistname
+            mp3["artist"] = artistname
             mp3.save()
         # Else, check for artist tag in metadata and use that instead:
         elif "artist" in mp3:
             artistname = mp3["artist"][0]
 
-        # If MP3 contains title tag, use this as trackname:
+        # If MP3 contains title tag, use this as name:
         if "title" in mp3:
-            trackname = mp3["title"][0]
+            name = mp3["title"][0]
         # Else use the filename without the suffix:
         else:
-            trackname = os.path.splitext(filename)[0]
+            name = os.path.splitext(filename)[0]
 
         with open(filepath, "rb") as fileobj:
             data = fileobj.read()
@@ -72,14 +71,17 @@ class AudioFile(db.Model):
             data=data,
             duration=round(mp3.info.length),
             artist=artist,
-            trackname=trackname,
+            name=name,
         )
 
     def __repr__(self):
         return "<AudioFile: {name} [{size}]>".format(
-            name=self.filename if self.filename is not None else "??",
+            name=self.filename if not None else "??",
             size=self.filesize_string if self.filesize is not None else "??",
         )
+
+    def __str__(self):
+        return self.name
 
     def __len__(self):
         return self.filesize
@@ -110,6 +112,10 @@ class Session(db.Model):
     def __repr__(self):
         return "<Session: {} [{} file(s)]>".format(self.date, len(self.files))
 
+    def __str__(self):
+        # TODO: return challenge or datestring?
+        return self.challenge.name
+
 
 class Artist(db.Model):
     __tablename__ = "artists"
@@ -121,6 +127,9 @@ class Artist(db.Model):
 
     def __repr__(self):
         return "<Artist: {} [{} track(s)]>".format(self.name, len(self.files))
+
+    def __str__(self):
+        return self.name
 
 
 class Challenge(db.Model):
@@ -139,8 +148,12 @@ class Challenge(db.Model):
             name=self.name,
             num_sessions="UNUSED"
             if len(self.sessions) == 0
-            else "used in {} session(s)".format(len(self.sessions)),
+            else "{} session(s)".format(len(self.sessions)),
         )
+
+    def __str__(self):
+        # TODO: return name or text_short?
+        return self.text_short
 
 
 # Drop into interactive shell for debugging:
@@ -160,13 +173,14 @@ if __name__ == "__main__":
         for row in [a, b, c, x]:
             db.session.add(row)
 
-        # f1 = AudioFile.from_mp3(
-        #     "/Users/fshstk/Downloads/joe_der_singende_staubsauger.mp3"
-        # )
-        f2 = AudioFile.from_mp3("/Users/fshstk/Downloads/41 Skeng.mp3")
+        f1 = AudioFile.from_mp3(
+            "/Users/fshstk/Downloads/joe_der_singende_staubsauger.mp3",
+            artistname="fshstk",
+        )
+        # f2 = AudioFile.from_mp3("/Users/fshstk/Downloads/41 Skeng.mp3")
 
-        # x.files.append(f1)
-        x.files.append(f2)
+        x.files.append(f1)
+        # x.files.append(f2)
 
         db.session.commit()
 
