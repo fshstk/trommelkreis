@@ -12,13 +12,13 @@
 		<div class="col-md-6">
 			<div class="list-group text-left">
 				{% for session in month %}
-				<a href="{{ session.yyyymmdd }}" class="list-group-item list-group-item-action">
+				<a href="{{ session.name }}" class="list-group-item list-group-item-action">
 					<div class="d-flex justify-content-between">
-						<h5 class="mb-1">{{ session.name }}</h5>
+						<h5 class="mb-1">{{ session.challenge.name }}</h5>
 						<small class="text-muted">{{ session.datestring }}</small>
 					</div>
-					<p style="height: 20px;" class="mb-1">{{ session.challenge_short }}</p>
-					<small class="text-muted">{{ session.countstring }}</small>
+					<p style="height: 20px;" class="mb-1">{{ session.challenge.text_short|truncate }}</p>
+					<small class="text-muted">{{ session.filecount_string }}</small>
 				</a>
 
 				{# break into 2nd column after half of the elements: #}
