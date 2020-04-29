@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.ext.hybrid import hybrid_property
+
+# from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import deferred
 from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime
@@ -14,7 +15,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://{user}:{password}@{host}/{db}".
     user="trommelkreis",
     password="YUM-senk8nect",
     host="data.trommelkreis.club",
-    db="trommelkreis_test",
+    db="trommelkreis",
 )
 db = SQLAlchemy(app)
 
@@ -41,7 +42,7 @@ class AudioFile(db.Model):
             raise ValueError("input file may not be a valid MP3")
 
         # If we pass in a value for artist, write it to the MP3 metadata:
-        # (overwrite existing tag if necessary)
+        # (overwrite any existing tag)
         if artistname is not None:
             mp3["artist"] = artistname
             mp3.save()
@@ -86,7 +87,7 @@ class AudioFile(db.Model):
     def __len__(self):
         return self.filesize
 
-    @hybrid_property
+    @property
     def filesize_string(self):
         kB = 1000
         MB = kB ** 2
@@ -95,7 +96,7 @@ class AudioFile(db.Model):
         else:
             return "{:.0f} kB".format(self.filesize / kB)
 
-    @hybrid_property
+    @property
     def duration_string(self):
         return "{:02d}:{:02d}".format(self.duration // 60, self.duration % 60)
 
@@ -105,16 +106,62 @@ class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Required:
     challenge_id = db.Column(db.Integer, db.ForeignKey("challenges.id"), nullable=False)
-    date = db.Column(db.Date, nullable=False)  # unique?
+    date = db.Column(db.Date, nullable=False)
+    name = db.Column(db.Unicode(255), nullable=False, unique=True)
     # Generated:
     files = db.relationship("AudioFile", backref="session", lazy=True)
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if "name" not in kwargs:
+            self.name = self.date.strftime("%Y%m%d")
+            # TODO: if name already exists, silently add "_#",
+            # where # is the lowest integer > 1 such that name is unique
+            # if self.name_exists(name):
+            #     suffix = 2
+            #     while self.name_exists(name):
+            #         basename = name
+            #         name = "{}_{}".format(basename, suffix)
+            #         suffix += 1
+            # self.name = name
+
     def __repr__(self):
-        return "<Session: {} [{} file(s)]>".format(self.date, len(self.files))
+        return "<Session: {} [{} file(s)]>".format(self.name, len(self.files))
 
     def __str__(self):
-        # TODO: return challenge or datestring?
-        return self.challenge.name
+        return self.name
+
+    @classmethod
+    def name_exists(cls, name):
+        # NOTE: we only need this method if implementing the auto add suffix
+        # feature in __init__()
+        return False if cls.query.filter_by(name=name).scalar() is None else True
+
+    @classmethod
+    def from_yyyymmdd(cls, yyyymmdd):
+        # TODO: raise exception or return None if not found?
+        # also... do we have this at all or just use the expression below directly?
+        return cls.query.filter_by(name=yyyymmdd).one()
+
+    @classmethod
+    def sessioncount(cls):
+        # TODO (but we need count as global # of sessions AND as # of files in session!)
+        # I guess use len() for the 2nd but it's kinda confusing & ambiguous
+        raise NotImplementedError
+
+    def filecount(self):
+        # TODO
+        raise NotImplementedError
+
+    @classmethod
+    def countstring(cls):
+        # TODO (see above)
+        raise NotImplementedError
+
+    @classmethod
+    def grouped_by_month(cls):
+        # TODO
+        raise NotImplementedError
 
 
 class Artist(db.Model):

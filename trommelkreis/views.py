@@ -26,7 +26,9 @@ def info():
 @app.route("/archiv")
 @app.route("/archiv/")
 def archive():
-    return render_template("archive.jinja", archive=sessions.grouped_by_month)
+    return render_template(
+        "archive.jinja", archive=sessions.grouped_by_month
+    )  # TODO: old method
 
 
 @app.route("/abo")
@@ -44,7 +46,7 @@ def challenge():
 # single session:
 @app.route("/archiv/<int:number>")
 def session(number):
-    session = sessions.get_session_by_yyyymmdd(number)
+    session = sessions.get_session_by_yyyymmdd(number)  # TODO: old method
     if session is not None:
         return render_template("session.jinja", session=session)
     else:
@@ -55,12 +57,14 @@ def session(number):
 @app.route("/archiv/<int:number>.zip")
 # @app.route('/archiv/<int:number>/download/<whatever>') # (debug) chrome likes to cache downloads
 def download_session(number, whatever):
-    session = sessions.get_session_by_yyyymmdd(number)
+    session = sessions.get_session_by_yyyymmdd(number)  # TODO: old method
     if session is not None:
         data = io.BytesIO()
         with ZipFile(data, "w") as zipfile:
             for file in session.files:
-                zipfile.write(file.path, os.path.basename(file.path))
+                zipfile.write(
+                    file.path, os.path.basename(file.path)
+                )  # TODO: old method
         data.seek(0)
         return send_file(
             data,
@@ -75,9 +79,9 @@ def download_session(number, whatever):
 # single mp3 from session:
 @app.route("/archiv/<int:number>/<filename>")
 def download_file(number, filename):
-    session = sessions.get_session_by_yyyymmdd(number)
+    session = sessions.get_session_by_yyyymmdd(number)  # TODO: old method
     if session is not None:
-        file = session.get_file_by_name(filename)
+        file = session.get_file_by_name(filename)  # TODO: old method
         if file is not None:
             return send_file(file.path)
         else:
@@ -90,14 +94,14 @@ def download_file(number, filename):
 
 from .archive import Session
 
-today = Session("20200401")
+today = Session("20200401")  # TODO: old method
 # today = None
 
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
     # try:
-    #     today = sessions.get_session_by_yyyymmdd(datetime.today())
+    #     today = sessions.get_session_by_yyyymmdd(datetime.today())  # TODO: old method
     # except:
     #     today = None
 
@@ -131,4 +135,3 @@ def testfile():
 @app.route("/test")
 def testpage():
     return render_template("test.jinja")
-
