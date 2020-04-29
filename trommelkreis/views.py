@@ -5,6 +5,7 @@ from zipfile import ZipFile
 import io
 from sqlalchemy.orm.exc import NoResultFound
 from . import app
+from .sql_archive import Session, AudioFile, Challenge
 
 
 ################################################################################
@@ -24,7 +25,7 @@ def info():
 @app.route("/archiv")
 @app.route("/archiv/")
 def archive():
-    return render_template("archive.jinja", archive=Session.grouped_by_month)
+    return render_template("archive.jinja", archive=Session.grouped_by_month())
 
 
 @app.route("/abo")
