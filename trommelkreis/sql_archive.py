@@ -106,15 +106,6 @@ class Session(db.Model):
         super().__init__(**kwargs)
         if "name" not in kwargs:
             self.name = self.date.strftime("%Y%m%d")
-            # TODO: if name already exists, silently add "_#",
-            # where # is the lowest integer > 1 such that name is unique
-            # if self.name_exists(name):
-            #     suffix = 2
-            #     while self.name_exists(name):
-            #         basename = name
-            #         name = "{}_{}".format(basename, suffix)
-            #         suffix += 1
-            # self.name = name
 
     def __repr__(self):
         return "<Session: {} [{} file(s)]>".format(self.name, len(self.files))
@@ -123,26 +114,8 @@ class Session(db.Model):
         return self.name
 
     @classmethod
-    def name_exists(cls, name):
-        # NOTE: we only need this method if implementing the auto add suffix
-        # feature in __init__()
-        return False if cls.query.filter_by(name=name).scalar() is None else True
-
-    @classmethod
-    def from_yyyymmdd(cls, yyyymmdd):
-        # TODO: raise exception or return None if not found?
-        # also... do we have this at all or just use the expression below directly?
-        return cls.query.filter_by(name=yyyymmdd).one()
-
-    @classmethod
-    def sessioncount(cls):
-        # TODO (but we need count as global # of sessions AND as # of files in session!)
-        # I guess use len() for the 2nd but it's kinda confusing & ambiguous
-        raise NotImplementedError
-
-    def filecount(self):
-        # TODO
-        raise NotImplementedError
+    def from_name(cls, name):
+        return cls.query.filter_by(name=name).one()
 
     @classmethod
     def countstring(cls):
@@ -151,13 +124,40 @@ class Session(db.Model):
 
     @classmethod
     def grouped_by_month(cls):
-        # TODO
-        # sessions = self.sorted_by_date
-        # grouped_sessions = []
-        # for _, group in groupby(sessions, key=lambda x: x.monthyear):
-        #     grouped_sessions.append(list(group))
-        # return grouped_sessions
-        raise NotImplementedError
+        sessions = Session.query.order_by(Session.date).all()
+        grouped_sessions = []
+        for _, group in groupby(sessions, key=lambda x: x.monthyear):
+            grouped_sessions.append(list(group))
+        return grouped_sessions
+
+    @property
+    def month(self):
+        return self.date.strftime("%B")
+
+    @property
+    def year(self):
+        return self.date.strftime("%Y")
+
+    @property
+    def monthyear(self):
+        return self.date.strftime("%B %Y")
+
+    @property
+    def datestring(self):
+        return self.date.strftime("%d.%m.%Y")
+
+    @property
+    def filecount_string(self):
+        filecount = len(self.files)
+        if filecount is 0:
+            return "Keine Einträge"
+        elif filecount is 1:
+            return "1 Eintrag"
+        else:
+            return filecount + " Einträge"
+
+    def get_file_by_name(self, filename):
+        return AudioFile.query.filter_by(session=self, filename=filename).one()
 
 
 class Artist(db.Model):
