@@ -2,11 +2,11 @@ node_modules
 **/__pycache__
 
 # compiled css:
-*.css
+#*.css
 *.map
 
 # fontawesome:
-trommelkreis/static/webfonts
+#trommelkreis/static/webfonts
 
 # yarn:
 *.log
