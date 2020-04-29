@@ -71,6 +71,8 @@ class AudioFile(db.Model):
                 artist = Artist.query.filter_by(name=artistname).one()
             except NoResultFound:
                 artist = Artist(name=artistname)
+        else:
+            artist = None
 
         return AudioFile(
             filename=filename,
@@ -170,7 +172,7 @@ class Session(db.Model):
         elif filecount is 1:
             return "1 Eintrag"
         else:
-            return filecount + " Einträge"
+            return "{} Einträge".format(filecount)
 
     def get_file_by_name(self, filename):
         return AudioFile.query.filter_by(session=self, filename=filename).one()
