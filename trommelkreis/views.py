@@ -5,7 +5,7 @@ from zipfile import ZipFile
 import io
 from sqlalchemy.orm.exc import NoResultFound
 from . import app
-from .sql_archive import Session, AudioFile, Challenge
+from .archive import Session, AudioFile, Challenge
 
 
 ################################################################################
