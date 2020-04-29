@@ -213,20 +213,22 @@ if __name__ == "__main__":
 
         # Create some test data:
         a = Artist(name="Alice")
-        b = Artist(name="Alices")
+        b = Artist(name="Bob")
         c = Challenge(name="Foo", text_short="This is a test challenge.")
+        d = Challenge(name="Bar", text_short="This is another test challenge.")
         x = Session(date=datetime.now(), challenge=c)
+        y = Session(date=datetime.now(), name="20200424_bonus", challenge=c)
 
-        for row in [a, b, c, x]:
+        for row in [a, b, c, d, x]:
             db.session.add(row)
 
-        f1 = AudioFile.from_mp3(
-            "/Users/fshstk/Downloads/joe_der_singende_staubsauger.mp3",
-            artistname="fshstk",
-        )
+        # f1 = AudioFile.from_mp3(
+        #     "/Users/fshstk/Downloads/joe_der_singende_staubsauger.mp3",
+        #     artistname="fshstk",
+        # )
         # f2 = AudioFile.from_mp3("/Users/fshstk/Downloads/41 Skeng.mp3")
 
-        x.files.append(f1)
+        # x.files.append(f1)
         # x.files.append(f2)
 
         db.session.commit()
