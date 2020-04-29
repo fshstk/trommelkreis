@@ -8,12 +8,13 @@ import json
 
 from .config import ARCHIVE_PATH
 
-class AudioFile():
-    def __init__(self, path, artist = None):
+
+class AudioFile:
+    def __init__(self, path, artist=None):
         self.mp3 = EasyMP3(path)
         self.path = path
         if self.mp3.info.sketchy:
-            raise ValueError("sketchy mp3") # or whatever error is most appropriate
+            raise ValueError("sketchy mp3")  # or whatever error is most appropriate
         if artist is not None:
             self.mp3["artist"][0] = artist
             self.mp3.save()
@@ -34,30 +35,33 @@ class AudioFile():
 
     @property
     def duration(self):
-        return timedelta(seconds = math.floor(self.mp3.info.length))
+        return timedelta(seconds=math.floor(self.mp3.info.length))
 
     @property
     def size(self):
         # kB = 1024
         kB = 1000
-        MB = kB**2
+        MB = kB ** 2
         precision = 2
 
         filesize = os.path.getsize(self.path)
         if filesize > MB:
-            filesize = round(filesize/MB, precision)
+            filesize = round(filesize / MB, precision)
             return str(filesize) + " MB"
         else:
-            filesize = round(filesize/kB, precision)
+            filesize = round(filesize / kB, precision)
             return str(filesize) + " kB"
 
-class Session():
+
+class Session:
     max_challenge_length = 100
     date_output_format = "%d.%m.%Y"
     default_challenge_text = "Zu dieser Challenge sind keine Informationen verfügbar."
 
-    def __init__(self, datestring, name = None, challenge = default_challenge_text, html = None):
-        self.date = datetime.strptime(datestring, "%Y%m%d").date() # yyyymmdd
+    def __init__(
+        self, datestring, name=None, challenge=default_challenge_text, html=None
+    ):
+        self.date = datetime.strptime(datestring, "%Y%m%d").date()  # yyyymmdd
         if name is None:
             self.name = datestring
         else:
@@ -84,10 +88,10 @@ class Session():
         if self.challenge == self.default_challenge_text:
             return ""
         elif len(self.challenge) > self.max_challenge_length:
-            challenge_short = self.challenge[:self.max_challenge_length]
+            challenge_short = self.challenge[: self.max_challenge_length]
             while challenge_short[-1] in punctuation:
                 self.challenge = self.challenge[:-1]
-            return self.challenge[:self.max_challenge_length] + "…"
+            return self.challenge[: self.max_challenge_length] + "…"
         else:
             return self.challenge
 
@@ -125,7 +129,8 @@ class Session():
         else:
             return None
 
-class SessionCollection():
+
+class SessionCollection:
     def __init__(self):
         self.sessions = []
         tree = os.walk(ARCHIVE_PATH)
@@ -141,7 +146,9 @@ class SessionCollection():
             try:
                 self.sessions.append(Session(directory))
             except ValueError:
-                directories.remove(directory) # prune all directories that can't be parsed
+                directories.remove(
+                    directory
+                )  # prune all directories that can't be parsed
 
         for directory in directories:
             session = self.get_session_by_yyyymmdd(directory)
@@ -149,7 +156,7 @@ class SessionCollection():
 
             if "sessioninfo.json" in files:
                 jsonpath = os.path.join(path, "sessioninfo.json")
-                with open(jsonpath, 'r') as jsonfile:
+                with open(jsonpath, "r") as jsonfile:
                     data = jsonfile.read()
                     try:
                         sessioninfo = json.loads(data)
@@ -160,7 +167,7 @@ class SessionCollection():
                         pass
             if "challenge.html" in files:
                 htmlpath = os.path.join(path, "challenge.html")
-                with open(htmlpath, 'r') as htmlfile:
+                with open(htmlpath, "r") as htmlfile:
                     data = htmlfile.read()
                     # TODO: check if valid html file
                     session.html = data
@@ -174,7 +181,7 @@ class SessionCollection():
 
                 # print(directory)
                 for trackname in tracks:
-                    # print("----> " + trackname)
+                    # print("--> " + trackname)
                     trackpath = os.path.join(path, trackname)
                     try:
                         track = AudioFile(trackpath)
@@ -186,13 +193,13 @@ class SessionCollection():
 
     @property
     def sorted_by_date(self):
-        return sorted(self.sessions, key = lambda x: x.date)
+        return sorted(self.sessions, key=lambda x: x.date)
 
     @property
     def grouped_by_month(self):
         sessions = self.sorted_by_date
         grouped_sessions = []
-        for _, group in groupby(sessions, key = lambda x: x.monthyear):
+        for _, group in groupby(sessions, key=lambda x: x.monthyear):
             grouped_sessions.append(list(group))
         return grouped_sessions
 

@@ -6,35 +6,35 @@
 
 {% block main %}
 <div class="archive">
-{% for month in archive %}
-<h3 class="month">{{ month[0].month }} <small class="year">{{ month[0].year }}</small></h3>
-<div class="row">
-	<div class="col-md-6">
-		<div class="list-group text-left">
-			{% for session in month %}
-			<a href="{{ session.yyyymmdd }}" class="list-group-item list-group-item-action">
-				<div class="d-flex justify-content-between">
-					<h5 class="mb-1">{{ session.name }}</h5>
-					<small class="text-muted">{{ session.datestring }}</small>
-				</div>
-				<p style="height: 20px;" class="mb-1">{{ session.challenge_short }}</p>
-				<small class="text-muted">{{ session.countstring }}</small>
-			</a>
+	{% for month in archive %}
+	<h3 class="month">{{ month[0].month }} <small class="year">{{ month[0].year }}</small></h3>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="list-group text-left">
+				{% for session in month %}
+				<a href="{{ session.yyyymmdd }}" class="list-group-item list-group-item-action">
+					<div class="d-flex justify-content-between">
+						<h5 class="mb-1">{{ session.name }}</h5>
+						<small class="text-muted">{{ session.datestring }}</small>
+					</div>
+					<p style="height: 20px;" class="mb-1">{{ session.challenge_short }}</p>
+					<small class="text-muted">{{ session.countstring }}</small>
+				</a>
 
-	{# break into 2nd column after half of the elements: #}
-	{% if loop.index == (loop.length/2)|round(method = 'ceil') %}
+				{# break into 2nd column after half of the elements: #}
+				{% if loop.index == (loop.length/2)|round(method = 'ceil') %}
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="list">
+				{% endif %}
+
+				{% endfor %}
+			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
-		<div class="list">
-	{% endif %}
-	
-			{% endfor %}
-		</div>
-	</div>
-</div>
 
-<hr>
-{% endfor %}
+	<hr>
+	{% endfor %}
 </div>
 {% endblock %}
