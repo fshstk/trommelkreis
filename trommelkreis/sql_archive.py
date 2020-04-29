@@ -1,11 +1,28 @@
-from . import app, db
-
 from sqlalchemy.orm import deferred
 from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime
 from itertools import groupby
 from mutagen.mp3 import EasyMP3
 import os.path
+
+if __name__ == "__main__":
+    from flask import Flask
+    from flask_sqlalchemy import SQLAlchemy
+
+    app = Flask(__name__)
+    # Disabled to suppress warning at startup:
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ] = "mysql://{user}:{password}@{host}/{db}".format(
+        user="trommelkreis",
+        password="YUM-senk8nect",
+        host="data.trommelkreis.club",
+        db="trommelkreis",
+    )
+    db = SQLAlchemy(app)
+else:
+    from . import app, db
 
 
 class AudioFile(db.Model):
@@ -200,7 +217,7 @@ class Challenge(db.Model):
 
 # Drop into interactive shell for debugging:
 if __name__ == "__main__":
-    REBUILD = True
+    REBUILD = False
 
     if REBUILD:
         db.drop_all()
