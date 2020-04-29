@@ -13,3 +13,6 @@ node_modules
 
 # mp3s
 archive/
+
+# vs code preferences
+.vscode/
