@@ -1,7 +1,7 @@
 {% extends "layout.jinja" %}
 
 {% block title %}Challenge vom {{ session.datestring }}{% endblock %}
-{% block heading %}{{ session.name }}{% endblock %}
+{% block heading %}{{ session.challenge.name }}{% endblock %}
 {% block subheading %}{{ session.datestring }}{% endblock %}
 
 {% block main %}

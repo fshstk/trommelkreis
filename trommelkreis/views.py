@@ -52,9 +52,9 @@ def upload():
 
 # Show single session:
 @app.route("/archiv/<name>")
-def session(name):
+def get_session(name):
     try:
-        session = Session.query.filter_by(name=name).one()
+        session = Session.from_name(name)
     except NoResultFound:
         return abort(400)
     return render_template("session.jinja", session=session)
@@ -62,8 +62,7 @@ def session(name):
 
 # Get all session files as zip archive:
 @app.route("/archiv/<name>.zip")
-# @app.route('/archiv/<int:number>/download/<whatever>') # (debug) chrome likes to cache downloads
-def download_session(name, whatever):
+def download_session(name):
     try:
         session = Session.from_name(name)
     except NoResultFound:
@@ -85,7 +84,7 @@ def download_file(name, filename):
         return abort(400)
 
     return send_file(
-        file.data,
+        file.bytestream,
         mimetype="audio/mpeg",  # TODO: remove if using types other than mp3 files
         as_attachment=True,
         attachment_filename=file.filename,
