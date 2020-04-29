@@ -1,29 +1,19 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from . import app, db
 
 # from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import deferred
 from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime
+from itertools import groupby
 from mutagen.mp3 import EasyMP3
 import os.path
-
-app = Flask(__name__)
-# Disabled to suppress warning at startup:
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://{user}:{password}@{host}/{db}".format(
-    user="trommelkreis",
-    password="YUM-senk8nect",
-    host="data.trommelkreis.club",
-    db="trommelkreis",
-)
-db = SQLAlchemy(app)
 
 
 class AudioFile(db.Model):
     __tablename__ = "files"
     id = db.Column(db.Integer, primary_key=True)
     # Required:
+    # TODO: boolean to see if file/session is CC-licensed?
     session_id = db.Column(db.Integer, db.ForeignKey("sessions.id"), nullable=False)
     name = db.Column(db.Unicode(255), nullable=False)
     filename = db.Column(db.Unicode(255), nullable=False)
@@ -105,6 +95,7 @@ class Session(db.Model):
     __tablename__ = "sessions"
     id = db.Column(db.Integer, primary_key=True)
     # Required:
+    # TODO: boolean to see if file/session is CC-licensed?
     challenge_id = db.Column(db.Integer, db.ForeignKey("challenges.id"), nullable=False)
     date = db.Column(db.Date, nullable=False)
     name = db.Column(db.Unicode(255), nullable=False, unique=True)
@@ -161,6 +152,11 @@ class Session(db.Model):
     @classmethod
     def grouped_by_month(cls):
         # TODO
+        # sessions = self.sorted_by_date
+        # grouped_sessions = []
+        # for _, group in groupby(sessions, key=lambda x: x.monthyear):
+        #     grouped_sessions.append(list(group))
+        # return grouped_sessions
         raise NotImplementedError
 
 
