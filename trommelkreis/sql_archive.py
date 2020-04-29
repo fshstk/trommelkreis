@@ -1,11 +1,9 @@
 from . import app, db
 
-# from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import deferred
 from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime
 from itertools import groupby
-from io import BytesIO
 from mutagen.mp3 import EasyMP3
 import os.path
 
@@ -65,10 +63,6 @@ class AudioFile(db.Model):
             artist=artist,
             name=name,
         )
-
-    @property
-    def bytestream(self):
-        return BytesIO(self.data)
 
     def __repr__(self):
         return "<AudioFile: {name} [{size}]>".format(

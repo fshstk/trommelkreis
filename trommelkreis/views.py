@@ -84,7 +84,7 @@ def download_file(name, filename):
         return abort(400)
 
     return send_file(
-        file.bytestream,
+        io.BytesIO(file.data),
         mimetype="audio/mpeg",  # TODO: remove if using types other than mp3 files
         as_attachment=True,
         attachment_filename=file.filename,
@@ -98,7 +98,7 @@ def send_files_as_zip(filelist, name):
     zipdata = io.BytesIO()
     with ZipFile(zipdata, "w") as zipfile:
         for file in filelist:
-            zipfile.write(file.data, file.filename)
+            zipfile.writestr(file.filename, file.data)
     zipdata.seek(0)
     return send_file(
         zipdata,
