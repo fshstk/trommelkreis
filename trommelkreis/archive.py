@@ -1,3 +1,4 @@
+from sqlalchemy import UniqueConstraint
 from sqlalchemy.orm import deferred
 from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime
@@ -27,6 +28,7 @@ else:
 
 class AudioFile(db.Model):
     __tablename__ = "files"
+    __table_args__ = UniqueConstraint("session_id", "filename")
     id = db.Column(db.Integer, primary_key=True)
     # Required:
     # TODO: boolean to see if file/session is CC-licensed?
@@ -38,6 +40,7 @@ class AudioFile(db.Model):
     data = deferred(db.Column(db.LargeBinary(length=(30e6)), nullable=False))  # 30 MB
     # Optional:
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"), nullable=True)
+    session_subsection = db.Column(db.Unicode(255), nullable=True)
 
     @classmethod
     def from_mp3(cls, filepath, artistname=None):
