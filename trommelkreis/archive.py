@@ -202,8 +202,8 @@ class Challenge(db.Model):
     # Required:
     name = db.Column(db.Unicode(255), nullable=False, unique=True)
     # Optional:
-    text_short = db.Column(db.Unicode(1023), nullable=True)
-    text_long = db.Column(db.Unicode(4095), nullable=True)
+    blurb = db.Column(db.Unicode(1023), nullable=True)
+    markdown = db.Column(db.Unicode(4095), nullable=True)
     # Generated:
     sessions = db.relationship("Session", backref="challenge", lazy=True)
 
@@ -216,8 +216,8 @@ class Challenge(db.Model):
         )
 
     def __str__(self):
-        # TODO: return name or text_short?
-        return self.text_short
+        # TODO: return name or blurb?
+        return self.blurb
 
 
 # Drop into interactive shell for debugging:
@@ -231,8 +231,8 @@ if __name__ == "__main__":
         # Create some test data:
         a = Artist(name="Alice")
         b = Artist(name="Bob")
-        c = Challenge(name="Foo", text_short="This is a test challenge.")
-        d = Challenge(name="Bar", text_short="This is another test challenge.")
+        c = Challenge(name="Foo", blurb="This is a test challenge.")
+        d = Challenge(name="Bar", blurb="This is another test challenge.")
         x = Session(date=datetime.now(), challenge=c)
         y = Session(date=datetime.now(), name="20200424_bonus", challenge=c)
 
