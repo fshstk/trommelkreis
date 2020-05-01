@@ -44,8 +44,10 @@ for seshname in sessionlist:
         continue
 
     try:
-        # sesh.name = seshname
         sesh.name = seshinfo["session yyyymmdd"]
+        if seshname != sesh.name:
+            print("ERROR: mismatch between folder name and sessioninfo.json")
+            continue
         sesh.date = datetime.strptime(sesh.name, "%Y%m%d").date()
         sesh.challenge.name = seshinfo["challenge name"]
         sesh.challenge.blurb = seshinfo["challenge text short"]
