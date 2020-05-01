@@ -11,6 +11,7 @@ UPLOAD = False
 ERASE_ALL = False
 
 sessionlist = next(os.walk(ARCHIVE_PATH))[1]
+sessionlist.sort()
 successful_uploads = 0
 separator = "--------------------------------------------"
 
