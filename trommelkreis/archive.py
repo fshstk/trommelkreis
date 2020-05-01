@@ -210,8 +210,7 @@ class Challenge(db.Model):
         )
 
     def __str__(self):
-        # TODO: return name or blurb?
-        return self.blurb
+        return self.name
 
 
 # Drop into interactive shell for debugging:
