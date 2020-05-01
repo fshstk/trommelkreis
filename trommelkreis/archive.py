@@ -10,6 +10,9 @@ if __name__ == "__main__":
     from flask import Flask
     from flask_sqlalchemy import SQLAlchemy
 
+    REBUILD = True
+    POPULATE_WITH_TEST_DATA = False
+
     app = Flask(__name__)
     # Disabled to suppress warning at startup:
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -215,9 +218,6 @@ class Challenge(db.Model):
 
 # Drop into interactive shell for debugging:
 if __name__ == "__main__":
-    REBUILD = True
-    POPULATE_WITH_TEST_DATA = False
-
     if REBUILD:
         db.drop_all()
         db.create_all()
