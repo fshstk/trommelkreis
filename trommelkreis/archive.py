@@ -28,7 +28,7 @@ else:
 
 class AudioFile(db.Model):
     __tablename__ = "files"
-    __table_args__ = UniqueConstraint("session_id", "filename")
+    __table_args__ = (UniqueConstraint("session_id", "filename"),)
     id = db.Column(db.Integer, primary_key=True)
     # Required:
     # TODO: boolean to see if file/session is CC-licensed?
