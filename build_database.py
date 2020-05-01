@@ -61,7 +61,7 @@ for seshname in sessionlist:
         with open(markdownfile) as f:
             sesh.challenge.markdown = f.read()
     except FileNotFoundError:
-        print("WARNING: missing challenge.md".format(seshname))
+        print("WARNING: missing challenge.md")
 
     if os.path.isdir(filedir):
         tracks = next(os.walk(filedir))[2]
