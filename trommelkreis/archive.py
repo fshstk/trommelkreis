@@ -226,12 +226,14 @@ class Challenge(db.Model):
 
 # Drop into interactive shell for debugging:
 if __name__ == "__main__":
-    REBUILD = False
+    REBUILD = True
+    POPULATE_WITH_TEST_DATA = False
 
     if REBUILD:
         db.drop_all()
         db.create_all()
 
+    if POPULATE_WITH_TEST_DATA:
         # Create some test data:
         a = Artist(name="Alice")
         b = Artist(name="Bob")
