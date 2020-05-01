@@ -7,8 +7,8 @@ from trommelkreis.archive import *
 from trommelkreis import db
 
 ARCHIVE_PATH = "/Users/fshstk/Documents/Digitaler Trommelkreis/website/archive/sessions"
-UPLOAD = True
-ERASE_ALL = True
+UPLOAD = False
+ERASE_ALL = False
 
 sessionlist = next(os.walk(ARCHIVE_PATH))[1]
 successful_uploads = 0
