@@ -98,14 +98,18 @@ class AudioFile(db.Model):
     def __len__(self):
         return self.filesize
 
-    @property
-    def filesize_string(self):
+    @staticmethod
+    def readable_filesize(numbytes):
         kB = 1000
         MB = kB ** 2
-        if self.filesize > MB:
-            return "{:.2f} MB".format(self.filesize / MB)
+        if numbytes > MB:
+            return "{:.2f} MB".format(numbytes / MB)
         else:
-            return "{:.0f} kB".format(self.filesize / kB)
+            return "{:.0f} kB".format(numbytes / kB)
+
+    @property
+    def filesize_string(self):
+        return self.readable_filesize(self.filesize)
 
     @property
     def duration_string(self):
