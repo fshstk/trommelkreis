@@ -127,13 +127,6 @@ class Session(db.Model):
     # Generated:
     files = db.relationship("AudioFile", backref="session", lazy=True)
 
-    # TODO: If neither name nor date are in kwargs, or if date is not a date object,
-    # this will raise an exception:
-    # def __init__(self, **kwargs):
-    #     super().__init__(**kwargs)
-    #     if "name" not in kwargs:
-    #         self.name = self.date.strftime("%Y%m%d")
-
     def __repr__(self):
         return "<Session: {} [{} file(s)]>".format(self.name, len(self.files))
 
