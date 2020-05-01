@@ -25,7 +25,9 @@ def info():
 @app.route("/archiv")
 @app.route("/archiv/")
 def archive():
-    return render_template("archive.jinja", archive=Session.grouped_by_month())
+    archive = Session.grouped_by_month()
+    archive.reverse()  # Display in reverse chronological order
+    return render_template("archive.jinja", archive=archive)
 
 
 @app.route("/abo")
