@@ -69,36 +69,40 @@ for seshname in sessionlist:
         print("WARNING: no files directory")
         continue
 
-    uploadsize = 0
-
-    for trackname in tracks:
-        if not trackname.endswith(".mp3"):
-            print(
-                "----> WARNING: skipped file {} (doesn't end with .mp3)".format(
-                    trackname
-                )
-            )
-            continue
-
-        trackpath = os.path.join(filedir, trackname)
-        track = AudioFile.from_mp3(trackpath)
-        uploadsize += track.filesize
-        sesh.files.append(track)
-        print("----> added {}".format(track.filename))
+    print("Adding session to database...", end=" ", flush=True)
+    try:
+        db.session.add(sesh)
+        db.session.commit()
+        print("Done")
+    except sqlalchemy.exc.IntegrityError as e:
+        print("Aborted")
+        print("ERROR: {}".format(e.args[0]))
 
     if UPLOAD:
-        print("Adding session to upload queue...", end=" ", flush=True)
-        db.session.add(sesh)
-        print("Done ({})".format(AudioFile.readable_filesize(uploadsize)))
+        for trackname in tracks:
+            if not trackname.endswith(".mp3"):
+                print(
+                    "----> WARNING: skipped file {} (doesn't end with .mp3)".format(
+                        trackname
+                    )
+                )
+                continue
 
-        print("Uploading session to database...", end=" ", flush=True)
-        try:
+            trackpath = os.path.join(filedir, trackname)
+            # The following line raises an IntegrityError when trying to add existing artist to database ?!:
+            track = AudioFile.from_mp3(trackpath)
+            sesh.files.append(track)
+            print(
+                "----> Uploading {}... ({})".format(
+                    track.filename, track.filesize_string
+                ),
+                end=" ",
+                flush=True,
+            )
             db.session.commit()
-            successful_uploads += 1
             print("Done")
-        except sqlalchemy.exc.IntegrityError as e:
-            print("Aborted")
-            print("ERROR: {}".format(e.args[0]))
+
+        successful_uploads += 1
 
 print(separator)
 
