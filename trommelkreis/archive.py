@@ -138,11 +138,6 @@ class Session(db.Model):
         return cls.query.filter_by(name=name).one()
 
     @classmethod
-    def countstring(cls):
-        # TODO (see above)
-        raise NotImplementedError
-
-    @classmethod
     def grouped_by_month(cls):
         sessions = Session.query.order_by(Session.date).all()
         grouped_sessions = []
