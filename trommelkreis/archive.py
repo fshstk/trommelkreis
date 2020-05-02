@@ -31,6 +31,19 @@ else:
 
 
 class AudioFile(db.Model):
+    """
+    Representation of audio files (mp3 only) stored in the database.
+
+    Usage:
+    x = Session()
+    y = AudioFile.from_mp3("path/to/file.mp3")
+    x.files.append(y)
+
+    If the session should contain multiple natural groupings of files, these
+    can be specified as a string using the optional session_subsection column.
+    (e.g. before/after type challenges)
+    """
+
     __tablename__ = "files"
     __table_args__ = (UniqueConstraint("session_id", "slug"),)
     id = db.Column(db.Integer, primary_key=True)
@@ -56,6 +69,19 @@ class AudioFile(db.Model):
 
     @classmethod
     def from_mp3(cls, filepath, artistname=None):
+        """
+        Generate AudioFile object from a given file.
+
+        Usage:
+        a = AudioFile.from_mp3("/path/to/file.mp3")
+        b = AudioFile.from_mp3("/path/to/second/file.mp3", artistname="Foo Bar")
+
+        The function will check the file's ID3 tags for artist and title.
+        If an artistname is provided, the function will instead write this value
+        to the file, overwriting any existing artist tag.
+        If no title information is found, the function will use the file name
+        without the suffix.
+        """
         mp3 = EasyMP3(filepath)
         filename = os.path.basename(filepath)
 
