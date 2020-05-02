@@ -53,7 +53,6 @@ class AudioFile(db.Model):
     data = deferred(db.Column(db.LargeBinary(length=(30e6)), nullable=False))
     # Optional:
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"), nullable=True)
-    session_subsection = db.Column(db.Unicode(255), nullable=True)
 
     @classmethod
     def from_mp3(cls, filepath, artistname=None):
