@@ -45,13 +45,13 @@ for seshname in sessionlist:
         continue
 
     try:
-        sesh.name = seshinfo["session yyyymmdd"]
-        if seshname != sesh.name:
+        if seshname != seshinfo["session yyyymmdd"]:
             print("ERROR: mismatch between folder name and sessioninfo.json")
             continue
-        sesh.date = datetime.strptime(sesh.name, "%Y%m%d").date()
+        sesh.date = datetime.strptime(seshname, "%Y%m%d")
         sesh.challenge.name = seshinfo["challenge name"]
         sesh.challenge.blurb = seshinfo["challenge text short"]
+        # sesh.challenge.kosher = seshinfo["copyright issues y/n"]
     except KeyError as e:
         print("ERROR: missing key {}".format(e.args[0]))
         continue

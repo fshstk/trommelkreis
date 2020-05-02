@@ -2,6 +2,7 @@ from sqlalchemy import UniqueConstraint
 from sqlalchemy.orm import deferred
 from sqlalchemy.orm.exc import NoResultFound
 from datetime import datetime
+import urllib.parse
 from itertools import groupby
 from mutagen.mp3 import EasyMP3
 import os.path
@@ -31,16 +32,25 @@ else:
 
 class AudioFile(db.Model):
     __tablename__ = "files"
-    __table_args__ = (UniqueConstraint("session_id", "filename"),)
+    __table_args__ = (UniqueConstraint("session_id", "slug"),)
     id = db.Column(db.Integer, primary_key=True)
+
+    @staticmethod
+    def generate_slug(context):
+        """Generate url-safe string from filename column."""
+        # TODO: generate "_2" or something else if not unique?
+        filename = context.get_current_parameters()["filename"]
+        return urllib.parse.quote(filename)
+
     # Required:
     # TODO: boolean to see if file/session is CC-licensed?
     session_id = db.Column(db.Integer, db.ForeignKey("sessions.id"), nullable=False)
-    name = db.Column(db.Unicode(255), nullable=False)
+    title = db.Column(db.Unicode(255), nullable=False)
     filename = db.Column(db.Unicode(255), nullable=False)
+    slug = db.Column(db.Unicode(255), nullable=False, default=generate_slug.__func__)
     filesize = db.Column(db.Integer, nullable=False)
     duration = db.Column(db.Integer, nullable=False)
-    data = deferred(db.Column(db.LargeBinary(length=(30e6)), nullable=False))  # 30 MB
+    data = deferred(db.Column(db.LargeBinary(length=(30e6)), nullable=False))
     # Optional:
     artist_id = db.Column(db.Integer, db.ForeignKey("artists.id"), nullable=True)
     session_subsection = db.Column(db.Unicode(255), nullable=True)
@@ -64,10 +74,10 @@ class AudioFile(db.Model):
 
         # If MP3 contains title tag, use this as name:
         if "title" in mp3:
-            name = mp3["title"][0]
+            title = mp3["title"][0]
         # Else use the filename without the suffix:
         else:
-            name = os.path.splitext(filename)[0]
+            title = os.path.splitext(filename)[0]
 
         with open(filepath, "rb") as fileobj:
             data = fileobj.read()
@@ -86,7 +96,7 @@ class AudioFile(db.Model):
             data=data,
             duration=round(mp3.info.length),
             artist=artist,
-            name=name,
+            title=title,
         )
 
     def __repr__(self):
@@ -96,7 +106,7 @@ class AudioFile(db.Model):
         )
 
     def __str__(self):
-        return self.name
+        return self.slug
 
     def __len__(self):
         return self.filesize
@@ -122,23 +132,32 @@ class AudioFile(db.Model):
 class Session(db.Model):
     __tablename__ = "sessions"
     id = db.Column(db.Integer, primary_key=True)
+
+    @staticmethod
+    def generate_slug(context):
+        """Generate url-safe string from date column."""
+        date = context.get_current_parameters()["date"]
+        return date.strftime("%Y%m%d")
+
     # Required:
     # TODO: boolean to see if file/session is CC-licensed?
     challenge_id = db.Column(db.Integer, db.ForeignKey("challenges.id"), nullable=False)
     date = db.Column(db.Date, nullable=False)
-    name = db.Column(db.Unicode(255), nullable=False, unique=True)
+    slug = db.Column(
+        db.Unicode(255), nullable=False, unique=True, default=generate_slug.__func__
+    )
     # Generated:
     files = db.relationship("AudioFile", backref="session", lazy=True)
 
     def __repr__(self):
-        return "<Session: {} [{} file(s)]>".format(self.name, len(self.files))
+        return "<Session: {} [{} file(s)]>".format(self.slug, len(self.files))
 
     def __str__(self):
-        return self.name
+        return self.slug
 
     @classmethod
-    def from_name(cls, name):
-        return cls.query.filter_by(name=name).one()
+    def from_slug(cls, slug):
+        return cls.query.filter_by(slug=slug).one()
 
     @classmethod
     def grouped_by_month(cls):
@@ -174,8 +193,10 @@ class Session(db.Model):
         else:
             return "{} Einträge".format(filecount)
 
-    def get_file_by_name(self, filename):
-        return AudioFile.query.filter_by(session=self, filename=filename).one()
+    def get_file_by_slug(self, slug):
+        # do this again since flask undoes it? feels hacky (TODO)
+        slug = urllib.parse.quote(slug)
+        return AudioFile.query.filter_by(session=self, slug=slug).one()
 
 
 class Artist(db.Model):

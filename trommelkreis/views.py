@@ -53,50 +53,50 @@ def upload():
 
 
 # Show single session:
-@app.route("/archiv/<name>")
-def get_session(name):
+@app.route("/archiv/<session>")
+def get_session(session):
     try:
-        session = Session.from_name(name)
+        session = Session.from_slug(session)
     except NoResultFound:
         return abort(400)
     return render_template("session.jinja", session=session)
 
 
 # Get all session files as zip archive:
-@app.route("/archiv/<name>.zip")
-def download_session(name):
+@app.route("/archiv/<session>.zip")
+def download_session(session):
     try:
-        session = Session.from_name(name)
+        session = Session.from_slug(session)
     except NoResultFound:
         return abort(400)
-    return send_files_as_zip(session.files, name=name)
+    return send_files_as_zip(session.files, archivename=session)
 
 
 # Get single MP3 from session:
-@app.route("/archiv/<name>/<filename>")
-def download_file(name, filename):
+@app.route("/archiv/<session>/<file>")
+def download_file(session, file):
     try:
-        session = Session.from_name(name)
+        session = Session.from_slug(session)
     except NoResultFound:
         return abort(400)
 
     try:
-        file = session.get_file_by_name(filename)
+        track = session.get_file_by_slug(file)
     except NoResultFound:
         return abort(400)
 
     return send_file(
-        io.BytesIO(file.data),
-        mimetype="audio/mpeg",  # TODO: remove if using types other than mp3 files
+        io.BytesIO(track.data),
+        mimetype="audio/mpeg",
         as_attachment=True,
-        attachment_filename=file.filename,
+        attachment_filename=track.filename,
     )
 
 
 ################################################################################
 
 
-def send_files_as_zip(filelist, name):
+def send_files_as_zip(filelist, archivename):
     zipdata = io.BytesIO()
     with ZipFile(zipdata, "w") as zipfile:
         for file in filelist:
@@ -106,7 +106,7 @@ def send_files_as_zip(filelist, name):
         zipdata,
         mimetype="application/zip",
         as_attachment=True,
-        attachment_filename="{}.zip".format(name),
+        attachment_filename="{}.zip".format(archivename),
     )
 
 
