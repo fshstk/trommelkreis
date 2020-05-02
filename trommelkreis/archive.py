@@ -11,7 +11,7 @@ if __name__ == "__main__":
     from flask import Flask
     from flask_sqlalchemy import SQLAlchemy
 
-    REBUILD = True
+    REBUILD = False
     POPULATE_WITH_TEST_DATA = False
 
     app = Flask(__name__)
