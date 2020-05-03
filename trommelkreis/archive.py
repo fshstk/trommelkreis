@@ -219,8 +219,10 @@ class Session(db.Model):
             return "{} Einträge".format(filecount)
 
     def get_file_by_slug(self, slug):
-        # do this again since flask undoes it? feels hacky (TODO)
+        # The following kinda hacky fix is required locally, but actually breaks
+        # dreamhost, because urls are passed to flask differently apparently...
         slug = urllib.parse.quote(slug)
+
         return AudioFile.query.filter_by(session=self, slug=slug).one()
 
 
