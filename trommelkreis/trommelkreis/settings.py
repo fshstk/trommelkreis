@@ -25,7 +25,12 @@ SECRET_KEY = "_m_+%#$9^bt*&a=g2mcxy^uuqopy6kec9=7fabmb&7$vshc^_h"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["trommelkreis.club", "www.trommelkreis.club"]
+ALLOWED_HOSTS = [
+    "trommelkreis.club",
+    "www.trommelkreis.club",
+    "localhost",
+    "192.168.178.*",
+]
 
 
 # Application definition
