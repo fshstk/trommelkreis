@@ -12,7 +12,7 @@ node_modules
 *.log
 
 # mp3s
-archive/
+/archive/
 
 # vs code preferences
 .vscode/
