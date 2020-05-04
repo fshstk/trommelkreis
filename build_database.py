@@ -2,13 +2,13 @@ import os
 import json
 import sqlalchemy.exc
 from datetime import datetime
+import IPython
 
 from trommelkreis.archive import *
 from trommelkreis import db
 
 ARCHIVE_PATH = "/Users/fshstk/Documents/Digitaler Trommelkreis/website/archive/sessions"
-UPLOAD = False
-ERASE_ALL = False
+ERASE_ALL = True
 
 sessionlist = next(os.walk(ARCHIVE_PATH))[1]
 sessionlist.sort()
@@ -76,39 +76,41 @@ for seshname in sessionlist:
         db.session.commit()
         print("Done")
     except sqlalchemy.exc.IntegrityError as e:
+        db.session.rollback()
         print("Aborted")
         print("ERROR: {}".format(e.args[0]))
+        continue
 
-    if UPLOAD:
-        for trackname in tracks:
-            if not trackname.endswith(".mp3"):
-                print(
-                    "----> WARNING: skipped file {} (doesn't end with .mp3)".format(
-                        trackname
-                    )
-                )
-                continue
-
-            trackpath = os.path.join(filedir, trackname)
-            # The following line raises an IntegrityError when trying to add existing artist to database ?!:
-            track = AudioFile.from_mp3(trackpath)
-            sesh.files.append(track)
+    for trackname in tracks:
+        if not trackname.endswith(".mp3"):
             print(
-                "----> Uploading {}... ({})".format(
-                    track.filename, track.filesize_string
-                ),
+                "----> WARNING: skipped file {} (doesn't end with .mp3)".format(
+                    trackname
+                )
+            )
+            continue
+
+        trackpath = os.path.join(filedir, trackname)
+        track = AudioFile.from_mp3(trackpath)
+
+        # TODO: sesh.files.append(track) sometimes raises the following error:
+        # (MySQLdb._exceptions.OperationalError) (1048, "Column 'session_id' cannot be null")
+        # Calling db.session.rollback() and trying again fixes the issue. (Why?)
+        # Additionally, "SQL Server has gone away" type exception occurs when uploading large (>15MB?) files.
+        try:
+            print(
+                "----> Add {} ... ({})".format(track.filename, track.filesize_string),
                 end=" ",
                 flush=True,
             )
+            # with db.session.no_autoflush:
+            sesh.files.append(track)
+            # db.session.flush()
             db.session.commit()
             print("Done")
-
-        successful_uploads += 1
+        except Exception as e:
+            print("Aborted")
+            print("ERROR: {}".format(e))
+            IPython.embed()  # error launches debugging shell
 
 print(separator)
-
-print(
-    "{} of {} sessions successfully uploaded".format(
-        successful_uploads, len(sessionlist)
-    )
-)
