@@ -5,7 +5,7 @@ from django.utils import timezone
 class Challenge(models.Model):
     name = models.CharField(max_length=200, unique=True)
     blurb = models.CharField(max_length=1000, blank=True)
-    longtext = models.CharField(max_length=5000, blank=True)
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
