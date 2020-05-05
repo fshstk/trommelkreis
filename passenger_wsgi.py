@@ -7,7 +7,6 @@ if sys.executable != INTERP:
 
 cwd = os.getcwd()
 sys.path.append(cwd)
-# sys.path.append(cwd + "/trommelkreis")
 
 # Do virtualenv stuff here:
 # sys.path.insert(0, cwd + "/home/trommelkreis_v2/opt/python-3.7.7/bin")
