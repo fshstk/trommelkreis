@@ -11,8 +11,8 @@ node_modules
 # yarn:
 *.log
 
-# mp3s
-/archive/
+# archive etc.
+/ignore
 
 # vs code preferences
 .vscode/
