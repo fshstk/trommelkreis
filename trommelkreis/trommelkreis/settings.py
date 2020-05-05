@@ -87,7 +87,7 @@ DATABASES = {
         "PASSWORD": "YUM-senk8nect",
         "HOST": "data.trommelkreis.club",
         "PORT": "3306",
-        "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+        "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
     },
     # "archive": {
     #     "ENGINE": "django.db.backends.mysql",
