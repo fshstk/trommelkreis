@@ -6,17 +6,6 @@ from math import ceil
 from archive.models import Session
 
 
-def split_list_in_half(list):
-    """
-    Splits a list into two equally sized sublists,
-    with the first being one larger if len(list) is odd.
-    """
-    middle_index = ceil(len(list) / 2)
-    first_half = list[:middle_index]
-    second_half = list[middle_index:]
-    return [first_half, second_half]
-
-
 def all_sessions(request):
     """Show list of all sessions."""
     archive = [split_list_in_half(month) for month in Session.grouped_by_month()]
@@ -40,14 +29,28 @@ def show_session(request, session):
         raise Http404("Session does not exist.")
 
 
-def download_file(request, session, file):
-    """Get single MP3 from session."""
-    try:
-        pass  # look for session
-    except Session.DoesNotExist:
-        raise Http404("Session does not exist.")
+# Helper functions:
 
-    try:
-        pass  # look for file
-    except AudioFile.DoesNotExist:
-        raise Http404("File does not exist.")
+
+def split_list_in_half(list):
+    """
+    Splits a list into two equally sized sublists,
+    with the first being one larger if len(list) is odd.
+    """
+    middle_index = ceil(len(list) / 2)
+    first_half = list[:middle_index]
+    second_half = list[middle_index:]
+    return [first_half, second_half]
+
+
+def filesize_to_string(numbytes):
+    kB = 1000
+    MB = kB ** 2
+    if nunmbytes > MB:
+        return "{:.2f} MB".format(numbytes / MB)
+    else:
+        return "{:.0f} kB".format(numbytes / kB)
+
+
+def duration_to_string(numseconds):
+    return "{:02d}:{:02d}".format(numseconds // 60, numseconds % 60)

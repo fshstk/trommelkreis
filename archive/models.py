@@ -2,6 +2,10 @@ from django.db import models
 from django.utils import timezone
 
 from itertools import groupby
+from mutagen.mp3 import EasyMP3
+import os.path
+
+from trommelkreis import settings
 
 
 class Challenge(models.Model):
@@ -12,10 +16,15 @@ class Challenge(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def sessions(self):
+        return self.session_set.all()
+
 
 class Session(models.Model):
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now, unique=True)
+    info = models.CharField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.slug
@@ -49,6 +58,10 @@ class Session(models.Model):
         return self.date.strftime("%d.%m.%Y")
 
     @property
+    def files(self):
+        return self.audiofile_set.all()
+
+    @property
     def filecount_string(self):
         filecount = len(self.files)
         if filecount is 0:
@@ -59,19 +72,24 @@ class Session(models.Model):
             return "{} Einträge".format(filecount)
 
 
+# TODO: do we REALLY need this class? can we not solve everything w/ just queries...
 class Artist(models.Model):
     name = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
         return self.name
 
+    @property
+    def files(self):
+        return self.audiofile_set.all()
+
 
 class AudioFile(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    data = models.FileField(upload_to="archive/%Y%m%d/")
+    # just read ID3 tag for artist/name?
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
-    duration = models.DurationField()
-    data = models.FileField(upload_to="archive/%Y%m%d/")
 
     class Meta:
         constraints = [
@@ -82,3 +100,16 @@ class AudioFile(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def filesize(self):
+        return self.data.size
+
+    @property
+    def mp3(self):
+        filepath = os.path.join(settings.MEDIA_ROOT, self.data.name)
+        return EasyMP3(filepath)
+
+    @property
+    def duration(self):
+        return round(self.mp3.info.length)
