@@ -1,12 +1,27 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.shortcuts import render, get_object_or_404
+from django.db.models.functions import TruncMonth, TruncYear
 
-from .models import Challenge, Session, Artist, AudioFile
+from math import ceil
+
+from archive.models import Session
 
 
-def index(request):
-    """Show archive index."""
-    pass
+def split_list_in_half(list):
+    """
+    Splits a list into two equally sized sublists,
+    with the first being one larger if len(list) is odd.
+    """
+    middle_index = ceil(len(list) / 2)
+    first_half = list[:middle_index]
+    second_half = list[middle_index:]
+    return [first_half, second_half]
+
+
+def all_sessions(request):
+    """Show list of all sessions."""
+    archive = [split_list_in_half(month) for month in Session.grouped_by_month()]
+    context = {"archive": archive}  # "archive": sessions.group_by_month
+    return render(request, "archive/index.html", context)
 
 
 def download_session(request, session):
