@@ -70,7 +70,7 @@ class AudioFile(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
-    duration = models.IntegerField()
+    duration = models.DurationField()
     data = models.FileField(upload_to="archive/%Y%m%d/")
 
     class Meta:
