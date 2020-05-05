@@ -3,8 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.all_sessions, name="all_sessions"),
-    path("<session>.zip", views.download_session, name="zipdownload"),
-    path("<session>/", views.show_session, name="sessionview"),
-    path("<session>/<file>", views.download_file, name="fileview"),
+    path("", views.show_all_sessions, name="session_index"),
+    path("<session>.zip", views.download_session, name="session_zip"),
+    path("<session>/", views.show_single_session, name="session_view"),
 ]

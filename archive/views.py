@@ -6,8 +6,7 @@ from math import ceil
 from archive.models import Session
 
 
-def all_sessions(request):
-    """Show list of all sessions."""
+def show_all_sessions(request):
     archive = [split_list_in_half(month) for month in Session.grouped_by_month()]
     context = {"archive": archive}  # "archive": sessions.group_by_month
     return render(request, "archive/index.html", context)
@@ -21,8 +20,7 @@ def download_session(request, session):
         raise Http404("Session does not exist.")
 
 
-def show_session(request, session):
-    """Show single session."""
+def show_single_session(request, session):
     try:
         pass  # look for session
     except Session.DoesNotExist:
