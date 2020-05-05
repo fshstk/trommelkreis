@@ -13,6 +13,7 @@ node_modules
 
 # archive etc.
 /ignore
+/public
 
 # vs code preferences
 .vscode/
