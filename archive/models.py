@@ -78,7 +78,7 @@ class Artist(models.Model):
 class AudioFile(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     data = models.FileField(upload_to="archive/%Y%m%d/")
-    # just read ID3 tag for artist/name?
+    # TODO: just read ID3 tag for artist/name?
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
 

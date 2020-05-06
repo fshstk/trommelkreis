@@ -42,6 +42,7 @@ def split_list_in_half(list):
     return [first_half, second_half]
 
 
+# TODO: delete this and replace with {{ numbytes|filesizeformat }}
 def filesize_to_string(numbytes):
     kB = 1000
     MB = kB ** 2
