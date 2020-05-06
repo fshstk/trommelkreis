@@ -10,7 +10,7 @@ def show_all_sessions(request):
     archive = [split_list_in_half(month) for month in Session.grouped_by_month()]
     archive.reverse()  # Reverse chronoloical order
     context = {"archive": archive}  # "archive": sessions.group_by_month
-    return render(request, "archive/index.html", context)
+    return render(request, "archive/all_sessions.html", context)
 
 
 def download_session(request, session):
