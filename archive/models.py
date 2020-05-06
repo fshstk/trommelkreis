@@ -10,7 +10,7 @@ from trommelkreis import settings
 
 class Challenge(models.Model):
     name = models.CharField(max_length=200, unique=True)
-    blurb = models.CharField(max_length=1000, blank=True)
+    blurb = models.TextField(max_length=1000, blank=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
@@ -24,7 +24,7 @@ class Challenge(models.Model):
 class Session(models.Model):
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now, unique=True)
-    info = models.CharField(max_length=1000, blank=True)
+    info = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.slug
