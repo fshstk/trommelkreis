@@ -18,7 +18,14 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from trommelkreis import views
+
 urlpatterns = [
+    path("", views.home),
+    path("home/", views.home),
+    path("info/", views.info),
+    path("upload/", views.upload),
+    path("abo/", views.subscribe),
     path("archiv/", include("archive.urls")),
     path("admin/", admin.site.urls),
     # Serve MEDIA files through Django (DEBUG only):
