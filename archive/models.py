@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models.functions import TruncMonth
 
 from itertools import groupby
 from mutagen.mp3 import EasyMP3
@@ -31,9 +32,9 @@ class Session(models.Model):
 
     @classmethod
     def grouped_by_month(cls):
-        sessions = cls.objects.order_by("date")
+        sessions = cls.objects.order_by("date").annotate(month=TruncMonth("date"))
         grouped_sessions = []
-        for _, group in groupby(sessions, key=lambda x: x.date.strftime("%B%Y")):
+        for _, group in groupby(sessions, key=lambda x: x.month):
             grouped_sessions.append(list(group))
         return grouped_sessions
 
