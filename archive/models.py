@@ -33,7 +33,7 @@ class Session(models.Model):
     def grouped_by_month(cls):
         sessions = cls.objects.order_by("date")
         grouped_sessions = []
-        for _, group in groupby(sessions, key=lambda x: x.monthyear):
+        for _, group in groupby(sessions, key=lambda x: x.date.strftime("%B%Y")):
             grouped_sessions.append(list(group))
         return grouped_sessions
 
@@ -41,18 +41,7 @@ class Session(models.Model):
     def slug(self):
         return self.date.strftime("%Y%m%d")
 
-    @property
-    def month(self):
-        return self.date.strftime("%B")
-
-    @property
-    def year(self):
-        return self.date.strftime("%Y")
-
-    @property
-    def monthyear(self):
-        return self.date.strftime("%B %Y")
-
+    # TODO: move this to the view layer
     @property
     def datestring(self):
         return self.date.strftime("%d.%m.%Y")
@@ -61,6 +50,7 @@ class Session(models.Model):
     def files(self):
         return self.audiofile_set.all()
 
+    # TODO: move this to the view layer
     @property
     def filecount_string(self):
         filecount = len(self.files)
