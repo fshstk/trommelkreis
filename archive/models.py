@@ -42,25 +42,9 @@ class Session(models.Model):
     def slug(self):
         return self.date.strftime("%Y%m%d")
 
-    # TODO: move this to the view layer
-    @property
-    def datestring(self):
-        return self.date.strftime("%d.%m.%Y")
-
     @property
     def files(self):
         return self.audiofile_set.all()
-
-    # TODO: move this to the view layer
-    @property
-    def filecount_string(self):
-        filecount = len(self.files)
-        if filecount is 0:
-            return "Keine Einträge"
-        elif filecount is 1:
-            return "1 Eintrag"
-        else:
-            return "{} Einträge".format(filecount)
 
 
 # TODO: do we REALLY need this class? can we not solve everything w/ just queries...

@@ -50,7 +50,3 @@ def filesize_to_string(numbytes):
         return "{:.2f} MB".format(numbytes / MB)
     else:
         return "{:.0f} kB".format(numbytes / kB)
-
-
-def duration_to_string(numseconds):
-    return "{:02d}:{:02d}".format(numseconds // 60, numseconds % 60)
