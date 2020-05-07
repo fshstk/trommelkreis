@@ -1,46 +1,45 @@
 {% extends "layout.html" %}
+{% load session_filters %}
 
-{% block title %}Challenge vom {{ session.datestring }}{% endblock %}
+{% block title %}Challenge vom {{ session|dateformat }}{% endblock %}
 {% block heading %}{{ session.challenge.name }}{% endblock %}
-{% block subheading %}{{ session.datestring }}{% endblock %}
+{% block subheading %}{{ session|dateformat }}{% endblock %}
 
 {% block main %}
-{{ session.html_or_text }}
+{{ session|info|safe }}
 
 <hr>
 
 <div class="list-group text-left">
 	{% for file in session.files %}
-	<a href="#{{ file.slug }}" class="list-group-item list-group-item-action" data-toggle="collapse">
+	<a href="#{{ file.name }}" class="list-group-item list-group-item-action" data-toggle="collapse">
 		<div class="d-flex justify-content-between">
-			<h5 class="mb-1">{{ file.title }}</h5>
-			<small class="text-muted">{{ file.duration_string }}</small>
+			<h5 class="mb-1">{{ file.name }}</h5>
+			<small class="text-muted">{{ file|duration }}</small>
 		</div>
 		<div class="d-flex justify-content-between">
-			<p class="mb-1 text-muted">{{ file.artist or ""}}</p>
-			<small class="text-muted">{{ file.filesize_string }}</small>
+			<p class="mb-1 text-muted">{{ file.artist|default:"Anonym" }}</p>
+			<small class="text-muted">{{ file.filesize|filesizeformat }}</small>
 		</div>
 	</a>
-
-	<div class="collapse" id="{{ file.slug }}">
+	<div class="collapse" id="{{ file.name }}">
 		<div class="card card-body">
-			<audio src="{{ session.slug }}/{{ file.slug }}" style="width: 100%;" preload="none" controls>
+			<audio src="{{ file.url }}" style="width: 100%;" preload="none" controls>
 				<p>Dein browser unterstützt das <em>audio</em> Element nicht.</p>
-				<p>Du kannst stattdessen die <a href="{{ session.slug }}/{{ file.slug }}">Datei Herunterladen</a>.</p>
+				<p>Du kannst stattdessen die <a href="{{ file.url }}">Datei Herunterladen</a>.</p>
 			</audio>
 			{# <a href="{{ session.slug }}/{{ file.slug }}" class="btn btn-secondary text-light m-3" download>Download</a> #}
 		</div>
 		<hr>
 	</div>
-
 	{% endfor %}
 </div>
 
 <hr>
 
 <div class="d-flex justify-content-between">
-	<span><a href="/archiv">Archiv</a> / {{ session.slug }}</span>
-	<a class="download-link" title="Download" href="{{ session.slug }}.zip">
-		<!--<small>ZIP Download</small>--><span></span></a>
+	<span><a href="{% url "archive_home" %}">Archiv</a> / {{ session.slug }}</span>
+	<a class="download-link" title="Download" href="{% url "session_zip" session.slug %}">
+		<!-- TODO: <small>ZIP Download</small>--><span></span></a>
 </div>
 {% endblock %}

@@ -1,7 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
+from django.http import HttpResponse
 
 from math import ceil
+from datetime import datetime
+from zipfile import ZipFile
+import io
 
 from archive.models import Session
 
@@ -15,20 +19,30 @@ def show_all_sessions(request):
 
 def download_session(request, session):
     """Get all session files as zip archive."""
-    try:
-        pass  # look for session
-    except Session.DoesNotExist:
-        raise Http404("Session does not exist.")
+    session = get_session_from_slug(session)
+    # files = [file.filepath for file in session.files]
+    archivename = "{}.zip".format(session)
+    zipfile = compress_files(session.files, archivename)
+
+    response = HttpResponse(zipfile, content_type="application/zip")
+    response["Content-Disposition"] = "attachment; filename={}".format(archivename)
+    return response
 
 
 def show_single_session(request, session):
-    try:
-        pass  # look for session
-    except Session.DoesNotExist:
-        raise Http404("Session does not exist.")
+    session = get_session_from_slug(session)
+    context = {"session": session}
+    return render(request, "archive/session.html", context)
 
 
 # Helper functions:
+
+
+def get_session_from_slug(slug):
+    """Get session with date in yyyymmdd format, or raise 404 error if not found."""
+    seshdate = datetime.strptime(slug, "%Y%m%d")
+    session = get_object_or_404(Session, date=seshdate)
+    return session
 
 
 def split_list_in_half(list):
@@ -42,11 +56,11 @@ def split_list_in_half(list):
     return [first_half, second_half]
 
 
-# TODO: delete this and replace with {{ numbytes|filesizeformat }}
-def filesize_to_string(numbytes):
-    kB = 1000
-    MB = kB ** 2
-    if nunmbytes > MB:
-        return "{:.2f} MB".format(numbytes / MB)
-    else:
-        return "{:.0f} kB".format(numbytes / kB)
+def compress_files(filelist, archivename):
+    """Takes in a list of AudioFile objects and archive name, and returns ZIP file as BytesIO object."""
+    zipdata = io.BytesIO()
+    with ZipFile(zipdata, "w") as zipfile:
+        for file in filelist:
+            zipfile.write(file.filepath, file.filename)
+    zipdata.seek(0)
+    return zipdata

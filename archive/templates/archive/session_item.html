@@ -3,8 +3,8 @@
 <a href="{{ session.slug }}" class="list-group-item list-group-item-action">
     <div class="d-flex justify-content-between">
         <h5 class="mb-1">{{ session.challenge.name }}</h5>
-        <small class="text-muted">{{ session.date|date_string }}</small>
+        <small class="text-muted">{{ session|dateformat }}</small>
     </div>
     <p style="height: 20px;" class="mb-1">{{ session.challenge.blurb }}</p>
-    <small class="text-muted">{{ session.files|filecount_string }}</small>
+    <small class="text-muted">{{ session|filecount }}</small>
 </a>

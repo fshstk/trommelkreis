@@ -1,11 +1,13 @@
 from django import template
 
+from markdown import markdown
+
 register = template.Library()
 
 
 @register.filter
-def filecount_string(files):
-    filecount = len(files)
+def filecount(session):
+    filecount = len(session.files)
     if filecount is 0:
         return "Keine Einträge"
     elif filecount is 1:
@@ -15,5 +17,20 @@ def filecount_string(files):
 
 
 @register.filter
-def date_string(date):
-    return date.strftime("%d.%m.%Y")
+def dateformat(session):
+    return session.date.strftime("%d.%m.%Y")
+
+
+@register.filter
+def duration(file):
+    return "{:02d}:{:02d}".format(file.duration // 60, file.duration % 60)
+
+
+@register.filter
+def info(session):
+    text = (
+        markdown(session.challenge.description)
+        if session.challenge.description
+        else session.challenge.blurb  # TODO: standard formatting for blurb here?
+    )
+    return text
