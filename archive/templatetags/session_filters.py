@@ -1,4 +1,5 @@
 from django import template
+from django.template.defaultfilters import date as django_date
 
 from markdown import markdown
 
@@ -34,3 +35,15 @@ def info(session):
         else session.challenge.blurb  # TODO: standard formatting for blurb here?
     )
     return text
+
+
+@register.filter
+def month(session):
+    # return session.date.strftime("%B")
+    return django_date(session.date, "F")
+
+
+@register.filter
+def year(session):
+    # return session.date.strftime("%Y")
+    return django_date(session.date, "Y")
