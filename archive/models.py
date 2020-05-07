@@ -81,10 +81,22 @@ class AudioFile(models.Model):
         return self.data.size
 
     @property
+    def filename(self):
+        return os.path.basename(self.data.name)
+
+    @property
+    def filepath(self):
+        """Returns full path to file on disk (do not expose)."""
+        return os.path.join(settings.MEDIA_ROOT, self.data.name)
+
+    @property
     def mp3(self):
-        filepath = os.path.join(settings.MEDIA_ROOT, self.data.name)
-        return EasyMP3(filepath)
+        return EasyMP3(self.filepath)
 
     @property
     def duration(self):
         return round(self.mp3.info.length)
+
+    @property
+    def url(self):
+        return self.data.url
