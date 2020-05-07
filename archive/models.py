@@ -47,7 +47,6 @@ class Session(models.Model):
         return self.audiofile_set.all()
 
 
-# TODO: do we REALLY need this class? can we not solve everything w/ just queries...
 class Artist(models.Model):
     name = models.CharField(max_length=200, unique=True)
 
@@ -62,7 +61,6 @@ class Artist(models.Model):
 class AudioFile(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     data = models.FileField(upload_to="archive/%Y%m%d/")
-    # TODO: just read ID3 tag for artist/name?
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
 
