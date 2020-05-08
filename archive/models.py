@@ -23,7 +23,7 @@ class Challenge(models.Model):
 
 
 class Session(models.Model):
-    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    challenge = models.ForeignKey(Challenge, on_delete=models.PROTECT)
     date = models.DateField(default=timezone.now, unique=True)
     info = models.TextField(max_length=1000, blank=True)
 
@@ -59,10 +59,10 @@ class Artist(models.Model):
 
 
 class AudioFile(models.Model):
-    session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    data = models.FileField(upload_to="archive/%Y%m%d/")
+    session = models.ForeignKey(Session, on_delete=models.PROTECT)
+    data = models.FileField(upload_to="archive/%Y%m%d/")  # TODO: dynamic upload path?
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
 
     class Meta:
         constraints = [
