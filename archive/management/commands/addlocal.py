@@ -55,7 +55,6 @@ class Command(BaseCommand):
             markdownfile = os.path.join(seshpath, "challenge.md")
             infofile = os.path.join(seshpath, "sessioninfo.json")
             filedir = os.path.join(seshpath, "files")
-            targetdir = os.path.join(settings.MEDIA_ROOT, "archive", dirname)
 
             try:
                 with open(infofile) as f:
@@ -127,12 +126,6 @@ class Command(BaseCommand):
             sesh.challenge.save()
             sesh.save()
 
-            if os.path.isdir(targetdir):
-                self.printnotice("directory exists")
-            else:
-                os.mkdir(targetdir)
-                self.printsuccess("created directory")
-
             for filename in tracks:
                 if not filename.endswith(".mp3"):
                     self.printnotice("unallowed file suffix: {}".format(filename))
@@ -151,19 +144,17 @@ class Command(BaseCommand):
                     # Strip off .mp3 suffix:
                     trackname = os.path.splitext(filename)[0]
 
-                newpath = os.path.join(targetdir, filename)
-                shutil.copyfile(oldpath, newpath)
-                # TODO: django always copies file again!
-                # TODO: if dupe file, old file gets overwritten, but details in AudioFile object don't change
+                track = AudioFile(session=sesh, name=trackname)
+                try:
+                    track.save()
+                except IntegrityError:
+                    self.printwarning("file {} already exists".format(filename))
+                    continue
 
-                with open(newpath, "rb") as f:
-                    track = AudioFile(session=sesh, name=trackname, data=DjangoFile(f))
-                    try:
-                        track.save()
-                        self.printsuccess("added {}".format(trackname))
-                    except IntegrityError:
-                        self.printwarning("file {} already exists".format(trackname))
-                        continue
+                with DjangoFile(open(oldpath, "rb")) as f:
+                    savepath = os.path.join(dirname, filename)
+                    track.data.save(savepath, f)
+                    self.printsuccess("added {}".format(trackname))
 
                 if "artist" in mp3:
                     (track.artist, artistcreated) = Artist.objects.get_or_create(
