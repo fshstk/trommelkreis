@@ -62,7 +62,7 @@ class AudioFile(models.Model):
     session = models.ForeignKey(Session, on_delete=models.PROTECT)
     data = models.FileField(upload_to="archive/%Y%m%d/")  # TODO: dynamic upload path?
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
 
     class Meta:
         constraints = [
