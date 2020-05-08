@@ -96,4 +96,5 @@ class AudioFile(models.Model):
 
     @property
     def url(self):
+        # TODO: this returns an extra "/media" at the start of the url
         return self.data.url
