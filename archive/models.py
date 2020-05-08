@@ -84,8 +84,7 @@ class AudioFile(models.Model):
 
     @property
     def filepath(self):
-        """Returns full path to file on disk (do not expose)."""
-        return os.path.join(settings.MEDIA_ROOT, self.data.name)
+        return self.data.path
 
     @property
     def mp3(self):
