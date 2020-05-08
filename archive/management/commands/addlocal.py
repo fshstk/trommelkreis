@@ -66,6 +66,7 @@ class Command(BaseCommand):
                 self.printerror("malformed or unreadable sessioninfo.json")
                 continue
 
+            # TODO: implement this
             # try:
             #     sesh.challenge.kosher = seshinfo["copyright issues y/n"]
             # except ValueError:
