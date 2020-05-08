@@ -173,6 +173,7 @@ class Command(BaseCommand):
                     if artistcreated:
                         self.printsuccess("created artist: {}".format(track.artist))
 
+    # TODO: move these to separate file... _printfunctions.py?
     def printerror(self, msg):
         self.stdout.write(self.style.ERROR("ERROR: {}".format(str(msg))))
 
