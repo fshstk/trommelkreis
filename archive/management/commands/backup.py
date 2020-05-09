@@ -39,13 +39,14 @@ class Command(BaseCommand):
                 sessioninfo = {
                     "session.date": seshdir,
                     "challenge.name": sesh.challenge.name,
-                    "session.info": sesh.info,
                     "challenge.blurb": sesh.challenge.blurb,
+                    "session.info": sesh.info,
+                    # "session.kosher": sesh.kosher,
                 }
                 jsonpath = os.path.join(seshdir, "sessioninfo.json")
-                zipfile.writestr(jsonpath, json.dumps(sessioninfo))
+                zipfile.writestr(jsonpath, json.dumps(sessioninfo, indent=4))
 
-                if sesh.challenge.description is not None:
+                if sesh.challenge.description is not "":
                     mdpath = os.path.join(seshdir, "challenge.md")
                     zipfile.writestr(mdpath, sesh.challenge.description)
 
@@ -53,11 +54,11 @@ class Command(BaseCommand):
                     savepath = os.path.join(seshdir, "files", file.filename)
                     zipfile.write(file.filepath, savepath)
 
-            archive.seek(0)
+        archive.seek(0)
 
-            with open(archivepath, "wb") as f:
-                self.print("Writing to {}...".format(archivepath))
-                f.write(archive.getvalue())
+        with open(archivepath, "wb") as f:
+            self.print("Writing to {}...".format(archivepath))
+            f.write(archive.getvalue())
 
     # TODO: move these to separate file... _printfunctions.py?
     def printerror(self, msg):
