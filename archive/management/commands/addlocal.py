@@ -1,11 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.files import File as DjangoFile
-from django.conf import settings
 from django.db.utils import IntegrityError
 
 import os
 import json
-import shutil
 from datetime import datetime
 from mutagen.mp3 import EasyMP3
 
