@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.db.models.functions import TruncMonth
 
+from datetime import datetime
 from itertools import groupby
 from mutagen.mp3 import EasyMP3
 import os.path
@@ -37,6 +38,11 @@ class Session(models.Model):
         for _, group in groupby(sessions, key=lambda x: x.month):
             grouped_sessions.append(list(group))
         return grouped_sessions
+
+    @classmethod
+    def from_slug(cls, slug):
+        date = datetime.strptime(slug, "%Y%m%d")
+        return cls.objects.get(date=date)
 
     @property
     def slug(self):
