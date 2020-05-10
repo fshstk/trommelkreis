@@ -130,9 +130,9 @@ class Command(BaseCommand):
                     self.printnotice("unallowed file suffix: {}".format(filename))
                     continue
 
-                oldpath = os.path.join(filedir, filename)
+                filepath = os.path.join(filedir, filename)
 
-                mp3 = EasyMP3(oldpath)
+                mp3 = EasyMP3(filepath)
                 if mp3.info.sketchy:
                     self.printerror("invalid mp3 file: {}".format(filename))
                     continue
@@ -150,7 +150,7 @@ class Command(BaseCommand):
                     self.printwarning("file {} already exists".format(filename))
                     continue
 
-                with DjangoFile(open(oldpath, "rb")) as f:
+                with DjangoFile(open(filepath, "rb")) as f:
                     savepath = os.path.join(dirname, filename)
                     track.data.save(savepath, f)
                     self.printsuccess("added {}".format(trackname))
