@@ -10,8 +10,8 @@
         <p class="invalid-feedback mb-0">Falsches Passwort</p>
     </div>
 
+    {{ form.data.errors }}
     <div class="custom-file mt-2 mb-2">
-        {{ form.data.errors }}
         {{ form.data }}
         <label class="custom-file-label" for="customFile">Dein Track… (nur MP3 erlaubt)</label>
     </div>

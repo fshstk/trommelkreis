@@ -4,7 +4,7 @@
   window.addEventListener(
     "load",
     function () {
-      var form = document.getElementById("upload-form");
+      let form = document.getElementById("upload-form");
       form.addEventListener(
         "submit",
         function (event) {

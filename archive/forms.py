@@ -1,7 +1,7 @@
 from django.forms import Form, ModelForm, ValidationError
 from django.forms import CharField, BooleanField, FileField
 
-from mutagen.mp3 import EasyMP3
+from mutagen.mp3 import EasyMP3, HeaderNotFoundError
 
 from archive.models import AudioFile, Artist
 
@@ -14,15 +14,19 @@ def validate_password(password):
         raise ValidationError("Wrong password!")
 
 
-# def validate_mp3(file):
-#     print (type(file))
-
-
 class MP3Field(FileField):
-    pass
-    # def clean(self, value):
-    #     print("hi")
-    #     return super().clean(value)
+    def clean(self, value, initial=None):
+        file = super().clean(value, initial)
+
+        if not file.name.endswith(".mp3"):
+            raise ValidationError("file name does not end in .mp3")
+        try:
+            mp3 = EasyMP3(file.temporary_file_path())
+        except HeaderNotFoundError:
+            raise ValidationError("file is not a valid mp3")
+        if mp3.info.sketchy:
+            raise ValidationError("file may not be a valid mp3")
+        return file
 
 
 class ArtistField(CharField):
@@ -38,7 +42,6 @@ class ArtistField(CharField):
         except Artist.DoesNotExist:
             # Return a new Artist object, but don't save it to the database
             # until the rest of the form has been validated:
-            print("DOOOES NOT EXIIIIST")
             return Artist(name=artistname)
 
 
