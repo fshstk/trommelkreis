@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponseNotFound
+
+from archive.views import upload_form
 
 
 def home(request):
@@ -10,7 +13,14 @@ def info(request):
 
 
 def upload(request):
-    return render(request, "upload.html")
+    # TODO: make this a global variable
+    UPLOADS_OPEN = True
+
+    if UPLOADS_OPEN:
+        return upload_form(request)
+    else:
+        # TODO: downloads not open page
+        return HttpResponseNotFound
 
 
 def subscribe(request):

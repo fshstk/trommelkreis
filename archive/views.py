@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from math import ceil
 from datetime import datetime
@@ -8,6 +8,7 @@ from zipfile import ZipFile
 import io
 
 from archive.models import Session
+from archive.forms import UploadForm
 
 
 def show_all_sessions(request):
@@ -33,6 +34,19 @@ def show_single_session(request, session):
     session = get_session_from_slug(session)
     context = {"session": session}
     return render(request, "archive/session.html", context)
+
+
+def upload_form(request):
+    if request.method == "POST":
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            # TODO: form parsing
+            # TODO: make this page, or do it spa style in JS, OR use url name or whatever
+            return HttpResponseRedirect("/archive/<session>")
+    else:
+        form = UploadForm()
+
+    return render(request, "upload.html", {"form": form})
 
 
 # Helper functions:
