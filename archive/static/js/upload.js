@@ -54,7 +54,7 @@ $(".custom-file-input").on("change", function () {
         var title = tags.title;
       } else {
         // Strip file suffix:
-        var title = file.name.replace(/\.[^/.]+$/, "");
+        var title = file.name.replace(/\.mp3$/, "");
         // Underscores to spaces:
         title = title.replace(/_/g, " ");
       }
