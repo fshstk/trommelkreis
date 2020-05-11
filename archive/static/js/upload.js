@@ -40,6 +40,12 @@ $("form").submit(function (event) {
 $(".custom-file-input").on("change", function () {
   let file = $(this).prop("files")[0];
 
+  if (file.name.match(/\.[^/.]+$/) == ".mp3") {
+    this.setCustomValidity("");
+  } else {
+    this.setCustomValidity("Datei endet nicht in .mp3");
+  }
+
   ID3.loadTags(
     file.name,
     function () {
