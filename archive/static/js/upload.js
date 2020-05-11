@@ -1,13 +1,38 @@
 "use strict";
 
+function passwordValid() {
+  return false;
+}
+
+function validatePassword() {
+  let field = $("#id_password")[0];
+  let password = $("#id_password").val();
+
+  $.post(
+    "/upload/checkpassword/",
+    { password: password },
+    function (response) {
+      if (response.valid) {
+        // Password correct :)
+        console.log("yay");
+        field.setCustomValidity("");
+      } else {
+        // Password incorrect :(
+        console.log("boo");
+        field.setCustomValidity("Passwort falsch");
+      }
+    },
+    "json"
+  );
+}
+
 // Validate form when clicking submit:
 $("form").submit(function (event) {
+  validatePassword();
+
   if ($("form")[0].checkValidity() === false) {
     event.preventDefault();
     event.stopPropagation();
-  }
-  if (true) {
-    $("#id_password");
   }
   $("form").addClass("was-validated");
 });

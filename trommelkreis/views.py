@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from archive.views import upload_form
 
@@ -20,6 +21,17 @@ def upload(request):
         return upload_form(request)
     else:
         # TODO: downloads not open page
+        raise Http404
+
+
+@csrf_exempt
+def check_password(request):
+    CORRECT_PASSWORD = "foobar"
+
+    if request.method == "POST":
+        password = request.POST.get("password")
+        return JsonResponse({"valid": True if password == CORRECT_PASSWORD else False})
+    else:
         raise Http404
 
 

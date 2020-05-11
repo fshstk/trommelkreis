@@ -25,6 +25,7 @@ urlpatterns = [
     path("home/", views.home),
     path("info/", views.info),
     path("upload/", views.upload),
+    path("upload/checkpassword/", views.check_password),
     path("abo/", views.subscribe),
     path("archiv/", include("archive.urls")),
     path("admin/", admin.site.urls),
