@@ -14,10 +14,7 @@
         <label class="custom-file-label" for="customFile">Dein Track… (nur MP3 erlaubt)</label>
     </div>
 
-    <div>
-        {{ form.name.errors }}
-        {{ form.name }}
-    </div>
+    {{ form.name.as_hidden }}
 
     <div>
         {{ form.artist.errors }}
