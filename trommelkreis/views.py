@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import Http404, JsonResponse
 
 from archive.views import upload_form
 
@@ -20,7 +20,7 @@ def upload(request):
         return upload_form(request)
     else:
         # TODO: downloads not open page
-        return HttpResponseNotFound
+        raise Http404
 
 
 def subscribe(request):
