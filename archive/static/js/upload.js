@@ -56,7 +56,7 @@ $(".custom-file-input").on("change", function () {
         // Strip file suffix:
         var title = file.name.replace(/\.[^/.]+$/, "");
         // Underscores to spaces:
-        title = title.replace(/_/, " ");
+        title = title.replace(/_/g, " ");
       }
       // Populate title/artist fields with ID3 tags of selected file:
       $("#id_name").val(title);
