@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Challenge, Session, Artist, AudioFile
+from archive.models import Challenge, Session, Artist, AudioFile
 
 admin.site.register(Challenge)
 admin.site.register(Session)
