@@ -20,8 +20,7 @@ def upload(request):
     if UPLOADS_OPEN:
         return upload_form(request)
     else:
-        # TODO: downloads not open page
-        raise Http404
+        return render(request, "nexttime.html")
 
 
 @csrf_exempt
