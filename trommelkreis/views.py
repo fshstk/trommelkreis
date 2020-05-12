@@ -25,6 +25,7 @@ def upload(request):
 
 @csrf_exempt
 def check_password(request):
+    # TODO: make this a global variable
     CORRECT_PASSWORD = "foobar"
 
     if request.method == "POST":
