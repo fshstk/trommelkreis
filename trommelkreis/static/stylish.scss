@@ -2,7 +2,7 @@
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
 
-$fa-font-path:              "../webfonts";
+$fa-font-path:              "/static/webfonts";
 
 $body-bg:                   #ddd;
 $font-family-sans-serif:    'Ubuntu', sans-serif;
@@ -11,10 +11,10 @@ $font-family-sans-serif:    'Ubuntu', sans-serif;
 // Import
 ////////////////////////////////////////////////////////////////////////////////
 
-@import "../../node_modules/bootstrap/scss/bootstrap";
-@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
-// @import "../../node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+// @import "node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
 
 ////////////////////////////////////////////////////////////////////////////////
 // Custom Styling
