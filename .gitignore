@@ -1,19 +1,15 @@
 node_modules
 **/__pycache__
 
-# compiled css:
-#*.css
+# Compiled CSS:
+*.css
 *.map
 
-# fontawesome:
-#trommelkreis/static/webfonts
-
-# yarn:
-*.log
-
-# archive etc.
-/ignore
+# All (collected) static files, archive, etc.
 /public
 
-# vs code preferences
+# Misc. stuff
+/ignore
+
+# VS Code preferences
 .vscode/
