@@ -10,7 +10,7 @@
 
 <hr>
 
-<div class="list-group text-left">
+<div id="sessionlist" class="list-group text-left">
 	{% for file in session.files %}
 	<a href="#{{ file.name }}" class="list-group-item list-group-item-action" data-toggle="collapse">
 		<div class="d-flex justify-content-between">
@@ -22,7 +22,7 @@
 			<small class="text-muted">{{ file.filesize|filesizeformat }}</small>
 		</div>
 	</a>
-	<div class="collapse" id="{{ file.name }}">
+	<div class="collapse" id="{{ file.name }}" data-parent="#sessionlist">
 		<div class="card card-body">
 			<audio src="{{ file.url }}" style="width: 100%;" preload="none" controls>
 				<p>Dein browser unterstützt das <em>audio</em> Element nicht.</p>
