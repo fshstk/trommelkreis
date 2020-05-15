@@ -1,4 +1,6 @@
 #!/bin/bash
+# NOTE: Changes to this script will only propagate on the 2nd push after change.
+# This is because the branch with the new script is checked out by the previous script...
 
 BRANCH="dh-jango"
 PYTHON="/home/trommelkreis_v2/opt/python-3.7.7/bin/python3"
