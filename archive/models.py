@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.db.models.functions import TruncMonth
+from solo.models import SingletonModel
 
 from datetime import datetime
 from itertools import groupby
@@ -104,3 +105,17 @@ class AudioFile(models.Model):
     def url(self):
         # TODO: this returns an extra "/media" at the start of the url
         return self.data.url
+
+
+class UploadFormVars(SingletonModel):
+    class Meta:
+        verbose_name_plural = "Upload form variables"
+
+    session = models.ForeignKey(
+        Session, blank=True, null=True, on_delete=models.SET_NULL
+    )
+    uploads_open = models.BooleanField(default=False)
+    upload_password = models.CharField(blank=True, max_length=20)
+
+    def __str__(self):
+        return "Upload Form Variables"

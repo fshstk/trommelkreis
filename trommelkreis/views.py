@@ -3,6 +3,7 @@ from django.http import Http404, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from archive.views import upload_form
+from archive.models import UploadFormVars
 
 
 def home(request):
@@ -14,10 +15,9 @@ def info(request):
 
 
 def upload(request):
-    # TODO: make this a global variable
-    UPLOADS_OPEN = True
+    config = UploadFormVars.get_solo()
 
-    if UPLOADS_OPEN:
+    if config.uploads_open:
         return upload_form(request)
     else:
         return render(request, "nexttime.html")
@@ -25,12 +25,13 @@ def upload(request):
 
 @csrf_exempt
 def check_password(request):
-    # TODO: make this a global variable
-    CORRECT_PASSWORD = "foobar"
+    config = UploadFormVars.get_solo()
 
     if request.method == "POST":
         password = request.POST.get("password")
-        return JsonResponse({"valid": True if password == CORRECT_PASSWORD else False})
+        return JsonResponse(
+            {"valid": True if password == config.upload_password else False}
+        )
     else:
         raise Http404
 

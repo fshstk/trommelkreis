@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "archive",
     "compressor",
     "django.contrib.admin",
+    "solo.apps.SoloAppConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",

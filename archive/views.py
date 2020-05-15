@@ -1,13 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 from math import ceil
 from datetime import datetime
 from zipfile import ZipFile
 import io
 
-from archive.models import Session
+from archive.models import Session, UploadFormVars
 from archive.forms import UploadForm
 
 
@@ -37,16 +38,20 @@ def show_single_session(request, session):
 
 
 def upload_form(request):
+    config = UploadFormVars.get_solo()
+    today = config.session
+
     if request.method == "POST":
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
-            # TODO: form parsing
-            # TODO: make this page, or do it spa style in JS, OR use url name or whatever
-            return HttpResponseRedirect("/archive/<session>")
+            uploaded_file = form.save()
+            uploaded_file.session = today
+            uploaded_file.save()
+            return HttpResponseRedirect(reverse("session_view", args=[today.slug]))
     else:
         form = UploadForm()
 
-    return render(request, "upload.html", {"form": form})
+    return render(request, "upload.html", {"form": form, "today": today})
 
 
 # Helper functions:

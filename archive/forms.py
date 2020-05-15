@@ -3,14 +3,14 @@ from django.forms import CharField, BooleanField, FileField
 
 from mutagen.mp3 import EasyMP3, HeaderNotFoundError
 
-from archive.models import AudioFile, Artist
+from archive.models import AudioFile, Artist, UploadFormVars
 
 
 def validate_password(password):
     # TODO: we can get away with not using any custom Field classes or validator functions
     # if we do the password checking via ajax before the form is presented
-    correct_password = "20200406"  # TODO: query this dynamically
-    if password != correct_password:
+    config = UploadFormVars.get_solo()
+    if password != config.upload_password:
         raise ValidationError("Wrong password!")
 
 
@@ -53,7 +53,7 @@ class UploadForm(ModelForm):
 
     class Meta:
         model = AudioFile
-        fields = ["name", "data"]
+        fields = ["name", "data", "artist"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -68,3 +68,14 @@ class UploadForm(ModelForm):
         )
         self.fields["data"].widget.attrs.update({"class": "custom-file-input"})
         self.fields["tos"].widget.attrs.update({"class": "form-check-input"})
+
+    def save(self, commit=True):
+        config = UploadFormVars.get_solo()
+
+        instance = super().save(commit=False)
+        instance.session = config.session
+        if commit:
+            if instance.artist is not None:
+                instance.artist.save()
+            instance.save()
+        return instance
