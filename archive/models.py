@@ -62,7 +62,6 @@ class Challenge(SlugIncluded):
 class Session(SlugIncluded):
     challenge = models.ForeignKey(Challenge, on_delete=models.PROTECT)
     date = models.DateField(default=timezone.now)
-    info = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.slug
@@ -162,6 +161,7 @@ class UploadFormVars(SingletonModel):
     )
     uploads_open = models.BooleanField(default=False)
     upload_password = models.CharField(blank=True, max_length=20)
+    session_info = models.TextField(blank=True, max_length=1000)
 
     def __str__(self):
         return "Upload Form Variables"
