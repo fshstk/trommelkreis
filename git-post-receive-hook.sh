@@ -7,7 +7,11 @@ PYTHON="/home/trommelkreis_v2/opt/python-3.7.7/bin/python3"
 MANAGE="/home/trommelkreis_v2/www/manage.py"
 
 printf "Checking out branch %s to ~/www/...\n" $BRANCH
-git --work-tree=/home/trommelkreis_v2/www --git-dir=/home/trommelkreis_v2/web.git checkout -f $BRANCH
+# git --work-tree=/home/trommelkreis_v2/www --git-dir=/home/trommelkreis_v2/web.git checkout -f $BRANCH
+
+# TODO: Using without explicit branch to avoid pathspec error:
+git --work-tree=/home/trommelkreis_v2/www --git-dir=/home/trommelkreis_v2/web.git checkout -f
+
 
 printf "Collecting static files and migrate database...\n"
 if test -f $MANAGE; then
