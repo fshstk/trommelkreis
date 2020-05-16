@@ -8,8 +8,6 @@ from itertools import groupby
 from mutagen.mp3 import EasyMP3
 import os.path
 
-from trommelkreis import settings
-
 
 class Challenge(models.Model):
     name = models.CharField(max_length=200, unique=True)
