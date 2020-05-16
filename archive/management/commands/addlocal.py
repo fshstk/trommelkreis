@@ -32,6 +32,7 @@ class Command(BaseCommand):
         "challenge.name"
         "session.info" (optional)
         "challenge.blurb" (optional but recommended)
+        "challenge.copyright" (copyright issues? default: False)
 
     challenge.md is an optional markdown document containing long-form challenge
     info (saved to challenge.description); may contain HTML/JS.
@@ -65,7 +66,7 @@ class Command(BaseCommand):
                 continue
 
             try:
-                copyflag = seshinfo["copyright"]
+                copyflag = seshinfo["challenge.copyright"]
             except KeyError:
                 self.printwarning("missing copyright flag. Assuming False.")
                 copyflag = False
