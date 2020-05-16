@@ -143,6 +143,15 @@ class AudioFile(SlugIncluded):
     def slug_basename(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        mp3 = self.mp3
+        if self.name:
+            mp3["title"] = self.name
+        if self.artist.name:
+            mp3["artist"] = self.artist.name
+        mp3.save()
+
 
 class UploadFormVars(SingletonModel):
     class Meta:
