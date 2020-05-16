@@ -21,7 +21,7 @@ class MP3Field(FileField):
         if not file.name.endswith(".mp3"):
             raise ValidationError("file name does not end in .mp3")
         try:
-            mp3 = EasyMP3(file.temporary_file_path())
+            mp3 = EasyMP3(file)
         except HeaderNotFoundError:
             raise ValidationError("file is not a valid mp3")
         if mp3.info.sketchy:
