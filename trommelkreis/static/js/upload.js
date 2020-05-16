@@ -65,6 +65,3 @@ $(".custom-file-input").on("change", function () {
     { dataReader: ID3.FileAPIReader(file) }
   );
 });
-
-var settings = {};
-$("#id_data").setProgressedUploader(settings);
