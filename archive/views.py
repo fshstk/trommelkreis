@@ -90,7 +90,11 @@ def upload_form(request):
     else:
         form = UploadForm()
 
-    return render(request, "upload.html", {"form": form, "today": today})
+    return render(
+        request,
+        "upload.html",
+        {"form": form, "today": today, "info": config.session_info},
+    )
 
 
 # Helper functions:

@@ -7,8 +7,21 @@
 {% block subheading %}beim digitalen Trommelkreis{% endblock %}
 
 {% block main %}
-<h2>{{ today|dateformat }}:</h2>
-<p>{{ today.challenge.blurb }}</p>
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">
+            {{ today.challenge.name }}
+        </h1>
+        <h3 class="card-subtitle mb-2 text-muted">
+            {{ today.challenge.blurb }}
+        </h3>
+        <div class="challenge-description">
+            {{ today.challenge|info|safe }}
+            {{ info|markdownify|safe }}
+        </div>
+    </div>
+</div>
+
 <hr>
 
 <div class="d-flex justify-content-center">

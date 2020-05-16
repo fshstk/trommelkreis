@@ -18,6 +18,7 @@ class Command(BaseCommand):
     """
 
     def handle(self, *args, **options):
+        # TODO: basepath would be different when executing from server
         basepath = "/Users/fshstk/Downloads"
         archivename = "trommelkreis-archive-backup-{}.zip".format(
             datetime.now().strftime("%Y%m%d")
