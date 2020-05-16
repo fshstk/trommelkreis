@@ -24,7 +24,7 @@ def show_all_sessions(request):
 
 def download_session(request, session):
     """Get all session files as zip archive."""
-    session = get_session_from_slug(session)
+    session = get_object_or_404(Session, slug=session)
     # files = [file.filepath for file in session.files]
     archivename = "{}.zip".format(session)
     zipfile = compress_files(session.files, archivename)
@@ -35,17 +35,17 @@ def download_session(request, session):
 
 
 def show_single_session_if_no_copyright(request, session):
-    sessionobj = get_session_from_slug(session)
-    if not sessionobj.copyright_issues:
+    session = get_object_or_404(Session, slug=session)
+    if not session.copyright_issues:
         return show_single_session(request, session)
     else:
-        context = {"session": sessionobj}
+        context = {"session": session}
         return render(request, "archive/cannot_show.html", context)
 
 
 def show_single_session(request, session):
-    sessionobj = get_session_from_slug(session)
-    context = {"session": sessionobj}
+    session = get_object_or_404(Session, slug=session)
+    context = {"session": session}
     return render(request, "archive/session.html", context)
 
 
@@ -56,8 +56,8 @@ def show_all_artists(request):
 
 
 def show_single_artist(request, artist):
-    artistobj = get_object_or_404(Artist, name=artist)
-    context = {"artist": artistobj, "files": artistobj.audiofile_set.all()}
+    artist = get_object_or_404(Artist, slug=artist)
+    context = {"artist": artist, "files": artist.audiofile_set.all()}
     return render(request, "archive/artist.html", context)
 
 
@@ -68,8 +68,8 @@ def show_single_artist(request, artist):
 
 
 # def show_single_challenge(request, challenge):
-#     challengeobj = get_object_or_404(Artist, name=challenge)
-#     context = {"challenge": challengeobj, "files": challengeobj.audiofile_set.all()}
+#     challenge = get_object_or_404(Challenge, slug=challenge)
+#     context = {"challenge": challenge, "files": challenge.audiofile_set.all()}
 #     return render(request, "archive/challenge.html", context)
 
 
@@ -94,13 +94,6 @@ def upload_form(request):
 
 
 # Helper functions:
-
-
-def get_session_from_slug(slug):
-    """Get session with date in yyyymmdd format, or raise 404 error if not found."""
-    seshdate = datetime.strptime(slug, "%Y%m%d")
-    session = get_object_or_404(Session, date=seshdate)
-    return session
 
 
 def split_list_in_half(list):
