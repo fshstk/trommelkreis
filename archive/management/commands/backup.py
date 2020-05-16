@@ -41,7 +41,7 @@ class Command(BaseCommand):
                     "challenge.name": sesh.challenge.name,
                     "challenge.blurb": sesh.challenge.blurb,
                     "session.info": sesh.info,
-                    # "session.kosher": sesh.kosher,
+                    "session.copyright": sesh.copyright_issues,
                 }
                 jsonpath = os.path.join(seshdir, "sessioninfo.json")
                 zipfile.writestr(jsonpath, json.dumps(sessioninfo, indent=4))

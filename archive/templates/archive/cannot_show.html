@@ -1,0 +1,15 @@
+{% extends "archive/session.html" %}
+{% load session_filters %}
+
+{% block main %}
+{{ session|info|safe }}
+
+<hr>
+
+<div class="text-center alert alert-danger">
+<p>Diese Session kann leider nicht öffentlich zugänglich gemacht werden, da darin kopiergeschützte Elemente vorkommen.</p>
+</div>
+
+<hr>
+
+{% endblock %}

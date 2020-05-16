@@ -31,9 +31,18 @@ def download_session(request, session):
     return response
 
 
+def show_single_session_if_no_copyright(request, session):
+    sessionobj = get_session_from_slug(session)
+    if not sessionobj.copyright_issues:
+        return show_single_session(request, session)
+    else:
+        context = {"session": sessionobj}
+        return render(request, "archive/cannot_show.html", context)
+
+
 def show_single_session(request, session):
-    session = get_session_from_slug(session)
-    context = {"session": session}
+    sessionobj = get_session_from_slug(session)
+    context = {"session": sessionobj}
     return render(request, "archive/session.html", context)
 
 

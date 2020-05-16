@@ -6,5 +6,10 @@
         <small class="text-muted">{{ session|dateformat }}</small>
     </div>
     <p style="height: 20px;" class="mb-1">{{ session.challenge.blurb }}</p>
-    <small class="text-muted">{{ session|filecount }}</small>
+    <div class="d-flex justify-content-between">
+        <small class="text-muted">{{ session|filecount }}</small>
+        {% if session.copyright_issues %}
+        <small><i class="fas fa-lock"></i></small>
+        {% endif %}
+    </div>
 </a>

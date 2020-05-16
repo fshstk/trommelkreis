@@ -64,12 +64,11 @@ class Command(BaseCommand):
                 self.printerror("malformed or unreadable sessioninfo.json")
                 continue
 
-            # TODO: implement this
-            # try:
-            #     sesh.challenge.kosher = seshinfo["copyright issues y/n"]
-            # except ValueError:
-            #     self.printerror("no copyright flag")
-            #     continue
+            try:
+                copyflag = seshinfo["copyright"]
+            except KeyError:
+                self.printwarning("missing copyright flag. Assuming False.")
+                copyflag = False
 
             try:
                 date_from_json = seshinfo["session.date"]
@@ -79,7 +78,7 @@ class Command(BaseCommand):
 
             try:
                 (challenge, challengecreated) = Challenge.objects.get_or_create(
-                    name=seshinfo["challenge.name"]
+                    name=seshinfo["challenge.name"], copyright_issues=copyflag
                 )
             except KeyError:
                 self.printerror("missing challenge.name in sessioninfo.json")
@@ -91,7 +90,7 @@ class Command(BaseCommand):
 
             try:
                 (sesh, sessioncreated) = Session.objects.get_or_create(
-                    date=datetime.strptime(dirname, "%Y%m%d"), challenge=challenge
+                    date=datetime.strptime(dirname, "%Y%m%d"), challenge=challenge,
                 )
             except ValueError:
                 self.printerror("directory name needs to be <yyyymmdd>")

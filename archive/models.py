@@ -15,6 +15,7 @@ class Challenge(models.Model):
     name = models.CharField(max_length=200, unique=True)
     blurb = models.TextField(max_length=1000, blank=True)
     description = models.TextField(blank=True)
+    copyright_issues = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -52,6 +53,10 @@ class Session(models.Model):
     @property
     def files(self):
         return self.audiofile_set.all()
+
+    @property
+    def copyright_issues(self):
+        return self.challenge.copyright_issues
 
 
 class Artist(models.Model):
