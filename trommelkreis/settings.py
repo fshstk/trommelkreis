@@ -11,16 +11,30 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import json
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Get all secret info from a file that's ignored by version control:
+with open(os.path.join(BASE_DIR, "secrets.json")) as secrets_file:
+    secrets = json.load(secrets_file)
+
+
+def get_secret(setting, secrets=secrets):
+    """Get secret setting or fail with ImproperlyConfigured"""
+    try:
+        return secrets[setting]
+    except KeyError:
+        raise ImproperlyConfigured("Set the {} setting".format(setting))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "_m_+%#$9^bt*&a=g2mcxy^uuqopy6kec9=7fabmb&7$vshc^_h"
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,7 +100,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "trommelkreis_test",
         "USER": "trommelkreis",
-        "PASSWORD": "YUM-senk8nect",
+        "PASSWORD": get_secret("DB_PASSWORD"),
         "HOST": "data.trommelkreis.club",
         "PORT": "3306",
         "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
@@ -95,7 +109,7 @@ DATABASES = {
     #     "ENGINE": "django.db.backends.mysql",
     #     "NAME": "trommelkreis_archive",
     #     "USER": "trommelkreis",
-    #     "PASSWORD": "YUM-senk8nect",
+    #     "PASSWORD": get_secret("DB_PASSWORD"),
     #     "HOST": "data.trommelkreis.club",
     #     "PORT": "3306",
     #     "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -148,4 +162,4 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "public", "media")
 
 # Password for unlocking copyrighted media:
-MEDIA_PASSWORD = "fuckgema"
+MEDIA_PASSWORD = get_secret("MEDIA_PASSWORD")
