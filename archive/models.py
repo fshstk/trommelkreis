@@ -112,13 +112,6 @@ class AudioFile(SlugIncluded):
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["session", "name"], name="unique_name_per_session"
-            )
-        ]
-
     def __str__(self):
         return self.name
 
