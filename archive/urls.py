@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf import settings
 
 from archive import views
 
@@ -7,7 +8,7 @@ urlpatterns = [
     path("<session>.zip", views.download_session, name="session_zip"),
     path("<session>/", views.show_single_session_if_no_copyright, name="session_view"),
     path(
-        "<session>/fuckgema",
+        "<session>/" + settings.MEDIA_PASSWORD,
         views.show_single_session,
         name="session_view_unconditional",
     ),
