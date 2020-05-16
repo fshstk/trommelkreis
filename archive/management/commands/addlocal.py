@@ -21,7 +21,7 @@ class Command(BaseCommand):
 
     Directory structure must be as follows:
     archive/
-        <sessions: yyyymmdd>/
+        <session slug (generally in "yyyymmdd" form)>/
             sessioninfo.json
             challenge.md
             files/
@@ -71,9 +71,12 @@ class Command(BaseCommand):
                 copyflag = False
 
             try:
-                date_from_json = seshinfo["session.date"]
+                seshdate = datetime.strptime(seshinfo["session.date"], "%Y%m%d")
             except KeyError:
                 self.printerror("missing date in sessioninfo.json")
+                continue
+            except ValueError:
+                self.printerror("date in session.info not in yyyymmdd form")
                 continue
 
             try:
@@ -88,21 +91,13 @@ class Command(BaseCommand):
             else:
                 self.print("Challenge: {}".format(challenge.name))
 
-            try:
-                (sesh, sessioncreated) = Session.objects.get_or_create(
-                    date=datetime.strptime(dirname, "%Y%m%d"), challenge=challenge,
-                )
-            except ValueError:
-                self.printerror("directory name needs to be <yyyymmdd>")
-                continue
+            (sesh, sessioncreated) = Session.objects.get_or_create(
+                challenge=challenge, date=seshdate, slug=dirname,
+            )
             if sessioncreated:
                 self.printsuccess("created session: {}".format(sesh.date))
             else:
                 self.printnotice("session already exists")
-
-            if dirname != date_from_json:
-                self.printerror("mismatch between directory name and sessioninfo.json")
-                continue
 
             if os.path.isdir(filedir):
                 tracks = next(os.walk(filedir))[2]
