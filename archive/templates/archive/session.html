@@ -6,7 +6,7 @@
 {% block subheading %}{{ session|dateformat }}{% endblock %}
 
 {% block main %}
-{{ session|info|safe }}
+{{ session.challenge|info|safe }}
 
 <hr>
 

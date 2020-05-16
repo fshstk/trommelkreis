@@ -28,11 +28,11 @@ def duration(file):
 
 
 @register.filter
-def info(session):
+def info(challenge):
     text = (
-        markdown(session.challenge.description)
-        if session.challenge.description
-        else session.challenge.blurb  # TODO: standard formatting for blurb here?
+        markdown(challenge.description)
+        if challenge.description
+        else challenge.blurb  # TODO: standard formatting for blurb here?
     )
     return text
 
