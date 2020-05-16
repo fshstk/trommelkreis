@@ -12,6 +12,9 @@ from archive.models import Session, UploadFormVars
 from archive.forms import UploadForm
 
 
+# Archive views:
+
+
 def show_all_sessions(request):
     archive = [split_list_in_half(month) for month in Session.grouped_by_month()]
     archive.reverse()  # Reverse chronoloical order
@@ -44,6 +47,9 @@ def show_single_session(request, session):
     sessionobj = get_session_from_slug(session)
     context = {"session": sessionobj}
     return render(request, "archive/session.html", context)
+
+
+# Upload form:
 
 
 def upload_form(request):
