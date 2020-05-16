@@ -33,11 +33,12 @@ class Command(BaseCommand):
 
         with ZipFile(archive, "w") as zipfile:
             for sesh in sessionlist:
-                seshdir = sesh.date.strftime("%Y%m%d")
+                seshdate = sesh.date.strftime("%Y%m%d")
+                seshdir = sesh.slug
                 self.print("Adding session: {}".format(seshdir))
 
                 sessioninfo = {
-                    "session.date": seshdir,
+                    "session.date": seshdate,
                     "challenge.name": sesh.challenge.name,
                     "challenge.blurb": sesh.challenge.blurb,
                     "session.info": sesh.info,
