@@ -8,7 +8,7 @@ from datetime import datetime
 from zipfile import ZipFile
 import io
 
-from archive.models import Session, UploadFormVars
+from archive.models import Artist, Session, UploadFormVars
 from archive.forms import UploadForm
 
 
@@ -47,6 +47,18 @@ def show_single_session(request, session):
     sessionobj = get_session_from_slug(session)
     context = {"session": sessionobj}
     return render(request, "archive/session.html", context)
+
+
+def show_all_artists(request):
+    artists = Artist.objects.all()
+    context = {"artists": artists}
+    pass
+
+
+def show_single_artist(request, artist):
+    artistobj = get_object_or_404(Artist, name=artist)
+    context = {"artist": artistobj, "files": artistobj.audiofile_set.all()}
+    return render(request, "archive/artist.html", context)
 
 
 # Upload form:

@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% load session_filters %}
+
+{% block title %}Artist: {{ artist.name }}{% endblock %}
+{% block heading %}{{ artist.name }}{% endblock %}
+{% block subheading %}Artist{% endblock %}
+
+{% block main %}
+
+<div id="sessionlist" class="list-group text-left">
+	{% for file in files %}
+	<a href="#{{ file.name }}" class="list-group-item list-group-item-action" data-toggle="collapse">
+		<div class="d-flex justify-content-between">
+			<h5 class="mb-1">{{ file.name }}</h5>
+			<small class="text-muted">{{ file|duration }}</small>
+		</div>
+		<div class="d-flex justify-content-between">
+			<p class="mb-1 text-muted">{{ file.artist|default:"Anonym" }}</p>
+			<small class="text-muted">{{ file.filesize|filesizeformat }}</small>
+		</div>
+	</a>
+	<div class="collapse" id="{{ file.name }}" data-parent="#sessionlist">
+		<div class="card card-body">
+			<audio src="{{ file.url }}" style="width: 100%;" preload="none" controls>
+				<p>Dein browser unterstützt das <em>audio</em> Element nicht.</p>
+				<p>Du kannst stattdessen die <a href="{{ file.url }}">Datei Herunterladen</a>.</p>
+			</audio>
+		</div>
+		<hr>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script>
+$(function () {
+    // When section is collapsed, pause audio player:
+    $(".collapse").each(function (index, element) {
+        var player = $(element).find("audio")[0];
+        $(element).on("hidden.bs.collapse", function () {
+            player.pause();
+        });
+    });
+});
+</script>
+{% endblock %}
