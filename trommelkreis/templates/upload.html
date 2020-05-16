@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 {% load static %}
+{% load session_filters %}
 
 {% block title %}Upload{% endblock %}
 {% block heading %}Mitmachen{% endblock %}
 {% block subheading %}beim digitalen Trommelkreis{% endblock %}
 
 {% block main %}
-<h2>{{ today.name }}:</h2>
-<p>{{ today.challenge }}</p>
+<h2>{{ today|dateformat }}:</h2>
+<p>{{ today.challenge.blurb }}</p>
 <hr>
 
 <div class="d-flex justify-content-center">
