@@ -14,11 +14,9 @@ function validatePassword() {
     function (response) {
       if (response.valid) {
         // Password correct :)
-        console.log("yay");
         field.setCustomValidity("");
       } else {
         // Password incorrect :(
-        console.log("boo");
         field.setCustomValidity("Passwort falsch");
       }
     },
@@ -60,7 +58,6 @@ $(".custom-file-input").on("change", function () {
       }
       // Populate title/artist fields with ID3 tags of selected file:
       $("#id_name").val(title);
-      console.log(title);
       $("#id_artist").val(tags.artist);
       // Display the file name in input field if one is selected:
       $(".custom-file-label").html(title);
