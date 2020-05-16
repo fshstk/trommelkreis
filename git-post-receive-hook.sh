@@ -4,18 +4,22 @@
 
 BRANCH="dh-jango"
 PYTHON="/home/trommelkreis_v2/opt/python-3.7.7/bin/python3"
-MANAGE="/home/trommelkreis_v2/www/manage.py"
+BASE_DIR="/home/trommelkreis_v2/www"
+MANAGE="${BASE_DIR}/manage.py"
 
 printf "Checking out branch %s to ~/www/...\n" $BRANCH
 # git --work-tree=/home/trommelkreis_v2/www --git-dir=/home/trommelkreis_v2/web.git checkout -f $BRANCH
 
 # TODO: Using without explicit branch to avoid pathspec error:
-git --work-tree=/home/trommelkreis_v2/www --git-dir=/home/trommelkreis_v2/web.git checkout -f
+git --work-tree=$BASE_DIR --git-dir=/home/trommelkreis_v2/web.git checkout -f
 
+printf "Updating npm dependencies...\n"
+npm install --prefix $BASE_DIR
 
-printf "Collecting static files and migrate database...\n"
 if test -f $MANAGE; then
+    printf "Collecting static files...\n"
     $PYTHON $MANAGE collectstatic --no-input
+    printf "Migrating database...\n"
     $PYTHON $MANAGE migrate --no-input
 fi
 
