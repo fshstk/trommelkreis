@@ -96,7 +96,7 @@ class Command(BaseCommand):
                 challenge=challenge, date=seshdate, slug=dirname,
             )
             if sessioncreated:
-                self.printsuccess("created session: {}".format(sesh.date))
+                self.printsuccess("created session: {}".format(sesh.slug))
             else:
                 self.printnotice("session already exists")
 
@@ -138,12 +138,13 @@ class Command(BaseCommand):
                     # Strip off .mp3 suffix:
                     trackname = os.path.splitext(filename)[0]
 
-                track = AudioFile(session=sesh, name=trackname)
-                try:
-                    track.save()
-                except IntegrityError:
-                    self.printwarning("file {} already exists".format(filename))
+                if AudioFile.objects.filter(session=sesh, name=trackname).exists():
+                    self.printwarning(
+                        "file titled '{}' already exists".format(trackname)
+                    )
                     continue
+
+                track = AudioFile(session=sesh, name=trackname)
 
                 with DjangoFile(open(filepath, "rb")) as f:
                     savepath = os.path.join(dirname, filename)
@@ -154,9 +155,10 @@ class Command(BaseCommand):
                     (track.artist, artistcreated) = Artist.objects.get_or_create(
                         name=mp3["artist"][0]
                     )
-                    track.save()
                     if artistcreated:
                         self.printsuccess("created artist: {}".format(track.artist))
+
+                track.save()
 
     # TODO: move these to separate file... _printfunctions.py?
     def printerror(self, msg):
