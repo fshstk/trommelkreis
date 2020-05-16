@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.db.models.functions import TruncMonth
 from solo.models import SingletonModel
+from django.utils.text import slugify
 
 from datetime import datetime
 from itertools import groupby
@@ -9,7 +10,39 @@ from mutagen.mp3 import EasyMP3
 import os.path
 
 
-class Challenge(models.Model):
+class SlugIncluded(models.Model):
+    """
+    Abstract base class for database models that auto-generates unique slug on save.
+    Must override slug_basename() in child class with chosen base name.
+    """
+
+    class Meta:
+        abstract = True
+
+    slug = models.SlugField(unique=True, null=False, max_length=50)
+
+    def slug_basename(self):
+        """Define what base name is used to auto-generate slug."""
+        raise NotImplementedError
+
+    @classmethod
+    def generate_unique_slug(cls, basename):
+        max_basename_length = 40
+        slug_basename = slugify(basename)[:max_basename_length]
+        slug = slug_basename
+        num = 1
+        while cls.objects.filter(slug=slug).exists():
+            num += 1
+            slug = "{}-{}".format(slug_basename, num)
+        return slug
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self.generate_unique_slug(basename=self.slug_basename())
+        super().save(*args, **kwargs)
+
+
+class Challenge(SlugIncluded):
     name = models.CharField(max_length=200, unique=True)
     blurb = models.TextField(max_length=1000, blank=True)
     description = models.TextField(blank=True)
@@ -22,14 +55,20 @@ class Challenge(models.Model):
     def sessions(self):
         return self.session_set.all()
 
+    def slug_basename(self):
+        return self.name
 
-class Session(models.Model):
+
+class Session(SlugIncluded):
     challenge = models.ForeignKey(Challenge, on_delete=models.PROTECT)
-    date = models.DateField(default=timezone.now, unique=True)
+    date = models.DateField(default=timezone.now)
     info = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.slug
+
+    def slug_basename(self):
+        return self.date.strftime("%Y%m%d")
 
     @classmethod
     def grouped_by_month(cls):
@@ -41,12 +80,8 @@ class Session(models.Model):
 
     @classmethod
     def from_slug(cls, slug):
-        date = datetime.strptime(slug, "%Y%m%d")
-        return cls.objects.get(date=date)
-
-    @property
-    def slug(self):
-        return self.date.strftime("%Y%m%d")
+        # TODO: get rid of this
+        return cls.objects.get(slug=slug)
 
     @property
     def files(self):
@@ -57,10 +92,13 @@ class Session(models.Model):
         return self.challenge.copyright_issues
 
 
-class Artist(models.Model):
+class Artist(SlugIncluded):
     name = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
+        return self.name
+
+    def slug_basename(self):
         return self.name
 
     @property
@@ -68,7 +106,7 @@ class Artist(models.Model):
         return self.audiofile_set.all()
 
 
-class AudioFile(models.Model):
+class AudioFile(SlugIncluded):
     session = models.ForeignKey(Session, on_delete=models.PROTECT)
     data = models.FileField(upload_to="archive/")
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
@@ -108,6 +146,9 @@ class AudioFile(models.Model):
     def url(self):
         # TODO: this returns an extra "/media" at the start of the url
         return self.data.url
+
+    def slug_basename(self):
+        return self.name
 
 
 class UploadFormVars(SingletonModel):
