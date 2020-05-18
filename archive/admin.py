@@ -49,10 +49,13 @@ class AudioFileAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
     def displayname(self, obj):
-        return "{} [{}] ({})".format(
+        return "{}{} ({})".format(
             obj.filename,
-            obj.artist.name if obj.artist.name else "<Anon>",
+            " [{}]".format(obj.artist.name) if obj.artist else "",
             "{:02d}:{:02d}".format(obj.duration // 60, obj.duration % 60),
         )
 
     displayname.short_description = "Name"
+
+
+# admin.site.register(AudioFile)
