@@ -90,6 +90,17 @@ class Session(SlugIncluded):
     def copyright_issues(self):
         return self.challenge.copyright_issues
 
+    @property
+    def files_by_subsection(self):
+        grouped_files = []
+        for _, group in groupby(
+            self.audiofile_set.order_by("session_subsection"),
+            key=lambda x: x.session_subsection,
+        ):
+            filelist = sorted(list(group), key=lambda x: x.name.lower())
+            grouped_files.append(filelist)
+        return grouped_files
+
 
 class Artist(SlugIncluded):
     name = models.CharField(max_length=100, unique=True)

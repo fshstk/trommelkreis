@@ -45,7 +45,8 @@ def show_single_session_if_no_copyright(request, session):
 
 def show_single_session(request, session):
     session = get_object_or_404(Session, slug=session)
-    context = {"session": session}
+    files = session.files_by_subsection
+    context = {"session": session, "files": files}
     return render(request, "archive/session.html", context)
 
 
