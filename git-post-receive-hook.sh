@@ -2,12 +2,12 @@
 # NOTE: Changes to this script will only propagate on the 2nd push after change.
 # This is because the branch with the new script is checked out by the previous script...
 
-BRANCH="dh-jango"
+BRANCH="master"
 PYTHON="/home/trommelkreis_v2/opt/python-3.7.7/bin/python3"
 BASE_DIR="/home/trommelkreis_v2/www"
 MANAGE="${BASE_DIR}/manage.py"
 
-printf "Checking out branch %s to ~/www/...\n" $BRANCH
+printf "Checking out branch to ~/www/...\n"
 # git --work-tree=/home/trommelkreis_v2/www --git-dir=/home/trommelkreis_v2/web.git checkout -f $BRANCH
 
 # TODO: Using without explicit branch to avoid pathspec error:
