@@ -27,16 +27,9 @@ def duration(file):
     return "{:02d}:{:02d}".format(file.duration // 60, file.duration % 60)
 
 
-# TODO: get rid of this function and just use markdownify
-@register.filter
-def info(challenge):
-    text = markdown(challenge.description) if challenge.description else ""
-    return text
-
-
 @register.filter
 def markdownify(text):
-    return markdown(text)
+    return markdown(text) if text else ""
 
 
 @register.filter

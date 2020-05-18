@@ -2,7 +2,7 @@
 {% load session_filters %}
 
 {% block main %}
-{{ session.challenge|info|safe }}
+{{ session.challenge.description|markdownify|safe }}
 
 <hr>
 

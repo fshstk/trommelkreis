@@ -19,7 +19,7 @@
 {% endcomment %}
 
         <div class="challenge-description">
-            {{ session.challenge|info|safe }}
+            {{ session.challenge.description|markdownify|safe }}
         </div>
     </div>
 </div>

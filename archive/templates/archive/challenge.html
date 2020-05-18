@@ -6,7 +6,7 @@
 {% block subheading %}bottom text{% endblock %}
 
 {% block main %}
-{{ challenge|info|safe }}
+{{ challenge.description|markdownify|safe }}
 
 <hr>
 
