@@ -1,4 +1,8 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
+
+import shutil
+import os
 
 from archive.models import Challenge, Session, Artist, AudioFile
 
@@ -24,9 +28,17 @@ class Command(BaseCommand):
             Session.objects.all().delete()
             self.print("Deleting Challenges...")
             Challenge.objects.all().delete()
-            self.printsuccess("database cleared (Audio Files remain in media/archive/)")
+            self.printsuccess("database cleared ()")
         else:
             raise CommandError("Delete database not confirmed...")
+
+        self.stdout.write(self.style.WARNING("Delete media/archive/?"))
+        if input("Enter 'yes' to confirm: ") == "yes":
+            archivedir = os.path.join(settings.MEDIA_ROOT, "archive")
+            shutil.rmtree(archivedir)
+            self.printsuccess("archive directory removed")
+        else:
+            self.print("audio files remain in media/archive/")
 
     # TODO: move these to separate file... _printfunctions.py?
     def printerror(self, msg):
