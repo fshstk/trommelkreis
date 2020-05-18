@@ -77,11 +77,6 @@ class Session(SlugIncluded):
             grouped_sessions.append(list(group))
         return grouped_sessions
 
-    @classmethod
-    def from_slug(cls, slug):
-        # TODO: get rid of this
-        return cls.objects.get(slug=slug)
-
     @property
     def files(self):
         return self.audiofile_set.all()
