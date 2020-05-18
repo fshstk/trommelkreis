@@ -147,7 +147,7 @@ class AudioFile(SlugIncluded):
         mp3 = self.mp3
         if self.name:
             mp3["title"] = self.name
-        if self.artist.name:
+        if self.artist:
             mp3["artist"] = self.artist.name
         mp3.save()
 
