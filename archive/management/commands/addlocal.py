@@ -100,6 +100,7 @@ class Command(BaseCommand):
             else:
                 self.printnotice("session already exists")
 
+            # TODO: look for any folder starting with "files_" and add subsection
             if os.path.isdir(filedir):
                 tracks = next(os.walk(filedir))[2]
             else:

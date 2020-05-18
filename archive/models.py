@@ -148,7 +148,6 @@ class AudioFile(SlugIncluded):
 
     @property
     def url(self):
-        # TODO: this returns an extra "/media" at the start of the url
         return self.data.url
 
     def slug_basename(self):

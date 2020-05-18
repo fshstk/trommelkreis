@@ -7,8 +7,6 @@ from archive.models import AudioFile, Artist, UploadFormVars
 
 
 def validate_password(password):
-    # TODO: we can get away with not using any custom Field classes or validator functions
-    # if we do the password checking via ajax before the form is presented
     config = UploadFormVars.get_solo()
     if password != config.upload_password:
         raise ValidationError("Wrong password!")
