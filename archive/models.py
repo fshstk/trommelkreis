@@ -109,7 +109,7 @@ class AudioFile(SlugIncluded):
     session = models.ForeignKey(Session, on_delete=models.PROTECT)
     data = models.FileField(upload_to="archive/")
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
