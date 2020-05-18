@@ -2,10 +2,10 @@
 
 <a href="{% url "session_view" session.slug %}" class="list-group-item list-group-item-action">
     <div class="d-flex justify-content-between">
-        <h5 class="mb-1">{{ session.challenge.name }}</h5>
+        <h5 class="mb-1 text-truncate">{{ session.challenge.name }}</h5>
         <small class="text-muted">{{ session|dateformat }}</small>
     </div>
-    <p style="height: 20px;" class="mb-1">{{ session.challenge.blurb }}</p>
+    <p style="height: 20px;" class="mb-1 text-truncate">{{ session.challenge.blurb }}</p>
     <div class="d-flex justify-content-between">
         <small class="text-muted">{{ session|filecount }}</small>
         {% if session.copyright_issues %}

@@ -29,11 +29,11 @@
 	{% for file in session.files %}
 	<a href="#{{ file.slug }}" class="list-group-item list-group-item-action" data-toggle="collapse">
 		<div class="d-flex justify-content-between">
-			<h5 class="mb-1">{{ file.name }}</h5>
+			<h5 class="mb-1 text-truncate">{{ file.name }}</h5>
 			<small class="text-muted">{{ file|duration }}</small>
 		</div>
 		<div class="d-flex justify-content-between">
-			<p class="mb-1 text-muted">{{ file.artist|default:"Anonym" }}</p>
+			<p class="mb-1 text-muted text-truncate">{{ file.artist|default:"Anonym" }}</p>
 			<small class="text-muted">{{ file.filesize|filesizeformat }}</small>
 		</div>
 	</a>
