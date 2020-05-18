@@ -113,7 +113,7 @@ class Command(BaseCommand):
 
             try:
                 with open(markdownfile) as f:
-                    sesh.challenge.markdown = f.read()
+                    sesh.challenge.description = f.read()
             except FileNotFoundError:
                 self.printnotice("missing challenge.md")
 
