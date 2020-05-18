@@ -107,6 +107,7 @@ class Artist(SlugIncluded):
 
 class AudioFile(SlugIncluded):
     session = models.ForeignKey(Session, on_delete=models.PROTECT)
+    session_subsection = models.CharField(max_length=50, blank=True, null=True)
     data = models.FileField(upload_to="archive/")
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
