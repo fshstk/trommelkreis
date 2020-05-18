@@ -43,8 +43,8 @@ class SlugIncluded(models.Model):
 
 
 class Challenge(SlugIncluded):
-    name = models.CharField(max_length=200, unique=True)
-    blurb = models.TextField(max_length=1000, blank=True)
+    name = models.CharField(max_length=50, unique=True)
+    blurb = models.TextField(max_length=100, blank=True)
     description = models.TextField(blank=True)
     copyright_issues = models.BooleanField(default=False)
 
@@ -92,7 +92,7 @@ class Session(SlugIncluded):
 
 
 class Artist(SlugIncluded):
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
@@ -109,7 +109,7 @@ class AudioFile(SlugIncluded):
     session = models.ForeignKey(Session, on_delete=models.PROTECT)
     data = models.FileField(upload_to="archive/")
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
