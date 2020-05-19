@@ -111,10 +111,17 @@ class Artist(SlugIncluded):
         return self.audiofile_set.all()
 
 
+def get_upload_path(instance, filename):
+    if instance.session:
+        return os.path.join("archive", instance.session.slug, filename)
+    else:
+        return os.path.join("archive", "unknown_session", filename)
+
+
 class AudioFile(SlugIncluded):
     session = models.ForeignKey(Session, on_delete=models.PROTECT)
-    data = models.FileField(upload_to="archive/")
     session_subsection = models.CharField(max_length=50, blank=True)
+    data = models.FileField(upload_to=get_upload_path)
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
 
