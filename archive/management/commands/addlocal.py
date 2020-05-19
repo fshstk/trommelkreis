@@ -144,11 +144,11 @@ class Command(BaseCommand):
                         # Strip off .mp3 suffix:
                         trackname = os.path.splitext(filename)[0]
 
-                    if AudioFile.objects.filter(session=sesh, name=trackname).exists():
-                        self.printwarning(
-                            "file titled '{}' already exists".format(trackname)
-                        )
-                        continue
+                    # if AudioFile.objects.filter(session=sesh, name=trackname).exists():
+                    #     self.printwarning(
+                    #         "file titled '{}' already exists".format(trackname)
+                    #     )
+                    #     continue
 
                     track = AudioFile(
                         session=sesh, name=trackname, session_subsection=subsection
