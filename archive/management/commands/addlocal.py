@@ -30,7 +30,6 @@ class Command(BaseCommand):
     sessioninfo.json must include the following keys:
         "session.date" (yyyymmdd, must be identical to directory name)
         "challenge.name"
-        "session.info" (optional)
         "challenge.blurb" (optional but recommended)
         "challenge.copyright" (copyright issues? default: False)
 
@@ -53,7 +52,6 @@ class Command(BaseCommand):
             seshpath = os.path.join(archive_path, dirname)
             markdownfile = os.path.join(seshpath, "challenge.md")
             infofile = os.path.join(seshpath, "sessioninfo.json")
-            filedir = os.path.join(seshpath, "files")
 
             try:
                 with open(infofile) as f:
@@ -100,13 +98,6 @@ class Command(BaseCommand):
             else:
                 self.printnotice("session already exists")
 
-            # TODO: look for any folder starting with "files_" and add subsection
-            if os.path.isdir(filedir):
-                tracks = next(os.walk(filedir))[2]
-            else:
-                self.printerror("no files directory")
-                continue
-
             try:
                 sesh.challenge.blurb = seshinfo["challenge.blurb"]
             except KeyError:
@@ -121,45 +112,61 @@ class Command(BaseCommand):
             sesh.challenge.save()
             sesh.save()
 
-            for filename in tracks:
-                if not filename.endswith(".mp3"):
-                    self.printnotice("unallowed file suffix: {}".format(filename))
-                    continue
+            if "filedirs" in seshinfo:
+                filedirs = seshinfo["filedirs"]
+            else:
+                filedirs = {"files": ""}
 
-                filepath = os.path.join(filedir, filename)
-
-                mp3 = EasyMP3(filepath)
-                if mp3.info.sketchy:
-                    self.printerror("invalid mp3 file: {}".format(filename))
-                    continue
-
-                if "title" in mp3:
-                    trackname = mp3["title"][0]
+            for dirname, subsection in filedirs.items():
+                filedir = os.path.join(seshpath, dirname)
+                if os.path.isdir(filedir):
+                    tracks = next(os.walk(filedir))[2]
+                    self.print("Reading directory: {}".format(filedir))
                 else:
-                    # Strip off .mp3 suffix:
-                    trackname = os.path.splitext(filename)[0]
-
-                if AudioFile.objects.filter(session=sesh, name=trackname).exists():
-                    self.printwarning(
-                        "file titled '{}' already exists".format(trackname)
-                    )
+                    self.printerror("directory does not exist: {}".format(filedir))
                     continue
 
-                track = AudioFile(session=sesh, name=trackname)
+                for filename in tracks:
+                    if not filename.endswith(".mp3"):
+                        self.printnotice("unallowed file suffix: {}".format(filename))
+                        continue
 
-                with DjangoFile(open(filepath, "rb")) as f:
-                    savepath = os.path.join(dirname, filename)
-                    track.data.save(savepath, f)
-                    self.printsuccess("added {}".format(trackname))
+                    filepath = os.path.join(filedir, filename)
 
-                if "artist" in mp3:
-                    (track.artist, artistcreated) = Artist.objects.get_or_create(
-                        name=mp3["artist"][0]
+                    mp3 = EasyMP3(filepath)
+                    if mp3.info.sketchy:
+                        self.printerror("invalid mp3 file: {}".format(filename))
+                        continue
+
+                    if "title" in mp3:
+                        trackname = mp3["title"][0]
+                    else:
+                        # Strip off .mp3 suffix:
+                        trackname = os.path.splitext(filename)[0]
+
+                    if AudioFile.objects.filter(session=sesh, name=trackname).exists():
+                        self.printwarning(
+                            "file titled '{}' already exists".format(trackname)
+                        )
+                        continue
+
+                    track = AudioFile(
+                        session=sesh, name=trackname, session_subsection=subsection
                     )
-                    if artistcreated:
-                        self.printsuccess("created artist: {}".format(track.artist))
 
-                track.save()
+                    with DjangoFile(open(filepath, "rb")) as f:
+                        savepath = os.path.join(dirname, filename)
+                        track.data.save(savepath, f)
+                        self.printsuccess("added {}".format(trackname))
+
+                    if "artist" in mp3:
+                        (track.artist, artistcreated) = Artist.objects.get_or_create(
+                            name=mp3["artist"][0]
+                        )
+                        if artistcreated:
+                            self.printsuccess("created artist: {}".format(track.artist))
+
+                    track.save()
 
     # TODO: move these to separate file... _printfunctions.py?
     def printerror(self, msg):

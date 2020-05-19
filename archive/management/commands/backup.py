@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.utils.text import slugify
 
 import os
 import json
@@ -38,23 +39,30 @@ class Command(BaseCommand):
                 seshdir = sesh.slug
                 self.print("Adding session: {}".format(seshdir))
 
-                sessioninfo = {
-                    "session.date": seshdate,
-                    "challenge.name": sesh.challenge.name,
-                    "challenge.blurb": sesh.challenge.blurb,
-                    "session.info": sesh.info,
-                    "session.copyright": sesh.copyright_issues,
-                }
-                jsonpath = os.path.join(seshdir, "sessioninfo.json")
-                zipfile.writestr(jsonpath, json.dumps(sessioninfo, indent=4))
-
                 if sesh.challenge.description is not "":
                     mdpath = os.path.join(seshdir, "challenge.md")
                     zipfile.writestr(mdpath, sesh.challenge.description)
 
+                filedirs = {"files": ""}
+
                 for file in sesh.files:
-                    savepath = os.path.join(seshdir, "files", file.filename)
+                    if file.session_subsection:
+                        dirname = "files_{}".format(slugify(file.session_subsection))
+                        filedirs[dirname] = file.session_subsection
+                        savepath = os.path.join(seshdir, dirname, file.filename,)
+                    else:
+                        savepath = os.path.join(seshdir, "files", file.filename)
                     zipfile.write(file.filepath, savepath)
+
+                sessioninfo = {
+                    "session.date": seshdate,
+                    "challenge.name": sesh.challenge.name,
+                    "challenge.blurb": sesh.challenge.blurb,
+                    "session.copyright": sesh.copyright_issues,
+                    "filedirs": filedirs,
+                }
+                jsonpath = os.path.join(seshdir, "sessioninfo.json")
+                zipfile.writestr(jsonpath, json.dumps(sessioninfo, indent=4))
 
         archive.seek(0)
 
