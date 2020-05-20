@@ -104,10 +104,12 @@ footer {
 //     width: 700px;
 // }
 
-blockquote {
-  //   @extend .blockquote;
-  @extend .text-muted;
-  margin-left: 20px;
-  padding: 1em;
-  border-left: 5px solid #999;
+.challenge-description {
+  blockquote {
+    //   @extend .blockquote;
+    @extend .text-muted;
+    margin-left: 20px;
+    padding: 1em;
+    border-left: 5px solid #999;
+  }
 }
