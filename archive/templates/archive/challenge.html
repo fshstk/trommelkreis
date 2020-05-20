@@ -6,7 +6,23 @@
 {% block subheading %}bottom text{% endblock %}
 
 {% block main %}
-{{ challenge.description|markdownify|safe }}
+<div class="card">
+    <div class="card-body">
+{% comment %} 
+        <h1 class="card-title">
+            {{ session.challenge.blurb }}
+        </h1>
+
+        <h3 class="card-subtitle mb-2 text-muted">
+            {{ session.challenge.blurb }}
+        </h3>
+{% endcomment %}
+
+        <div class="challenge-description">
+            {{ challenge.description|markdownify|safe }}
+        </div>
+    </div>
+</div>
 
 <hr>
 
