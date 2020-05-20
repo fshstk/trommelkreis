@@ -2,10 +2,10 @@
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
 
-$fa-font-path:              "/static/webfonts";
+$fa-font-path: "/static/webfonts";
 
-$body-bg:                   #ddd;
-$font-family-sans-serif:    'Ubuntu', sans-serif;
+$body-bg: #ddd;
+$font-family-sans-serif: "Ubuntu", sans-serif;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Import
@@ -21,77 +21,81 @@ $font-family-sans-serif:    'Ubuntu', sans-serif;
 ////////////////////////////////////////////////////////////////////////////////
 
 nav {
-    @extend .nav;
-    @extend .container;
-    @extend .p-1;
-    a {
-        @extend .nav-link;
-        @extend .text-dark;
-    }
+  @extend .nav;
+  @extend .container;
+  @extend .p-1;
+  a {
+    @extend .nav-link;
+    @extend .text-dark;
+  }
 
-    .home {
-        span {
-            @extend %fa-icon;
-            @extend .fas;
-            &:before { content: fa-content($fa-var-home); }    
-        }
+  .home {
+    span {
+      @extend %fa-icon;
+      @extend .fas;
+      &:before {
+        content: fa-content($fa-var-home);
+      }
     }
-    .subscribe {
-        @extend .ml-auto;      
-        span {
-            @extend %fa-icon;
-            @extend .fas;
-            &:before { content: fa-content($fa-var-envelope); }
-        }
+  }
+  .subscribe {
+    @extend .ml-auto;
+    span {
+      @extend %fa-icon;
+      @extend .fas;
+      &:before {
+        content: fa-content($fa-var-envelope);
+      }
     }
-    .upload {
-        @extend .text-primary;
-    }
+  }
+  .upload {
+    @extend .text-primary;
+  }
 }
 
 main {
-    @extend .container;
-    @extend .bg-white;
-    @extend .p-3;
+  @extend .container;
+  @extend .bg-white;
+  @extend .p-3;
 
-    .archive {
-        // .month {
-        //     @extend p-2;
-        // }
-        .year {
-            @extend .text-muted;
-            // @extend small;
-        }
-        // .column {
-        //     @extend col-md-6;
-        // }
-        // .list {
-        //     @extend list-group;
-        //     @extend text-left;
-            // a {
-            //     @extend list-group-item;
-            //     @extend list-group-item-action;
-            // }
-        // }
+  .archive {
+    // .month {
+    //     @extend p-2;
+    // }
+    .year {
+      @extend .text-muted;
+      // @extend small;
     }
-    .download-link {
-        @extend .ml-auto;
-        span {
-            // @extend %fa-icon;
-            @extend .fas;
-            @extend .fa-file-download;
-            @extend .text-dark
-            // &:before { content: fa-content($fa-file-download); }
-        }
+    // .column {
+    //     @extend col-md-6;
+    // }
+    // .list {
+    //     @extend list-group;
+    //     @extend text-left;
+    // a {
+    //     @extend list-group-item;
+    //     @extend list-group-item-action;
+    // }
+    // }
+  }
+  .download-link {
+    @extend .ml-auto;
+    span {
+      // @extend %fa-icon;
+      @extend .fas;
+      @extend .fa-file-download;
+      @extend .text-dark
+            // &:before { content: fa-content($fa-file-download); };
     }
+  }
 }
 
 footer {
-    @extend .container;
-    @extend .text-center;
-    @extend .p-1;
-    @extend small;
-    @extend .text-dark;
+  @extend .container;
+  @extend .text-center;
+  @extend .p-1;
+  @extend small;
+  @extend .text-dark;
 }
 
 // img {
