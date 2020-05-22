@@ -1,24 +1,165 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block title %}Info{% endblock %}
 {% block heading %}Infos{% endblock %}
 {% block subheading %}zum digitalen Trommelkreis{% endblock %}
 
 {% block main %}
-<div class="text-justify">
-	<h2>Was ist der digitale Trommelkreis?</h2>
-	<p>Maecenas eros orci, dictum id gravida in, dignissim in leo. Aliquam augue libero, ullamcorper quis nulla sit amet, dapibus ornare enim. Nunc non ullamcorper tellus. Duis eu arcu vulputate, lacinia nunc et, sodales ex. Integer vel elementum nibh, sit amet ultrices ante. Aliquam erat volutpat. Cras urna purus, gravida ut tincidunt elementum, consectetur in nulla.</p>
 
-	<h2>Wie kann ich mitmachen?</h2>
-	<p>Quisque faucibus condimentum aliquet. Ut blandit sem purus, non efficitur ligula porta vitae. Sed eu hendrerit ex. Sed interdum velit cursus magna eleifend, eu euismod nunc consequat. Donec vitae mi at felis pretium blandit vel vitae leo. Etiam quis egestas lacus. Nullam elementum odio diam, bibendum vestibulum erat consectetur ut. Mauris eu interdum dolor, ut tincidunt dolor. Mauris diam tellus, malesuada sed ullamcorper id, semper a ex. Phasellus sed ante quam. Suspendisse ex est, accumsan sed efficitur sit amet, tempus a purus. Nulla accumsan elit vitae nisi tempus faucibus. Nullam quis tempor velit, sed tristique lorem. Fusce malesuada, dui sed pellentesque consectetur, orci ligula fermentum mi, sit amet accumsan elit velit a velit. Vivamus eget sapien venenatis, porttitor enim vel, fringilla libero. Aliquam malesuada congue magna sed auctor.</p>
 
-	<h2>Wer steckt dahinter?</h2>
-	<p>Cras a nunc vulputate, volutpat justo sit amet, suscipit massa. Praesent accumsan urna a odio cursus, nec gravida ex convallis. Nam pretium mattis enim sit amet tristique. Curabitur nec pellentesque risus. Praesent in sagittis dui. Pellentesque volutpat nisi viverra, porta diam faucibus, aliquam mi. Nunc non gravida libero. Maecenas ac felis nec tortor lobortis finibus. Maecenas libero ligula, bibendum at urna elementum, imperdiet pharetra lorem. Pellentesque sagittis orci ornare nulla consequat pharetra. Suspendisse imperdiet ex vel nunc faucibus bibendum. Morbi sagittis nibh in justo aliquam sollicitudin. Vestibulum nisl ipsum, convallis id nulla vel, fringilla blandit leo. Morbi eros purus, condimentum non lacus id, auctor pharetra enim.</p>
-	
-	<h2>Entstehungsgeschichte</h2>
-	<p>Phasellus facilisis lectus ut tincidunt volutpat. Donec tincidunt lorem justo, ut elementum nulla pellentesque quis. Etiam nec tortor eu est pulvinar ultricies. Proin vitae iaculis lacus, sed porta risus. Aliquam nisi urna, imperdiet in pretium quis, vehicula sed nibh. Proin maximus arcu varius, sagittis nisi quis, porttitor lectus. Mauris non augue vitae tellus imperdiet posuere.</p>
-	
-	<h2>Sonstiges</h2>
-	<p>Aenean sed risus at neque malesuada semper. Cras rhoncus nibh diam, non placerat metus dictum vitae. Etiam pretium lobortis ante non ullamcorper. Donec ullamcorper cursus aliquam. In sit amet urna ut dui molestie interdum eu et sem. Fusce at consequat lectus. Ut rhoncus velit eget sapien dapibus luctus. Cras nunc tortor, volutpat non semper a, sollicitudin in est. Praesent tempus sem ante, eu mollis diam blandit id. Nulla ac est ac ante aliquam blandit vitae a felis. Nullam euismod felis eu tellus facilisis sodales. Duis condimentum semper elit quis laoreet. Donec risus libero, iaculis vitae eleifend sit amet, commodo non eros. Praesent molestie et tortor in aliquet. Fusce eleifend vel nisl in convallis.</p>
+<div class="text-center">
+	<h1>
+	Der erste digitale Trommelkreis
+	</h1>
+
+	<h4 class="text-muted">
+	Für alle, die gerne elektronische Musik produzieren,<br>
+	oder es schon immer mal probieren wollten.
+	</h4>
 </div>
+
+<div class="card">
+    <div class="card-body">
+		<h2>
+		Was ist der digitale Trommelkreis?
+		</h2>
+
+		<p>
+		Der digitale Trommelkreis ist eine regelmäßige Veranstaltung zum Thema
+		<em>Musik mit dem Computer machen</em>, und funktioniert so:
+		</p>
+
+		<ul>
+			<li>
+			Jedes Mal gibt es als Vorgabe eine kurze "Challenge".
+			</li>
+
+			<li>
+			Das könnte z.B. ein bestimmtes Sample sein, das man verwenden muss –
+			oder eine stilistische Vorgabe an die man sich halten muss – oder
+			auch alles mögliche! Schau einfach ins
+			<a href="{% url "archive:archive_home"%}">Archiv</a>, um dir Beispiele
+			aus der Vergangenheit anzusehen.
+			</li>
+
+			<li>
+			Jede<small class="text-muted">/r</small>
+			Teilnehmer<small class="text-muted">/in</small> hat einen gewissen
+			Zeitrahmen (in der Regel 60/90/120 Minuten), um diese Vorgabe in einen
+			kurzen Track zu verwandeln.
+			</li>
+
+			<li>
+			Dieser Beat muss nicht fertig oder poliert oder lang oder gut sein –
+			Bei uns geht es darum zu experimentieren und Spaß zu haben.
+			</li>
+
+			<li>
+			Nach Ablauf der Frist sollte der Beat ins Archiv hochgeladen werden,
+			wo er (auf Wunsch mit deinem Namen oder anonym) öffentlich zugänglich
+			ist.
+			</li>
+
+			<li>
+			Am Schluss hören wir uns gemeinsam die Früchte unserer Arbeit an –
+			entweder in Person oder online.
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+		<h2>
+		Wann und wo?
+		</h2>
+
+		<p>
+		Vor der COVID-19 Krise fand der digitale Trommelkreis alle zwei Wochen,
+		nämlich jeden zweiten Montag um 19:00 Uhr, in der
+		<a href="http://www.klangwerkstatt-graz.at/">Klangwerkstatt Graz</a>
+		statt.
+		</p>
+		<p>
+		Mittlerweile sind wir auf ein Onlineformat umgestiegen und veranstalten
+		<em>jeden Montag um 20:00 Uhr</em> eine Session! Seitdem freuen wir
+		uns auch sehr über Zuwachs von außerhalb Graz.
+		</p>
+		<p>
+		Wenn irgendwann mal der Zeitpunkt angekommen ist, wo wir wieder in
+		die Normalität zurückkehren, streben wir ein Hybridkonzept an.
+		Also zum Beispiel alle 14 Tage in Person; alle 14 Tage online.
+		</p>
+	</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+		<h2>
+		Wie kann ich mitmachen?
+		</h2>
+
+		<p>
+		Ganz einfach! Schreib eine Mail an
+		<span class="spamspan"><span class="u">mitmachen</span> [at] <span class="d">trommelkreis [dot] club</span></span>,
+		um weitere Infos zu erfahren.
+		Derzeit werden alle unmittelbaren Informationen über eine
+		WhatsApp Gruppe vermittelt.
+		Die Challenges und das Uploadformular findet ihr unter
+		<a href="{% url "upload" %}">Mitmachen</a>.
+		</p>
+	</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+		<h2>
+		Ich bin gar nicht so gut im Musik machen.
+		Kann ich trotzdem mitmachen?
+		</h2>
+
+		<p>
+		<em>Ja, klar!</em> Es geht hier ums gemeinsame Lernen und Spaßhaben.
+		Die meisten Challenges sind so ausgelegt, dass du dafür gar kein
+		fortgeschrittenes Wissen in Produktion oder Musiktheorie brauchst.
+		</p>
+
+		<p class="text-center">
+		<strong>Der digitale Trommelkreis ist kein Wettbewerb!</strong>
+		</p>
+
+		<p>
+		Wir sind eine <em>no-judge-Zone</em>. Wie gut oder professionell
+		dein Track am Schluss klingt, tut nichts zur Sache.
+		</p>
+
+		<p>
+		Es reicht wenn du ein Programm installiert hast, mit dem du Musik
+		machen kannst und das du grundsätzlich bedienen kannst,
+		und motivert bist.
+		</p>
+</div>	
+</div>
+
+<hr>
+
+<div class="text-center">
+	<small class="text-muted">
+		<h6>Für die, die's interessiert:</h6>
+		<p>
+			Diese Webseite basiert auf dem
+			<a href="https://www.djangoproject.com/">Django</a> Framework.
+			<br>
+			Der Quellcode ist Open-Source lizensiert und auf
+			<a href="https://github.com/fshstk/trommelkreis_website">GitHub verfügbar</a>.
+		</p>
+	</small>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static "js/spamspan.js" %}"></script>
 {% endblock %}
