@@ -3,6 +3,7 @@ from django.conf import settings
 
 from archive import views
 
+app_name = "archive"
 urlpatterns = [
     path("", views.show_all_sessions, name="archive_home"),
     path("artists/", views.show_all_artists, name="artists"),
