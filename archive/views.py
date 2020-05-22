@@ -94,7 +94,7 @@ def upload_form(request):
 
     return render(
         request,
-        "upload.html",
+        "uploadform/upload.html",
         {"form": form, "today": today, "info": config.session_info},
     )
 

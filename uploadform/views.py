@@ -12,7 +12,7 @@ def upload(request):
     if config.uploads_open:
         return upload_form(request)
     else:
-        return render(request, "nexttime.html")
+        return render(request, "uploadform/nexttime.html")
 
 
 @csrf_exempt
