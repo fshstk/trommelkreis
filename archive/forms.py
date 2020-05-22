@@ -3,7 +3,8 @@ from django.forms import CharField, BooleanField, FileField
 
 from mutagen.mp3 import EasyMP3, HeaderNotFoundError
 
-from archive.models import AudioFile, Artist, UploadFormVars
+from archive.models import AudioFile, Artist
+from uploadform.models import UploadFormVars
 
 
 def validate_password(password):

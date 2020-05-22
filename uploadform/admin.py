@@ -1,3 +1,6 @@
 from django.contrib import admin
+from solo.admin import SingletonModelAdmin
 
-# Register your models here.
+from uploadform.models import UploadFormVars
+
+admin.site.register(UploadFormVars, SingletonModelAdmin)

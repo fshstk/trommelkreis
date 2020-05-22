@@ -3,7 +3,7 @@ from django.http import Http404, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from archive.views import upload_form
-from archive.models import UploadFormVars
+from uploadform.models import UploadFormVars
 
 
 def home(request):

@@ -51,7 +51,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     "archive",
-    "uploadform",
+    "uploadform.apps.UploadFormConfig",
     "compressor",
     "django.contrib.admin",
     "solo.apps.SoloAppConfig",

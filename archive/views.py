@@ -8,8 +8,9 @@ from datetime import datetime
 from zipfile import ZipFile
 import io
 
-from archive.models import Challenge, Artist, Session, UploadFormVars
+from archive.models import Challenge, Artist, Session
 from archive.forms import UploadForm
+from uploadform.models import UploadFormVars
 
 
 # Archive views:

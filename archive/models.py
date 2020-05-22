@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.db.models.functions import TruncMonth
-from solo.models import SingletonModel
 from django.utils.text import slugify
 
 from datetime import datetime
@@ -163,18 +162,3 @@ class AudioFile(SlugIncluded):
         if self.artist:
             mp3["artist"] = self.artist.name
         mp3.save()
-
-
-class UploadFormVars(SingletonModel):
-    class Meta:
-        verbose_name_plural = "Upload form variables"
-
-    session = models.ForeignKey(
-        Session, blank=True, null=True, on_delete=models.SET_NULL
-    )
-    uploads_open = models.BooleanField(default=False)
-    upload_password = models.CharField(blank=True, max_length=20)
-    session_info = models.TextField(blank=True, max_length=1000)
-
-    def __str__(self):
-        return "Upload Form Variables"

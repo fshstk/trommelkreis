@@ -1,9 +1,7 @@
 from django.contrib import admin
 from solo.admin import SingletonModelAdmin
 
-from archive.models import Challenge, Session, Artist, AudioFile, UploadFormVars
-
-admin.site.register(UploadFormVars, SingletonModelAdmin)
+from archive.models import Challenge, Session, Artist, AudioFile
 
 
 @admin.register(Session)
