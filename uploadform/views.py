@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import Http404, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
-from archive.views import upload_form
 from uploadform.models import UploadFormVars
+from uploadform.forms import UploadForm
 
 
 def upload(request):
@@ -26,3 +28,24 @@ def check_password(request):
         )
     else:
         raise Http404
+
+
+def upload_form(request):
+    config = UploadFormVars.get_solo()
+    today = config.session
+
+    if request.method == "POST":
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            uploaded_file = form.save()
+            uploaded_file.session = today
+            uploaded_file.save()
+            return HttpResponseRedirect(reverse("session_view", args=[today.slug]))
+    else:
+        form = UploadForm()
+
+    return render(
+        request,
+        "uploadform/upload.html",
+        {"form": form, "today": today, "info": config.session_info},
+    )

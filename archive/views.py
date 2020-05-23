@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.http import HttpResponse
 
 from math import ceil
 from datetime import datetime
@@ -9,8 +8,6 @@ from zipfile import ZipFile
 import io
 
 from archive.models import Challenge, Artist, Session
-from archive.forms import UploadForm
-from uploadform.models import UploadFormVars
 
 
 # Archive views:
@@ -73,30 +70,6 @@ def show_single_artist(request, artist):
 #     challenge = get_object_or_404(Challenge, slug=challenge)
 #     context = {"challenge": challenge, "files": challenge.audiofile_set.all()}
 #     return render(request, "archive/challenge.html", context)
-
-
-# Upload form:
-
-
-def upload_form(request):
-    config = UploadFormVars.get_solo()
-    today = config.session
-
-    if request.method == "POST":
-        form = UploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            uploaded_file = form.save()
-            uploaded_file.session = today
-            uploaded_file.save()
-            return HttpResponseRedirect(reverse("session_view", args=[today.slug]))
-    else:
-        form = UploadForm()
-
-    return render(
-        request,
-        "uploadform/upload.html",
-        {"form": form, "today": today, "info": config.session_info},
-    )
 
 
 # Helper functions:
