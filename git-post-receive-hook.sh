@@ -7,6 +7,8 @@ PYTHON="/home/trommelkreis_v2/opt/python-3.7.7/bin/python3"
 BASE_DIR="/home/trommelkreis_v2/www"
 MANAGE="${BASE_DIR}/manage.py"
 
+export DJANGO_SETTINGS_MODULE="trommelkreis.settings.production"
+
 printf "Checking out branch to ~/www/...\n"
 # git --work-tree=/home/trommelkreis_v2/www --git-dir=/home/trommelkreis_v2/web.git checkout -f $BRANCH
 
