@@ -6,5 +6,5 @@ from uploadform import views
 app_name = "upload"
 urlpatterns = [
     path("", views.upload, name="home"),
-    path("checkpassword", views.check_password),
+    path("checkpassword/", views.check_password),
 ]
