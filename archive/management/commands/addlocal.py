@@ -5,7 +5,7 @@ from django.db.utils import IntegrityError
 import os
 import json
 from datetime import datetime
-from mutagen.mp3 import EasyMP3
+from mutagen.mp3 import EasyMP3, HeaderNotFoundError
 
 from archive.models import Challenge, Session, Artist, AudioFile
 
@@ -133,7 +133,13 @@ class Command(BaseCommand):
 
                     filepath = os.path.join(filedir, filename)
 
-                    mp3 = EasyMP3(filepath)
+                    try:
+                        mp3 = EasyMP3(filepath)
+                    except HeaderNotFoundError:
+                        self.printerror(
+                            "encountered HeaderNotFound error: {}".format(filename)
+                        )
+
                     if mp3.info.sketchy:
                         self.printerror("invalid mp3 file: {}".format(filename))
                         continue
