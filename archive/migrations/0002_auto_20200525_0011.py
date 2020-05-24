@@ -8,6 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('archive', '0001_initial'),
+        ('uploadform', '0002_uploadformvars_session_subsection'),
     ]
 
     operations = [
