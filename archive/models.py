@@ -8,6 +8,8 @@ from itertools import groupby
 from mutagen.mp3 import EasyMP3
 import os.path
 
+from uploadform.models import UploadFormVars
+
 
 class SlugIncluded(models.Model):
     """
@@ -117,9 +119,16 @@ def get_upload_path(instance, filename):
         return os.path.join("archive", "unknown_session", filename)
 
 
+def get_session_subsection():
+    config = UploadFormVars.get_solo()
+    return config.session_subsection
+
+
 class AudioFile(SlugIncluded):
     session = models.ForeignKey(Session, on_delete=models.PROTECT)
-    session_subsection = models.CharField(max_length=50, blank=True, default="")
+    session_subsection = models.CharField(
+        max_length=50, blank=True, default=get_session_subsection
+    )
     data = models.FileField(upload_to=get_upload_path)
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)

@@ -10,6 +10,7 @@ class UploadFormVars(SingletonModel):
     session = models.ForeignKey(
         "archive.Session", blank=True, null=True, on_delete=models.SET_NULL
     )
+    session_subsection = models.CharField(blank=True, max_length=50)
     uploads_open = models.BooleanField(default=False)
     upload_password = models.CharField(blank=True, max_length=20)
     session_info = models.TextField(blank=True, max_length=1000)
