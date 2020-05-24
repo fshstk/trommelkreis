@@ -18,9 +18,11 @@ class Command(BaseCommand):
     File will be saved to MEDIA_ROOT/trommelkreis-archive-backup-yyyymmdd.zip
     """
 
+    def add_arguments(self, parser):
+        parser.add_argument("archive_path")
+
     def handle(self, *args, **options):
-        # TODO: basepath would be different when executing from server
-        basepath = "/Users/fshstk/Downloads"
+        basepath = options["archive_path"]
         archivename = "trommelkreis-archive-backup-{}.zip".format(
             datetime.now().strftime("%Y%m%d")
         )
