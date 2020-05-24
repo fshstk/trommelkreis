@@ -1,8 +1,6 @@
 from django.db import models
 from solo.models import SingletonModel
 
-from archive.models import Session
-
 
 class UploadFormVars(SingletonModel):
     class Meta:
@@ -10,7 +8,7 @@ class UploadFormVars(SingletonModel):
         verbose_name_plural = "Upload form variables"
 
     session = models.ForeignKey(
-        Session, blank=True, null=True, on_delete=models.SET_NULL
+        "archive.Session", blank=True, null=True, on_delete=models.SET_NULL
     )
     uploads_open = models.BooleanField(default=False)
     upload_password = models.CharField(blank=True, max_length=20)
