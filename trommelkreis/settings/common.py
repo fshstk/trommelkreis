@@ -15,7 +15,7 @@ import json
 from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Get all secret info from a file that's ignored by version control:
 with open(os.path.join(BASE_DIR, "secrets.json")) as secrets_file:
@@ -28,23 +28,6 @@ def get_secret(setting, secrets=secrets):
         return secrets[setting]
     except KeyError:
         raise ImproperlyConfigured("Set the {} setting".format(setting))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret("SECRET_KEY")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    "trommelkreis.club",
-    "www.trommelkreis.club",
-    "localhost",
-    "192.168.178.*",
-]
 
 
 # Application definition
@@ -91,31 +74,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "trommelkreis.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "trommelkreis_test",
-        "USER": "trommelkreis",
-        "PASSWORD": get_secret("DB_PASSWORD"),
-        "HOST": "data.trommelkreis.club",
-        "PORT": "3306",
-        "OPTIONS": {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"},
-    },
-    # "archive": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": "trommelkreis_archive",
-    #     "USER": "trommelkreis",
-    #     "PASSWORD": get_secret("DB_PASSWORD"),
-    #     "HOST": "data.trommelkreis.club",
-    #     "PORT": "3306",
-    #     "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-    # },
-}
 
 
 # Password validation

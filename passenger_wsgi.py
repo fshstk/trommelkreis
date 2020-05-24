@@ -14,7 +14,7 @@ sys.path.append(cwd)
 #     0, cwd + "/home/trommelkreis_v2/opt/python-3.7.7/lib/python3.7/site-packages/"
 # )
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "trommelkreis.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "trommelkreis.settings.production"
 from django.core.wsgi import get_wsgi_application
 
 application = get_wsgi_application()
