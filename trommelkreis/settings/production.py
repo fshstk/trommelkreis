@@ -11,6 +11,8 @@ ALLOWED_HOSTS = [
     "192.168.178.*",
 ]
 
+SECURE_SSL_REDIRECT = True
+
 # Database
 
 DATABASES = {
