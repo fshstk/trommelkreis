@@ -2,17 +2,13 @@
 # NOTE: Changes to this script will only propagate on the 2nd push after change.
 # This is because the branch with the new script is checked out by the previous script...
 
-BRANCH="master"
 PYTHON="/home/trommelkreis_v2/opt/python-3.7.7/bin/python3"
 BASE_DIR="/home/trommelkreis_v2/www"
 MANAGE="${BASE_DIR}/manage.py"
 
 export DJANGO_SETTINGS_MODULE="trommelkreis.settings.production"
 
-printf "Checking out branch to ~/www/...\n"
-# git --work-tree=/home/trommelkreis_v2/www --git-dir=/home/trommelkreis_v2/web.git checkout -f $BRANCH
-
-# TODO: Using without explicit branch to avoid pathspec error:
+printf "Checking out current branch to ~/www/...\n"
 git --work-tree=$BASE_DIR --git-dir=/home/trommelkreis_v2/web.git checkout -f
 
 printf "Updating npm dependencies...\n"
