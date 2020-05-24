@@ -139,6 +139,7 @@ class Command(BaseCommand):
                         self.printerror(
                             "encountered HeaderNotFound error: {}".format(filename)
                         )
+                        continue
 
                     if mp3.info.sketchy:
                         self.printerror("invalid mp3 file: {}".format(filename))
