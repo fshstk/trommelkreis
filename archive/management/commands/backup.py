@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 from django.utils.text import slugify
 
 import os
@@ -8,9 +8,10 @@ from datetime import datetime
 from zipfile import ZipFile
 
 from archive.models import Challenge, Session, Artist, AudioFile
+from archive.management.commands._print import PrintIncluded
 
 
-class Command(BaseCommand):
+class Command(PrintIncluded):
     help = """
     Back up a ZIP archive with archive contents, including database metadata,
     in a format readable by addlocal.py.
@@ -71,19 +72,3 @@ class Command(BaseCommand):
         with open(archivepath, "wb") as f:
             self.print("Writing to {}...".format(archivepath))
             f.write(archive.getvalue())
-
-    # TODO: move these to separate file... _printfunctions.py?
-    def printerror(self, msg):
-        self.stdout.write(self.style.ERROR("ERROR: {}".format(str(msg))))
-
-    def printnotice(self, msg):
-        self.stdout.write(self.style.NOTICE("NOTICE: {}".format(str(msg))))
-
-    def printsuccess(self, msg):
-        self.stdout.write(self.style.SUCCESS("SUCCESS: {}".format(str(msg))))
-
-    def printwarning(self, msg):
-        self.stdout.write(self.style.WARNING("WARNING: {}".format(str(msg))))
-
-    def print(self, msg):
-        self.stdout.write(str(msg))

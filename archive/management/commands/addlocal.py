@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import CommandError
 from django.core.files import File as DjangoFile
 from django.db.utils import IntegrityError
 
@@ -8,9 +8,10 @@ from datetime import datetime
 from mutagen.mp3 import EasyMP3, HeaderNotFoundError
 
 from archive.models import Challenge, Session, Artist, AudioFile
+from archive.management.commands._print import PrintIncluded
 
 
-class Command(BaseCommand):
+class Command(PrintIncluded):
     help = """
     Add files from local directory to database.
     All added files/sessions/challenges must not already be in the database,
@@ -175,18 +176,3 @@ class Command(BaseCommand):
 
                     track.save()
 
-    # TODO: move these to separate file... _printfunctions.py?
-    def printerror(self, msg):
-        self.stdout.write(self.style.ERROR("ERROR: {}".format(str(msg))))
-
-    def printnotice(self, msg):
-        self.stdout.write(self.style.NOTICE("NOTICE: {}".format(str(msg))))
-
-    def printsuccess(self, msg):
-        self.stdout.write(self.style.SUCCESS("SUCCESS: {}".format(str(msg))))
-
-    def printwarning(self, msg):
-        self.stdout.write(self.style.WARNING("WARNING: {}".format(str(msg))))
-
-    def print(self, msg):
-        self.stdout.write(str(msg))
