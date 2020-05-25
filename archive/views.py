@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
 from django.http import HttpResponse
+from django.views.decorators.cache import never_cache
 
 from math import ceil
 from datetime import datetime
@@ -20,6 +21,7 @@ def show_all_sessions(request):
     return render(request, "archive/all_sessions.html", context)
 
 
+@never_cache
 def download_session(request, session):
     """Get all session files as zip archive."""
     session = get_object_or_404(Session, slug=session)
