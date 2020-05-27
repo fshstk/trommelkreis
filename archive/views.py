@@ -22,7 +22,7 @@ def show_all_sessions(request):
     archive = [split_list_in_half(month) for month in Session.grouped_by_month()]
     archive.reverse()  # Reverse chronoloical order
     context = {"archive": archive}  # "archive": sessions.group_by_month
-    return render(request, "archive/all_sessions.html", context)
+    return render(request, "archive/sessions_all.html", context)
 
 
 @never_cache
@@ -51,7 +51,7 @@ def show_single_session(request, session):
     session = get_object_or_404(Session, slug=session)
     files = session.files_by_subsection
     context = {"session": session, "files": files}
-    return render(request, "archive/session.html", context)
+    return render(request, "archive/sessions_single.html", context)
 
 
 def show_all_artists(request):
@@ -63,7 +63,7 @@ def show_all_artists(request):
 def show_single_artist(request, artist):
     artist = get_object_or_404(Artist, slug=artist)
     context = {"artist": artist, "files": artist.audiofile_set.all()}
-    return render(request, "archive/artist.html", context)
+    return render(request, "archive/artists_single.html", context)
 
 
 # def show_all_challenges(request):
@@ -75,7 +75,7 @@ def show_single_artist(request, artist):
 # def show_single_challenge(request, challenge):
 #     challenge = get_object_or_404(Challenge, slug=challenge)
 #     context = {"challenge": challenge, "files": challenge.audiofile_set.all()}
-#     return render(request, "archive/challenge.html", context)
+#     return render(request, "archive/challenges_single.html", context)
 
 
 # Helper functions:
