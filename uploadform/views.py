@@ -41,7 +41,7 @@ def upload_form(request):
             uploaded_file.session = today
             uploaded_file.save()
             return HttpResponseRedirect(
-                reverse("archive:session_view", args=[today.slug])
+                reverse("archive:single_session", args=[today.slug])
             )
     else:
         form = UploadForm()

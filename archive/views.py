@@ -15,7 +15,7 @@ from archive.models import Challenge, Artist, Session
 
 
 def index(request):
-    return redirect("archive:archive_home")
+    return redirect("archive:sessions")
 
 
 def show_all_sessions(request):
