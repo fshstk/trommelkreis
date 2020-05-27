@@ -15,8 +15,12 @@
 			<small class="text-muted">{{ file|duration }}</small>
 		</div>
 		<div class="d-flex justify-content-between">
-			<p class="mb-1 text-muted">{{ file.artist|default:"Anonym" }}</p>
+			<p class="mb-1 text-muted">{{ file.filename }}</p>
 			<small class="text-muted">{{ file.filesize|filesizeformat }}</small>
+		</div>
+		<div class="d-flex justify-content-between">
+			<p class="mb-1 text-muted">{{ file.session.challenge }}</p>
+			<small class="text-muted">{{ file.session|dateformat }}</small>
 		</div>
 	</a>
 	<div class="collapse" id="{{ file.name }}" data-parent="#sessionlist">

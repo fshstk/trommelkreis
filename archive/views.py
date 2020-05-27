@@ -55,9 +55,9 @@ def single_session_unconditional(request, session):
 
 
 def artists(request):
-    artists = Artist.objects.all()
+    artists = Artist.objects.order_by("name")
     context = {"artists": artists}
-    pass
+    return render(request, "archive/artists_all.html", context)
 
 
 def single_artist(request, artist):
