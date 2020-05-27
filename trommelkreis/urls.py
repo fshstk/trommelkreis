@@ -21,11 +21,11 @@ from django.conf.urls.static import static
 from trommelkreis import views
 
 urlpatterns = [
-    path("", views.home),  # TODO: use a redirect here
-    path("home/", views.home),
-    path("info/", views.info),
+    path("", views.index),  # TODO: use a redirect here
+    path("home/", views.home, name="home"),
+    path("info/", views.info, name="info"),
     path("upload/", include("uploadform.urls")),
-    path("abo/", views.subscribe),
+    path("abo/", views.subscribe, name="subscribe"),
     path("archiv/", include("archive.urls")),
     path("admin/", admin.site.urls),
     # Serve MEDIA files through Django (DEBUG only):

@@ -5,7 +5,7 @@ from archive import views
 
 app_name = "archive"
 urlpatterns = [
-    path("", views.show_all_sessions),  # TODO: use a redirect here
+    path("", views.index, name="index"),
     path("sessions/", views.show_all_sessions, name="archive_home"),
     path("artists/", views.show_all_artists, name="artists"),
     path("artists/<artist>", views.show_single_artist, name="single_artist"),

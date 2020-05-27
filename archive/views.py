@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
@@ -12,6 +12,10 @@ from archive.models import Challenge, Artist, Session
 
 
 # Archive views:
+
+
+def index(request):
+    return redirect("archive:archive_home")
 
 
 def show_all_sessions(request):
