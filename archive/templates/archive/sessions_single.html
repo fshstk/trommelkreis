@@ -60,7 +60,7 @@
 
 <div class="d-flex justify-content-between">
 	<span><a href="{% url "archive:index" %}">Archiv</a> / <a href="{% url "archive:sessions" %}">Sessions</a> / {{ session.slug }}</span>
-	<a class="download-link" title="Download" href="{% url "archive:single_session_zip" session.slug %}">
+	<a class="download-link" title="Download" href="{% url "archive:download_session" session.slug %}">
 		{# ZIP Download: #}<span></span></a>
 </div>
 {% endblock %}

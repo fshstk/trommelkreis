@@ -18,7 +18,7 @@ def index(request):
     return redirect("archive:sessions")
 
 
-def show_all_sessions(request):
+def sessions(request):
     archive = [split_list_in_half(month) for month in Session.grouped_by_month()]
     archive.reverse()  # Reverse chronoloical order
     context = {"archive": archive}  # "archive": sessions.group_by_month
@@ -38,41 +38,41 @@ def download_session(request, session):
     return response
 
 
-def show_single_session_if_no_copyright(request, session):
+def single_session_if_no_copyright(request, session):
     session = get_object_or_404(Session, slug=session)
     if not session.copyright_issues:
-        return show_single_session(request, session)
+        return single_session_unconditional(request, session)
     else:
         context = {"session": session}
         return render(request, "archive/cannot_show.html", context)
 
 
-def show_single_session(request, session):
+def single_session_unconditional(request, session):
     session = get_object_or_404(Session, slug=session)
     files = session.files_by_subsection
     context = {"session": session, "files": files}
     return render(request, "archive/sessions_single.html", context)
 
 
-def show_all_artists(request):
+def artists(request):
     artists = Artist.objects.all()
     context = {"artists": artists}
     pass
 
 
-def show_single_artist(request, artist):
+def single_artist(request, artist):
     artist = get_object_or_404(Artist, slug=artist)
     context = {"artist": artist, "files": artist.audiofile_set.all()}
     return render(request, "archive/artists_single.html", context)
 
 
-# def show_all_challenges(request):
+# def challenges(request):
 #     challenges = Challenge.objects.all()
 #     context = {"challenges": challenges}
 #     pass
 
 
-# def show_single_challenge(request, challenge):
+# def single_challenge(request, challenge):
 #     challenge = get_object_or_404(Challenge, slug=challenge)
 #     context = {"challenge": challenge, "files": challenge.audiofile_set.all()}
 #     return render(request, "archive/challenges_single.html", context)
