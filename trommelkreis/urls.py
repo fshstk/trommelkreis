@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from trommelkreis import views
 
 urlpatterns = [
-    path("", views.home),
+    path("", views.home),  # TODO: use a redirect here
     path("home/", views.home),
     path("info/", views.info),
     path("upload/", include("uploadform.urls")),
