@@ -6,54 +6,46 @@ from archive.models import Challenge, Session, Artist, AudioFile
 
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
-    list_display = ("displayname",)
+    list_display = ("challenge", "number_of_tracks", "date")
     prepopulated_fields = {"slug": ("date",)}
 
-    def displayname(self, obj):
-        return "{}: {} {}".format(
-            obj.slug, obj.challenge.name, "©" if obj.challenge.copyright_issues else "",
-        )
-
-    displayname.short_description = "Name"
+    def number_of_tracks(self, obj):
+        return obj.audiofile_set.count()
 
 
 @admin.register(Challenge)
 class ChallengeAdmin(admin.ModelAdmin):
-    list_display = ("displayname",)
+    list_display = ("name", "number_of_sessions", "copyright_ok")
     prepopulated_fields = {"slug": ("name",)}
 
-    def displayname(self, obj):
-        return "{} ({} Session/s)".format(obj.name, obj.session_set.count(),)
+    def number_of_sessions(self, obj):
+        return obj.session_set.count()
 
-    displayname.short_description = "Name"
+    def copyright_ok(self, obj):
+        return not obj.copyright_issues
+
+    copyright_ok.boolean = True
 
 
 @admin.register(Artist)
 class ArtistAdmin(admin.ModelAdmin):
-    list_display = ("displayname",)
+    list_display = ("name", "number_of_tracks")
     prepopulated_fields = {"slug": ("name",)}
 
-    def displayname(self, obj):
-        return "{} ({} Tracks)".format(
-            obj.name if obj.name else "<Anon>", obj.audiofile_set.count(),
-        )
-
-    displayname.short_description = "Name"
+    def number_of_tracks(self, obj):
+        return obj.audiofile_set.count()
 
 
 @admin.register(AudioFile)
 class AudioFileAdmin(admin.ModelAdmin):
-    list_display = ("displayname",)
+    list_display = ("filename", "artist", "duration", "challenge", "date")
     prepopulated_fields = {"slug": ("name",)}
 
-    def displayname(self, obj):
-        return "{}{} ({})".format(
-            obj.filename,
-            " [{}]".format(obj.artist.name) if obj.artist else "",
-            "{:02d}:{:02d}".format(obj.duration // 60, obj.duration % 60),
-        )
+    def duration(self, obj):
+        return "{:02d}:{:02d}".format(obj.duration // 60, obj.duration % 60)
 
-    displayname.short_description = "Name"
+    def challenge(self, obj):
+        return obj.session.challenge
 
-
-# admin.site.register(AudioFile)
+    def date(self, obj):
+        return obj.session.date
