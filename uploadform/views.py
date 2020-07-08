@@ -9,12 +9,18 @@ from uploadform.forms import UploadForm
 
 
 def upload(request):
+    """Show upload form if uploads are open, or an info message if not."""
     config = UploadFormVars.get_solo()
 
     if config.uploads_open:
         return upload_form(request)
     else:
         return render(request, "uploadform/nexttime.html")
+
+
+def preview(request):
+    """Show upload form unconditionally, even when uploads are not open."""
+    return upload_form(request)
 
 
 @csrf_exempt

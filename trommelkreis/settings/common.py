@@ -123,3 +123,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "public", "media")
 
 # Password for unlocking copyrighted media:
 MEDIA_PASSWORD = get_secret("MEDIA_PASSWORD")
+
+# Password for previewing challenge before uploads are open:
+PREVIEW_PASSWORD = get_secret("PREVIEW_PASSWORD")
