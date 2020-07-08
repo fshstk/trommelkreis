@@ -2,6 +2,7 @@ from django.contrib import admin
 from solo.admin import SingletonModelAdmin
 
 from archive.models import Challenge, Session, Artist, AudioFile
+from archive.forms import ChallengeForm
 
 
 @admin.register(Session)
@@ -24,6 +25,7 @@ class ChallengeAdmin(admin.ModelAdmin):
     # list_filter = ("copyright_ok",)
     search_fields = ["name"]
     prepopulated_fields = {"slug": ("name",)}
+    form = ChallengeForm
 
     def number_of_sessions(self, obj):
         return obj.session_set.count()

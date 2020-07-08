@@ -35,6 +35,7 @@ def get_secret(setting, secrets=secrets):
 INSTALLED_APPS = [
     "archive",
     "uploadform.apps.UploadFormConfig",
+    "pagedown.apps.PagedownConfig",
     "compressor",
     "django.contrib.admin",
     "solo.apps.SoloAppConfig",
