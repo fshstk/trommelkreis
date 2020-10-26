@@ -9,9 +9,9 @@ register = template.Library()
 @register.filter
 def filecount(session):
     filecount = len(session.files)
-    if filecount is 0:
+    if filecount == 0:
         return "Keine Einträge"
-    elif filecount is 1:
+    elif filecount == 1:
         return "1 Eintrag"
     else:
         return "{} Einträge".format(filecount)
