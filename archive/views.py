@@ -19,7 +19,14 @@ def index(request):
 
 
 def sessions(request):
-    archive = [split_list_in_half(month) for month in Session.grouped_by_month()]
+    # Remove empty sessions (no files) so they don't get displayed:
+    # (This is a bit confusing because of the nested array.)
+    archive = [
+        [session for session in month if len(session.files) > 0]
+        for month in Session.grouped_by_month()
+    ]
+    # Remove empty months and split into halves:
+    archive = [split_list_in_half(month) for month in archive if len(month) > 0]
     archive.reverse()  # Reverse chronoloical order
     context = {"archive": archive}  # "archive": sessions.group_by_month
     return render(request, "archive/sessions_all.html", context)
