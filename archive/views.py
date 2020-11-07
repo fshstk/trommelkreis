@@ -69,7 +69,7 @@ def artists(request):
 
 def single_artist(request, artist):
     artist = get_object_or_404(Artist, slug=artist)
-    context = {"artist": artist, "files": artist.audiofile_set.all()}
+    context = {"artist": artist, "files": artist.tracks.all()}
     return render(request, "archive/artists_single.html", context)
 
 
@@ -81,7 +81,7 @@ def single_artist(request, artist):
 
 # def single_challenge(request, challenge):
 #     challenge = get_object_or_404(Challenge, slug=challenge)
-#     context = {"challenge": challenge, "files": challenge.audiofile_set.all()}
+#     context = {"challenge": challenge, "files": challenge.tracks.all()}
 #     return render(request, "archive/challenges_single.html", context)
 
 

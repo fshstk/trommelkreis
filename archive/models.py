@@ -80,7 +80,7 @@ class Session(SlugIncluded):
 
     @property
     def files(self):
-        return self.audiofile_set.all()
+        return self.tracks.all()
 
     @property
     def copyright_issues(self):
@@ -90,7 +90,7 @@ class Session(SlugIncluded):
     def files_by_subsection(self):
         grouped_files = []
         for _, group in groupby(
-            self.audiofile_set.order_by("session_subsection"),
+            self.tracks.order_by("session_subsection"),
             key=lambda x: x.session_subsection,
         ):
             filelist = sorted(list(group), key=lambda x: x.name.lower())
@@ -109,7 +109,7 @@ class Artist(SlugIncluded):
 
     @property
     def files(self):
-        return self.audiofile_set.all()
+        return self.tracks.all()
 
 
 def get_upload_path(instance, filename):
@@ -126,7 +126,6 @@ def get_session_subsection():
 
 class AudioFile(SlugIncluded):
     session = models.ForeignKey(
-        # TODO: change audiofile_set to tracks elsewhere in project
         Session,
         related_name="tracks",
         on_delete=models.PROTECT,

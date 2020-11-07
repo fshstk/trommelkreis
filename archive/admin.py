@@ -14,7 +14,7 @@ class SessionAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("date",)}
 
     def number_of_tracks(self, obj):
-        return obj.audiofile_set.count()
+        return obj.tracks.count()
 
     # number_of_tracks.admin_order_field = Count("audiofile")
 
@@ -43,7 +43,7 @@ class ArtistAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
     def number_of_tracks(self, obj):
-        return obj.audiofile_set.count()
+        return obj.tracks.count()
 
 
 @admin.register(AudioFile)
