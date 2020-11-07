@@ -16,15 +16,10 @@ class SessionType(DjangoObjectType):
         fields = ("slug", "date", "challenge", "tracks")
 
 
-class ArtistType(DjangoObjectType):
-    class Meta:
-        model = Artist
-        fields = ("name",)
-
-
 class AudioFileType(DjangoObjectType):
     duration = graphene.String()
     url = graphene.String()
+    artist = graphene.String()
 
     def resolve_url(parent, info):
         base_link = "https://trommelkreis.club"
@@ -34,9 +29,12 @@ class AudioFileType(DjangoObjectType):
         # TODO: this is defined multiple times now. refactor as model property!
         return "{:02d}:{:02d}".format(parent.duration // 60, parent.duration % 60)
 
+    def resolve_artist(parent, info):
+        return parent.artist.name if parent.artist is not None else "(Anonym)"
+
     class Meta:
         model = AudioFile
-        fields = ("name", "artist")
+        fields = ("name",)
 
 
 class Query(graphene.ObjectType):
