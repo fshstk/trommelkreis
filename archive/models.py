@@ -125,7 +125,12 @@ def get_session_subsection():
 
 
 class AudioFile(SlugIncluded):
-    session = models.ForeignKey(Session, on_delete=models.PROTECT)
+    session = models.ForeignKey(
+        # TODO: change audiofile_set to tracks elsewhere in project
+        Session,
+        related_name="tracks",
+        on_delete=models.PROTECT,
+    )
     session_subsection = models.CharField(
         max_length=50, blank=True, default=get_session_subsection
     )
