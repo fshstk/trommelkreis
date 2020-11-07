@@ -1,44 +1,55 @@
 from graphene_django import DjangoObjectType
 import graphene
 
-import archive.models
+from archive.models import Challenge, Session, Artist, AudioFile
 
 
-class Challenge(DjangoObjectType):
+class ChallengeType(DjangoObjectType):
     class Meta:
-        model = archive.models.Challenge
-        fields = ("id", "name", "blurb", "description")
+        model = Challenge
+        fields = ("name", "blurb", "description")
 
 
-class Session(DjangoObjectType):
+class SessionType(DjangoObjectType):
     class Meta:
-        model = archive.models.Session
-        fields = ("id", "slug", "date", "challenge")
+        model = Session
+        fields = ("slug", "date", "challenge", "tracks")
 
 
-class Artist(DjangoObjectType):
+class ArtistType(DjangoObjectType):
     class Meta:
-        model = archive.models.Artist
-        fields = ("id", "name")
+        model = Artist
+        fields = ("name",)
 
 
-class AudioFile(DjangoObjectType):
+class AudioFileType(DjangoObjectType):
+    duration = graphene.String()
+    url = graphene.String()
+
+    def resolve_url(parent, info):
+        base_link = "https://trommelkreis.club"
+        return f"{base_link}{parent.url}"
+
+    def resolve_duration(parent, info):
+        # TODO: this is defined multiple times now. refactor as model property!
+        return "{:02d}:{:02d}".format(parent.duration // 60, parent.duration % 60)
+
     class Meta:
-        model = archive.models.AudioFile
-        fields = ("id", "name", "artist")
+        model = AudioFile
+        fields = ("name", "artist")
 
 
 class Query(graphene.ObjectType):
-    sessions = graphene.List(Session)
-    session_by_slug = graphene.Field(Session, slug=graphene.String(required=True))
+    sessions = graphene.List(SessionType)
+    session = graphene.Field(SessionType, slug=graphene.String(required=True))
 
     def resolve_sessions(self, info):
-        return archive.models.Session.objects.all()
+        return Session.objects.all()
 
-    def resolve_session_by_slug(self, info, slug):
+    def resolve_session(self, info, slug):
         try:
-            return archive.models.Session.objects.get(slug=slug)
-        except archive.models.Session.DoesNotExist:
+            return Session.objects.get(slug=slug)
+        except Session.DoesNotExist:
             return None
 
 
