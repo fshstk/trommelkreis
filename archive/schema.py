@@ -3,6 +3,8 @@ import graphene
 
 from archive.models import Challenge, Session, Artist, AudioFile
 
+base_link = "https://trommelkreis.club"
+
 
 class ChallengeType(DjangoObjectType):
     class Meta:
@@ -11,6 +13,12 @@ class ChallengeType(DjangoObjectType):
 
 
 class SessionType(DjangoObjectType):
+    url = graphene.String()
+
+    def resolve_url(parent, info):
+        # TODO: do this properly
+        return f"{base_link}/archiv/sessions/{parent.slug}/"
+
     class Meta:
         model = Session
         fields = ("slug", "date", "challenge", "tracks")
@@ -22,7 +30,6 @@ class AudioFileType(DjangoObjectType):
     artist = graphene.String()
 
     def resolve_url(parent, info):
-        base_link = "https://trommelkreis.club"
         return f"{base_link}{parent.url}"
 
     def resolve_duration(parent, info):
