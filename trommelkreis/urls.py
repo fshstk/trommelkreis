@@ -30,6 +30,6 @@ urlpatterns = [
     path("abo/", views.subscribe, name="subscribe"),
     path("archiv/", include("archive.urls")),
     path("admin/", admin.site.urls),
-    path("api", csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path("api", csrf_exempt(GraphQLView.as_view(graphiql=settings.DEBUG))),
     # Serve MEDIA files through Django (DEBUG only):
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
