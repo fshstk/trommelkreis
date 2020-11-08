@@ -41,7 +41,7 @@ class AudioFileType(DjangoObjectType):
 
     class Meta:
         model = AudioFile
-        fields = ("name",)
+        fields = ("name", "id", "session_subsection")
 
 
 class Query(graphene.ObjectType):
