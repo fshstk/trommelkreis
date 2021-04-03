@@ -18,8 +18,12 @@ from django.core.exceptions import ImproperlyConfigured
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Get all secret info from a file that's ignored by version control:
-with open(os.path.join(BASE_DIR, "secrets.json")) as secrets_file:
-    secrets = json.load(secrets_file)
+try:
+    with open(os.path.join(BASE_DIR, "secrets.json")) as secrets_file:
+        secrets = json.load(secrets_file)
+except FileNotFoundError:
+    print("No secrets.json file found. Reverting to env variables...")
+    secrets = os.environ
 
 
 def get_secret(setting, secrets=secrets):
@@ -87,9 +91,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 
