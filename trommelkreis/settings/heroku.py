@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import django_heroku
 
-DEBUG = bool(os.environ.get("DEBUG"))
+# DEBUG is a string and could be "1", "true" or "True":
+DEBUG = os.environ.get("DEBUG").lower() in ["1", "true"]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
