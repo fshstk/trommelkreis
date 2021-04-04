@@ -97,11 +97,12 @@ MEDIA_PASSWORD = os.environ.get("MEDIA_PASSWORD")
 # Password for previewing challenge before uploads are open:
 PREVIEW_PASSWORD = os.environ.get("PREVIEW_PASSWORD")
 
+# This line serves no purpose other than to calm down the Python linter during development...
+DATABASES = {"default": None}
+
 # A few default configs, including setting up static files and the database from DATABASE_URL:
 django_heroku.settings(locals())
 
 # The following line is required since dj_database_url sets the "sslmode=required" option, which
 # throws an error with mysql databases:
-# (The DATABASES={} line serves no purpose other than to calm down the Python linter during development...)
-DATABASES = {"default": None}
 del DATABASES["default"]["OPTIONS"]["sslmode"]
