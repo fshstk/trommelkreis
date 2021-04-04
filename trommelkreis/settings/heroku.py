@@ -107,3 +107,8 @@ django_heroku.settings(locals())
 # The following line is required since dj_database_url sets the "sslmode=required" option, which
 # throws an error with mysql databases:
 del DATABASES["default"]["OPTIONS"]["sslmode"]
+
+# Enable mysql strict mode (recommended for data integrity):
+DATABASES["default"]["OPTIONS"].update(
+    {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"}
+)
