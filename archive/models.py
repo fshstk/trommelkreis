@@ -143,7 +143,10 @@ class AudioFile(SlugIncluded):
 
     @property
     def filesize(self):
-        return self.data.size
+        try:
+            return self.data.size
+        except FileNotFoundError:
+            return 0
 
     @property
     def filename(self):
@@ -166,7 +169,10 @@ class AudioFile(SlugIncluded):
 
     @property
     def duration(self):
-        return self.data.duration
+        try:
+            return self.data.duration
+        except FileNotFoundError:
+            return 0
 
     def save(self, *args, **kwargs):
         mp3 = self.mp3
