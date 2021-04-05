@@ -32,6 +32,17 @@
 {% endif %}
 <div id="sessionlist" class="list-group text-left">
 	{% for file in subsection %}
+	{% if file.filesize == 0 %}
+	<a href="#" class="list-group-item disabled bg-secondary">
+		<div class="d-flex justify-content-between">
+			<h5 class="mb-1 text-truncate text-white">{{ file.name }}</h5>
+		</div>
+		<div class="d-flex justify-content-between">
+			<p class="mb-1 text-truncate text-white">{{ file.artist|default:"Anonym" }}</p>
+			<small class="text-warning">verloren</small>
+		</div>
+	</a>
+	{% else %}
 	<a href="#{{ file.slug }}" class="list-group-item list-group-item-action" data-toggle="collapse">
 		<div class="d-flex justify-content-between">
 			<h5 class="mb-1 text-truncate">{{ file.name }}</h5>
@@ -52,6 +63,7 @@
 		</div>
 		<hr>
 	</div>
+	{% endif %}
 	{% endfor %}
 </div>
 
