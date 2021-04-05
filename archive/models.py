@@ -175,8 +175,8 @@ class AudioFile(SlugIncluded):
             return 0
 
     def save(self, *args, **kwargs):
-        mp3 = self.mp3
         super().save(*args, **kwargs)
+        mp3 = self.mp3
         if self.name:
             mp3["title"] = self.name
         if self.artist:
