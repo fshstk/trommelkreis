@@ -8,6 +8,7 @@ ALLOWED_HOSTS = [
     "trommelkreis.club",
     "www.trommelkreis.club",
     "localhost",
+    "127.0.0.1",
     "192.168.178.*",
 ]
 
