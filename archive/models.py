@@ -153,14 +153,6 @@ class AudioFile(SlugIncluded):
         return os.path.basename(self.data.name)
 
     @property
-    def mp3(self):
-        """Return an mp3 based on the path, if possible. Else return an mp3 based on the data."""
-        try:
-            return EasyMP3(self.data.path)
-        except NotImplementedError:
-            return EasyMP3(self.data)
-
-    @property
     def url(self):
         return self.data.url
 
@@ -176,11 +168,11 @@ class AudioFile(SlugIncluded):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        mp3 = self.mp3
+        # NOTE: this will fail when using storage backends that don't support
+        # file paths (e.g. AWS S3):
+        mp3 = EasyMP3(self.data.path)
         if self.name:
             mp3["title"] = self.name
         if self.artist:
             mp3["artist"] = self.artist.name
-        # NOTE: this will fail when using storage backends that don't support
-        # file paths (e.g. AWS S3):
         mp3.save()
