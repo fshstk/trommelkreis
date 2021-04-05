@@ -175,4 +175,5 @@ class AudioFile(SlugIncluded):
             mp3["title"] = self.name
         if self.artist:
             mp3["artist"] = self.artist.name
+        mp3["album"] = f"Digitaler Trommelkreis | {self.session.slug}"
         mp3.save()
