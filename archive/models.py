@@ -9,6 +9,7 @@ from mutagen.mp3 import EasyMP3
 import os.path
 
 from uploadform.models import UploadFormVars
+from archive.MP3Field import MP3Field
 
 
 class SlugIncluded(models.Model):
@@ -133,10 +134,9 @@ class AudioFile(SlugIncluded):
     session_subsection = models.CharField(
         max_length=50, blank=True, default=get_session_subsection
     )
-    data = models.FileField(upload_to=get_upload_path)
+    data = MP3Field(upload_to=get_upload_path)
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
-    duration = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -164,9 +164,12 @@ class AudioFile(SlugIncluded):
     def slug_basename(self):
         return self.name
 
+    @property
+    def duration(self):
+        return self.data.duration
+
     def save(self, *args, **kwargs):
         mp3 = self.mp3
-        self.duration = round(self.mp3.info.length)
         super().save(*args, **kwargs)
         if self.name:
             mp3["title"] = self.name
