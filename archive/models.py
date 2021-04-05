@@ -149,12 +149,8 @@ class AudioFile(SlugIncluded):
         return os.path.basename(self.data.name)
 
     @property
-    def filepath(self):
-        return self.data.path
-
-    @property
     def mp3(self):
-        return EasyMP3(self.filepath)
+        return EasyMP3(self.data)
 
     @property
     def duration(self):

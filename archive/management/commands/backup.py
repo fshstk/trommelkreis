@@ -55,7 +55,7 @@ class Command(PrintIncluded):
                         savepath = os.path.join(seshdir, dirname, file.filename)
                     else:
                         savepath = os.path.join(seshdir, "files", file.filename)
-                    zipfile.write(file.filepath, savepath)
+                    zipfile.writestr(savepath, file.data.read())
 
                 sessioninfo = {
                     "session.date": seshdate,

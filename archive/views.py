@@ -104,6 +104,6 @@ def compress_files(filelist, archivename):
     zipdata = io.BytesIO()
     with ZipFile(zipdata, "w") as zipfile:
         for file in filelist:
-            zipfile.write(file.filepath, file.filename)
+            zipfile.writestr(file.filename, file.data.read())
     zipdata.seek(0)
     return zipdata
