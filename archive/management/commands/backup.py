@@ -52,7 +52,7 @@ class Command(PrintIncluded):
                     if file.session_subsection:
                         dirname = "files_{}".format(slugify(file.session_subsection))
                         filedirs[dirname] = file.session_subsection
-                        savepath = os.path.join(seshdir, dirname, file.filename,)
+                        savepath = os.path.join(seshdir, dirname, file.filename)
                     else:
                         savepath = os.path.join(seshdir, "files", file.filename)
                     zipfile.write(file.filepath, savepath)
