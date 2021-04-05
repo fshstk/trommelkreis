@@ -136,6 +136,7 @@ class AudioFile(SlugIncluded):
     data = models.FileField(upload_to=get_upload_path)
     artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
+    duration = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -150,11 +151,11 @@ class AudioFile(SlugIncluded):
 
     @property
     def mp3(self):
-        return EasyMP3(self.data)
-
-    @property
-    def duration(self):
-        return round(self.mp3.info.length)
+        """Return an mp3 based on the path, if possible. Else return an mp3 based on the data."""
+        try:
+            return EasyMP3(self.data.path)
+        except NotImplementedError:
+            return EasyMP3(self.data)
 
     @property
     def url(self):
@@ -164,10 +165,13 @@ class AudioFile(SlugIncluded):
         return self.name
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
         mp3 = self.mp3
+        self.duration = round(self.mp3.info.length)
+        super().save(*args, **kwargs)
         if self.name:
             mp3["title"] = self.name
         if self.artist:
             mp3["artist"] = self.artist.name
+        # NOTE: this will fail when using storage backends that don't support
+        # file paths (e.g. AWS S3):
         mp3.save()
