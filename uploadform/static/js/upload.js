@@ -1,9 +1,5 @@
 "use strict";
 
-function passwordValid() {
-  return false;
-}
-
 function validatePassword() {
   let field = $("#id_password")[0];
   let password = $("#id_password").val();
