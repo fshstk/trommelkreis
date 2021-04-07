@@ -31,6 +31,9 @@ $("form").submit(function (event) {
   if ($("form")[0].checkValidity() === false) {
     event.preventDefault();
     event.stopPropagation();
+  } else {
+    $("#upload-button").addClass("disabled loading");
+    $("#upload-button").text("Dein Track lädt hoch...");
   }
   $("form").addClass("was-validated");
 });
