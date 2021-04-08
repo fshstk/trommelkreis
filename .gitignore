@@ -10,6 +10,7 @@ node_modules
 
 # Misc. stuff
 /ignore
+/staticfiles
 
 # VS Code preferences
 .vscode/
