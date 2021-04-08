@@ -93,6 +93,12 @@ STATICFILES_FINDERS = [
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
+# Compressed assets (CSS) will fail to be generated before running the server
+# unless manage.py compress is run. The following line ensures that NOT running
+# this command will result in a failed build (which is preferable to 404 errors
+# that might go unnoticed):
+COMPRESS_OFFLINE = True
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.environ.get("MEDIA_ROOT")
 
