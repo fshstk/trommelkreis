@@ -1,2 +1,3 @@
 heroku/python
 heroku/nodejs
+https://github.com/ojarva/django-compressor-heroku-buildpack.git
