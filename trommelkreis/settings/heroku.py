@@ -1,5 +1,5 @@
 """
-These are the Django settings for a Herok/Dokku deployment.
+These are the Django settings for a Heroku/Dokku deployment.
 
 The following env variables should be set:
 SECRET_KEY:             [Unique secret key for Django app]
