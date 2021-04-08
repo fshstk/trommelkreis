@@ -28,7 +28,7 @@ $("form").submit(function (event) {
     event.preventDefault();
     event.stopPropagation();
   } else {
-    $("#upload-button").addClass("disabled loading");
+    $("#upload-button").addClass("disabled loading").attr("disabled", true)
     $("#upload-button").text("Dein Track lädt hoch…");
   }
   $("form").addClass("was-validated");
