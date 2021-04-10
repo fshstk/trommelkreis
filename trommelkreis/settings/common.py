@@ -123,7 +123,14 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "public", "static")
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "trommelkreis", "static")]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "trommelkreis", "static"),
+    os.path.join(
+        BASE_DIR, "node_modules", "@fortawesome", "fontawesome-free", "webfonts"
+    ),
+    os.path.join(BASE_DIR, "node_modules", "ubuntu-fontface", "fonts"),
+]
+
 STATICFILES_FINDERS = [
     "compressor.finders.CompressorFinder",
     "django.contrib.staticfiles.finders.FileSystemFinder",
