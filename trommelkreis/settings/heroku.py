@@ -84,7 +84,14 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "trommelkreis", "static")]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "trommelkreis", "static"),
+    os.path.join(
+        BASE_DIR, "node_modules", "@fortawesome", "fontawesome-free", "webfonts"
+    ),
+    os.path.join(BASE_DIR, "node_modules", "ubuntu-fontface", "fonts"),
+]
+
 STATICFILES_FINDERS = [
     "compressor.finders.CompressorFinder",
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -92,6 +99,7 @@ STATICFILES_FINDERS = [
 ]
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
+LIBSASS_OUTPUT_STYLE = "nested" if DEBUG else "compressed"
 
 # Compressed assets (CSS) will fail to be generated before running the server
 # unless manage.py compress is run. The following line ensures that NOT running
