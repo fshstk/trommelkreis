@@ -89,6 +89,7 @@ STATICFILES_DIRS = [
     os.path.join(
         BASE_DIR, "node_modules", "@fortawesome", "fontawesome-free", "webfonts"
     ),
+    os.path.join(BASE_DIR, "node_modules", "ubuntu-fontface", "fonts"),
 ]
 
 STATICFILES_FINDERS = [
