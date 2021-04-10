@@ -87,10 +87,8 @@ USE_TZ = True
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "trommelkreis", "static"),
-    os.path.join(
-        BASE_DIR, "node_modules", "@fortawesome", "fontawesome-free", "webfonts"
-    ),
-    os.path.join(BASE_DIR, "node_modules", "ubuntu-fontface", "fonts"),
+    os.path.join(BASE_DIR, "_fonts"),
+    os.path.join(BASE_DIR, "_scripts"),
 ]
 
 STATICFILES_FINDERS = [
