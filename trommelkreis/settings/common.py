@@ -37,6 +37,7 @@ def get_secret(setting, secrets=secrets):
 # Application definition
 
 INSTALLED_APPS = [
+    "django_gulp",
     "archive",
     "uploadform.apps.UploadFormConfig",
     "pagedown.apps.PagedownConfig",
