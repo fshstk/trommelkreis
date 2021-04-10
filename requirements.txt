@@ -1,6 +1,7 @@
 # Direct dependencies:
 # (These are packages that must be manually installed for the project to run.)
 django-compressor==2.4
+django-gulp==4.1.0
 django-heroku==0.3.1
 django-libsass==0.8
 django-pagedown==2.2.0

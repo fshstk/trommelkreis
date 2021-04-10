@@ -23,6 +23,7 @@ DEBUG = os.environ.get("DEBUG").lower() in ["1", "true"]
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 INSTALLED_APPS = [
+    "django_gulp",
     "archive",
     "uploadform.apps.UploadFormConfig",
     "pagedown.apps.PagedownConfig",
