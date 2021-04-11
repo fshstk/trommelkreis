@@ -1,6 +1,6 @@
 const { series, src, dest } = require("gulp");
 
-function fonts() {
+function copy_fonts() {
     const files = [
         "node_modules/@fortawesome/fontawesome-free/webfonts/*",
         "node_modules/ubuntu-fontface/fonts/*",
@@ -8,7 +8,7 @@ function fonts() {
     return src(files).pipe(dest("_fonts"));
 }
 
-function scripts() {
+function copy_scripts() {
     const files = [
         "node_modules/jquery/dist/jquery.min.js",
         "node_modules/popper.js/dist/popper.min.js",
@@ -22,4 +22,4 @@ function scripts() {
 exports.default = (cb) => { cb(); };
 
 // (This is called when python manage.py collectstatic is executed.)
-exports.build = series(fonts, scripts);
+exports.build = series(copy_fonts, copy_scripts);
