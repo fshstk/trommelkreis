@@ -37,6 +37,7 @@ def get_secret(setting, secrets=secrets):
 # Application definition
 
 INSTALLED_APPS = [
+    "django_gulp",
     "archive",
     "uploadform.apps.UploadFormConfig",
     "pagedown.apps.PagedownConfig",
@@ -125,10 +126,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "public", "static")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "trommelkreis", "static"),
-    os.path.join(
-        BASE_DIR, "node_modules", "@fortawesome", "fontawesome-free", "webfonts"
-    ),
-    os.path.join(BASE_DIR, "node_modules", "ubuntu-fontface", "fonts"),
+    os.path.join(BASE_DIR, "_fonts"),
+    os.path.join(BASE_DIR, "_scripts"),
 ]
 
 STATICFILES_FINDERS = [

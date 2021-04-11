@@ -17,3 +17,7 @@ node_modules
 
 # Sensitive info:
 /secrets.json
+
+# Generated static file folders:
+_fonts
+_scripts

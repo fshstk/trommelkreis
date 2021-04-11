@@ -23,6 +23,7 @@ DEBUG = os.environ.get("DEBUG").lower() in ["1", "true"]
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 INSTALLED_APPS = [
+    "django_gulp",
     "archive",
     "uploadform.apps.UploadFormConfig",
     "pagedown.apps.PagedownConfig",
@@ -86,10 +87,8 @@ USE_TZ = True
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "trommelkreis", "static"),
-    os.path.join(
-        BASE_DIR, "node_modules", "@fortawesome", "fontawesome-free", "webfonts"
-    ),
-    os.path.join(BASE_DIR, "node_modules", "ubuntu-fontface", "fonts"),
+    os.path.join(BASE_DIR, "_fonts"),
+    os.path.join(BASE_DIR, "_scripts"),
 ]
 
 STATICFILES_FINDERS = [
@@ -99,7 +98,6 @@ STATICFILES_FINDERS = [
 ]
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
-LIBSASS_OUTPUT_STYLE = "nested" if DEBUG else "compressed"
 
 # Compressed assets (CSS) will fail to be generated before running the server
 # unless manage.py compress is run. The following line ensures that NOT running
