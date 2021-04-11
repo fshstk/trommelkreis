@@ -98,7 +98,6 @@ STATICFILES_FINDERS = [
 ]
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
-LIBSASS_OUTPUT_STYLE = "nested" if DEBUG else "compressed"
 
 # Compressed assets (CSS) will fail to be generated before running the server
 # unless manage.py compress is run. The following line ensures that NOT running
