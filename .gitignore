@@ -6,18 +6,12 @@ node_modules
 *.map
 
 # All (collected) static files, archive, etc.
-/public
-
-# Misc. stuff
-/ignore
+/media
 /staticfiles
-
-# VS Code preferences
-.vscode/
-
-# Sensitive info:
-/secrets.json
-
-# Generated static file folders:
 _fonts
 _scripts
+
+# Misc. stuff & sensitive info:
+.env
+/ignore
+.vscode/
