@@ -135,7 +135,7 @@ class AudioFile(SlugIncluded):
         max_length=50, blank=True, default=get_session_subsection
     )
     data = MP3Field(upload_to=get_upload_path)
-    artist = models.ForeignKey(Artist, blank=True, null=True, on_delete=models.SET_NULL)
+    artist = models.ForeignKey(Artist, blank=True, null=True, related_name="tracks", on_delete=models.SET_NULL)
     name = models.CharField(max_length=200)
 
     def __str__(self):
