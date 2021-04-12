@@ -42,3 +42,11 @@ def month(session):
 def year(session):
     # return session.date.strftime("%Y")
     return django_date(session.date, "Y")
+
+
+@register.filter
+def css_friendly_id(id):
+    # CSS IDs cannot start with a digit
+    if id[0].isdigit():
+        return "_" + id
+    return id
