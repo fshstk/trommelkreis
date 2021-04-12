@@ -32,17 +32,17 @@ def sessions(request):
     return render(request, "archive/sessions_all.html", context)
 
 
-@never_cache
-def download_session(request, session):
-    """Get all session files as zip archive."""
-    session = get_object_or_404(Session, slug=session)
-    # files = [file.filepath for file in session.files]
-    archivename = "{}.zip".format(session)
-    zipfile = compress_files(session.files, archivename)
+# @never_cache
+# def download_session(request, session):
+#     """Get all session files as zip archive."""
+#     session = get_object_or_404(Session, slug=session)
+#     # files = [file.filepath for file in session.files]
+#     archivename = "{}.zip".format(session)
+#     zipfile = compress_files(session.files, archivename)
 
-    response = HttpResponse(zipfile, content_type="application/zip")
-    response["Content-Disposition"] = "attachment; filename={}".format(archivename)
-    return response
+#     response = HttpResponse(zipfile, content_type="application/zip")
+#     response["Content-Disposition"] = "attachment; filename={}".format(archivename)
+#     return response
 
 
 def single_session_if_no_copyright(request, session):
@@ -99,11 +99,11 @@ def split_list_in_half(list):
     return [first_half, second_half]
 
 
-def compress_files(filelist, archivename):
-    """Takes in a list of AudioFile objects and archive name, and returns ZIP file as BytesIO object."""
-    zipdata = io.BytesIO()
-    with ZipFile(zipdata, "w") as zipfile:
-        for file in filelist:
-            zipfile.writestr(file.filename, file.data.read())
-    zipdata.seek(0)
-    return zipdata
+# def compress_files(filelist, archivename):
+#     """Takes in a list of AudioFile objects and archive name, and returns ZIP file as BytesIO object."""
+#     zipdata = io.BytesIO()
+#     with ZipFile(zipdata, "w") as zipfile:
+#         for file in filelist:
+#             zipfile.writestr(file.filename, file.data.read())
+#     zipdata.seek(0)
+#     return zipdata
