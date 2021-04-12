@@ -1,26 +1,22 @@
 """
-These are the Django settings for a Heroku/Dokku deployment.
-
 The following env variables should be set:
 SECRET_KEY:             [Unique secret key for Django app]
 DATABASE_URL:           [mysql://db_user:db_password@db_host:db_port/db_name]
 DEBUG:                  [Enable debug mode (1 or 0)]
-DJANGO_SETTINGS_MODULE: trommelkreis.settings.heroku
-MEDIA_ROOT:             [Place in file system where media files are stored.
-                        Make sure that this is a mounted persistent storage
-                        volume]
 MEDIA_PASSWORD:         [URL Suffix for copyrighted sessions]
 PREVIEW_PASSWORD:       [URL Suffix for previewing unpublished challenges]
-WEB_CONCURRENCY:        [How many worker proceses to use (3)]
 """
 
 import os
 import django_heroku
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 # DEBUG is a string and could be "1", "true" or "True":
 DEBUG = os.environ.get("DEBUG").lower() in ["1", "true"]
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 INSTALLED_APPS = [
     "django_gulp",
@@ -106,7 +102,7 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 COMPRESS_OFFLINE = True
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.environ.get("MEDIA_ROOT")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Password for unlocking copyrighted media:
 MEDIA_PASSWORD = os.environ.get("MEDIA_PASSWORD")

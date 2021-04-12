@@ -1,5 +1,6 @@
 # Direct dependencies:
 # (These are packages that must be manually installed for the project to run.)
+python-dotenv==0.17.0
 django-compressor==2.4
 django-gulp==4.1.0
 django-heroku==0.3.1
