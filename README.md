@@ -12,7 +12,7 @@ ID3 metadata is automatically parsed by the upload script and written to the dat
 
 The Django admin interface makes it easy to add *sessions*/*challenges*, as well as manage uploaded files.
 
-A GraphQL-based API exists, and a [Discord bot](/fshstk/trommelbot) has been developed for group listening sessions after each workshop is concluded.
+A GraphQL-based API exists, and a [Discord bot](https://github.com/fshstk/trommelbot) has been developed for group listening sessions after each workshop is concluded.
 
 ## Deployment
 
