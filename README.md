@@ -16,14 +16,16 @@ A GraphQL-based API exists, and a [Discord bot](https://github.com/fshstk/tromme
 
 ## Deployment
 
-`Procfile` and `.buildpacks` files for Heroku-compatible deployments are included, so if you want to deploy your own version of this site it shouldn't be too complicated. The original site is hosted and deployed using [Dokku](https://dokku.com/).
-
 You should be able to deploy this app in three easy steps:
-1. Install [Heroku](https://heroku.com).
-2. Clone this repository.
-3. Follow the Heroku instructions on how to deploy an app.
 
-Additionally, you must make sure the following env variables are set in your app dashboard:
+1. Install [Docker](https://docker.com);
+2. Clone this repository;
+3. `cd` to the repository directory;
+4. Run `docker build . -t trommelkreis`;
+5. Run `docker run -p 5000:5000 trommelkreis`;
+6. Navigate to [localhost:5000](http://localhost:5000).
+
+You must make sure the following env variables are set in your app dashboard:
 
 - `DEBUG` (1 or 0)
 - `SECRET_KEY` (unique app key required by Django)
