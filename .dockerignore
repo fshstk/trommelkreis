@@ -24,3 +24,5 @@ media
 staticfiles
 _fonts
 _scripts
+
+docker-compose.yml
