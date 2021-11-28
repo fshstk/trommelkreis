@@ -9,12 +9,8 @@ PREVIEW_PASSWORD:       [URL Suffix for previewing unpublished challenges]
 
 import os
 import dj_database_url
-from dotenv import load_dotenv
 
-load_dotenv()  # take environment variables from .env.
-
-# DEBUG is a string and could be "1", "true" or "True":
-DEBUG = os.environ.get("DEBUG").lower() in ["1", "true"]
+DEBUG = os.environ.get("DEBUG", "0") == "1"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -110,13 +106,13 @@ STATIC_URL = "/static/"
 os.makedirs(STATIC_ROOT, exist_ok=True)
 
 # Password for unlocking copyrighted media:
-MEDIA_PASSWORD = os.environ.get("MEDIA_PASSWORD")
+MEDIA_PASSWORD = os.environ.get("MEDIA_PASSWORD", "_")
 
 # Password for previewing challenge before uploads are open:
-PREVIEW_PASSWORD = os.environ.get("PREVIEW_PASSWORD")
+PREVIEW_PASSWORD = os.environ.get("PREVIEW_PASSWORD", "_")
 
 DATABASES = {"default": dj_database_url.config()}
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "_")
 
 ALLOWED_HOSTS = "*"
