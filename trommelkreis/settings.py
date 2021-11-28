@@ -8,7 +8,7 @@ PREVIEW_PASSWORD:       [URL Suffix for previewing unpublished challenges]
 """
 
 import os
-import django_heroku
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
@@ -38,6 +38,7 @@ GRAPHENE = {"SCHEMA": "archive.schema.schema"}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -94,6 +95,7 @@ STATICFILES_FINDERS = [
 ]
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Compressed assets (CSS) will fail to be generated before running the server
 # unless manage.py compress is run. The following line ensures that NOT running
@@ -103,6 +105,9 @@ COMPRESS_OFFLINE = True
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = "/static/"
+os.makedirs(STATIC_ROOT, exist_ok=True)
 
 # Password for unlocking copyrighted media:
 MEDIA_PASSWORD = os.environ.get("MEDIA_PASSWORD")
@@ -110,17 +115,8 @@ MEDIA_PASSWORD = os.environ.get("MEDIA_PASSWORD")
 # Password for previewing challenge before uploads are open:
 PREVIEW_PASSWORD = os.environ.get("PREVIEW_PASSWORD")
 
-# This line serves no purpose other than to calm down the Python linter during development...
-DATABASES = {"default": None}
+DATABASES = {"default": dj_database_url.config()}
 
-# A few default configs, including setting up static files and the database from DATABASE_URL:
-django_heroku.settings(locals())
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# The following line is required since dj_database_url sets the "sslmode=required" option, which
-# throws an error with mysql databases:
-del DATABASES["default"]["OPTIONS"]["sslmode"]
-
-# Enable mysql strict mode (recommended for data integrity):
-DATABASES["default"]["OPTIONS"].update(
-    {"init_command": "SET sql_mode='STRICT_TRANS_TABLES'"}
-)
+ALLOWED_HOSTS = "*"
