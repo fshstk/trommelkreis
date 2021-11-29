@@ -66,7 +66,7 @@ function getElementsByClass(searchClass, scope, tag) {
 	if (tag == null) tag = '*';
 	var els = scope.getElementsByTagName(tag);
 	var elsLen = els.length;
-	var pattern = new RegExp("(^|\s)"+searchClass+"(\s|$)");
+	var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
 	for (var i = 0, j = 0; i < elsLen; i++) {
 		if ( pattern.test(els[i].className) ) {
 			classElements[j] = els[i];
