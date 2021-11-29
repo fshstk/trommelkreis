@@ -20,7 +20,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: fshstk/trommelkreis:${{ github.sha }}
+          tags: |
+            fshstk/trommelkreis:${{ github.sha }}
+            fshstk/trommelkreis:latest
 
       - name: Deploy website to trommelkreis.club
         uses: appleboy/ssh-action@master
