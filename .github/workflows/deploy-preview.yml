@@ -15,6 +15,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -22,6 +25,8 @@ jobs:
           tags: |
             fshstk/trommelkreis:${{ github.sha }}
             fshstk/trommelkreis:preview
+          cache-from: type=registry,ref=fshstk/trommelkreis:preview
+          cache-to: type=inline
 
       - name: Deploy website to trommelkreis.club
         uses: appleboy/ssh-action@master
