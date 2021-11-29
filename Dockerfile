@@ -22,8 +22,8 @@ ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:5000", "trommelkreis.wsgi"]
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r ./requirements.txt
 
-COPY --chown=pn package.json package-lock.json ./
-RUN npm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
 
 ################################################################################
