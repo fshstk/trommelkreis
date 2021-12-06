@@ -19,8 +19,11 @@ ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:5000", "trommelkreis.wsgi"]
 # Python / Node
 ################################################################################
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r ./requirements.txt
+RUN pip install --no-cache-dir poetry==1.1.11
+
+COPY pyproject.toml poetry.lock ./
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-dev
 
 COPY package.json package-lock.json ./
 RUN npm ci
