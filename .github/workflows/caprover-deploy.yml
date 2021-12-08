@@ -28,10 +28,10 @@ jobs:
           cache-from: type=registry,ref=fshstk/trommelkreis:preview
           cache-to: type=inline
 
-      - name: Deploy website to trommelkreis.fshstk.ml
+      - name: "Deploy website to trommelkreis.fshstk.ml"
         uses: floms/action-caprover@v1
         with:
-          host: https://captain.fshstk.ml
-          password: ${{ secrets.CAPROVER_PASSWORD }}
-          app: trommelkreis
-          image: fshstk/trommelkreis:${{ github.sha }}
+          host: "https://captain.fshstk.ml"
+          password: "${{ secrets.CAPROVER_PASSWORD }}"
+          app: "trommelkreis"
+          image: "fshstk/trommelkreis:${{ github.sha }}"
