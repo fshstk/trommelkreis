@@ -1,19 +1,13 @@
-node_modules
-**/__pycache__
-
-# Compiled CSS:
-*.css
-*.map
-
-# All (collected) static files, archive, etc.
 /media
-/staticfiles
-_fonts
-_scripts
-
-# Misc. stuff & sensitive info:
-.env
 /ignore
 .vscode/
-
-docker-compose.yml
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
