@@ -33,5 +33,5 @@ RUN npm ci
 
 COPY --chown=pn . .
 
-RUN python manage.py collectstatic --noinput \
-    && python manage.py compress --force
+RUN django-admin collectstatic --noinput \
+    && django-admin compress --force
