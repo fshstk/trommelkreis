@@ -38,7 +38,7 @@ nav {
       @extend %fa-icon;
       @extend .fas;
       &:before {
-        content: fa-content($fa-var-home);
+        content: fa-content($fa-var-house);
       }
     }
   }
@@ -87,9 +87,9 @@ main {
     span {
       // @extend %fa-icon;
       @extend .fas;
-      @extend .fa-file-download;
+      @extend .fa-file-arrow-down;
       @extend .text-dark;
-      // &:before { content: fa-content($fa-file-download); };
+      // &:before { content: fa-content($fa-file-arrow-down); };
     }
   }
 }

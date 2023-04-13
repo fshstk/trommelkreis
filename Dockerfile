@@ -2,7 +2,7 @@
 # Base Setup
 ################################################################################
 
-FROM nikolaik/python-nodejs:python3.10-nodejs17
+FROM nikolaik/python-nodejs:python3.11-nodejs19
 
 USER pn
 WORKDIR /home/pn/app
@@ -19,11 +19,9 @@ ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:5000", "trommelkreis.wsgi"]
 # Python / Node
 ################################################################################
 
-RUN pip install --no-cache-dir poetry==1.1.11
-
+RUN pip install --no-cache-dir poetry==1.4.2
 COPY pyproject.toml poetry.lock ./
-RUN poetry config virtualenvs.create false
-RUN poetry install --no-dev
+RUN poetry export -f requirements.txt | pip install -r /dev/stdin
 
 COPY package.json package-lock.json ./
 RUN npm ci
