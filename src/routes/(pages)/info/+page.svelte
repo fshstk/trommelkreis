@@ -1,20 +1,3 @@
-<script>
-	export let data;
-</script>
-
-<header>
-	<div class="row">
-		<div class="col-6 my-auto text-right">
-			<img src="logo.png" width="300px" class="img-fluid float-end p-3" alt="logo" />
-		</div>
-		<div class="col-6 my-auto text-left">
-			<h1 class="text-truncate">{data.heading}</h1>
-			<h6 class="text-muted">{data.subHeading}</h6>
-		</div>
-	</div>
-	<hr />
-</header>
-
 <div class="text-center">
 	<h1>Der erste digitale Trommelkreis</h1>
 
