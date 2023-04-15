@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model archive_artist {
+  id                Int                 @id @default(autoincrement())
+  slug              String              @unique(map: "slug") @db.VarChar(50)
+  name              String              @unique(map: "name") @db.VarChar(100)
+  archive_audiofile archive_audiofile[]
+}
+
+model archive_audiofile {
+  id                 Int             @id @default(autoincrement())
+  slug               String          @unique(map: "slug") @db.VarChar(50)
+  session_subsection String          @db.VarChar(50)
+  data               String          @db.VarChar(100)
+  name               String          @db.VarChar(200)
+  artist_id          Int?
+  session_id         Int
+  archive_artist     archive_artist? @relation(fields: [artist_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "archive_audiofile_artist_id_4770b25c_fk_archive_artist_id")
+  archive_session    archive_session @relation(fields: [session_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "archive_audiofile_session_id_ed86f222_fk_archive_session_id")
+
+  @@index([artist_id], map: "archive_audiofile_artist_id_4770b25c_fk_archive_artist_id")
+  @@index([session_id], map: "archive_audiofile_session_id_ed86f222_fk_archive_session_id")
+}
+
+model archive_challenge {
+  id               Int               @id @default(autoincrement())
+  slug             String            @unique(map: "slug") @db.VarChar(50)
+  name             String            @unique(map: "name") @db.VarChar(50)
+  blurb            String            @db.LongText
+  description      String            @db.LongText
+  copyright_issues Boolean
+  archive_session  archive_session[]
+}
+
+model archive_session {
+  id                        Int                         @id @default(autoincrement())
+  slug                      String                      @unique(map: "slug") @db.VarChar(50)
+  date                      DateTime                    @db.Date
+  challenge_id              Int
+  archive_audiofile         archive_audiofile[]
+  archive_challenge         archive_challenge           @relation(fields: [challenge_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "archive_session_challenge_id_d984eaa0_fk_archive_challenge_id")
+  uploadform_uploadformvars uploadform_uploadformvars[]
+
+  @@index([challenge_id], map: "archive_session_challenge_id_d984eaa0_fk_archive_challenge_id")
+}
+
+model uploadform_uploadformvars {
+  id                 Int              @id @default(autoincrement())
+  uploads_open       Boolean
+  upload_password    String           @db.VarChar(20)
+  session_info       String           @db.LongText
+  session_id         Int?
+  session_subsection String           @db.VarChar(50)
+  archive_session    archive_session? @relation(fields: [session_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "uploadform_uploadfor_session_id_b3a1c179_fk_archive_s")
+
+  @@index([session_id], map: "uploadform_uploadfor_session_id_b3a1c179_fk_archive_s")
+}
