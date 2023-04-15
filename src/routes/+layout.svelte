@@ -25,7 +25,5 @@
 
 <footer class="container text-center p-1 small text-dark">
 	Impressum: &copy; 2023 Fabian Hummel |
-	<a class="text-decoration-none" href="https://github.com/fshstk/trommelkreis">
-		github.com/fshstk/trommelkreis
-	</a>
+	<a href="https://github.com/fshstk/trommelkreis">github.com/fshstk/trommelkreis</a>
 </footer>

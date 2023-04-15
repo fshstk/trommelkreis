@@ -14,3 +14,11 @@ h1 {
 h6 {
 	font-weight: 500;
 }
+
+a {
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
