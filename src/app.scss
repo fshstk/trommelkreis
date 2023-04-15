@@ -1,13 +1,16 @@
-@import 'bootstrap/scss/bootstrap.scss';
-@import '@fontsource/ubuntu/700.css';
-@import '@fontsource/ubuntu/400.css';
-@import '@fortawesome/fontawesome-free/css/all.css';
+@import 'bootstrap/scss/bootstrap';
+@import '@fontsource/ubuntu/latin';
+@import '@fortawesome/fontawesome-free/css/all';
 
 body {
     background-color: #ddd;
     font-family: 'Ubuntu', sans-serif;
 }
 
-h1, h6 {
+h1 {
     font-weight: 700;
+}
+
+h6 {
+    font-weight: 500;
 }
