@@ -8,13 +8,13 @@
 </svelte:head>
 
 <nav class="nav container p-1">
-	<a class="nav-link text-dark" href="#" title="Home">
+	<a class="nav-link text-dark" href="/" title="Home">
 		<i class="fa-solid fa-house" />
 	</a>
-	<a class="nav-link text-dark" href="#">Info</a>
-	<a class="nav-link text-dark" href="#">Archiv</a>
-	<a class="nav-link text-primary" href="#">Mitmachen</a>
-	<a class="nav-link text-dark ms-auto" href="#" title="Newsletter">
+	<a class="nav-link text-dark" href="/info">Info</a>
+	<a class="nav-link text-dark" href="/archiv">Archiv</a>
+	<a class="nav-link text-primary" href="/upload">Mitmachen</a>
+	<a class="nav-link text-dark ms-auto" href="/subscribe" title="Newsletter">
 		<i class="fa-solid fa-envelope" />
 	</a>
 </nav>
