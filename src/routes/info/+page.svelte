@@ -1,12 +1,6 @@
 <script>
-	let title = 'Info';
-	let heading = 'Infos';
-	let subHeading = 'zum digitalen Trommelkreis';
+	export let data;
 </script>
-
-<svelte:head>
-	<title>{title} | Digitaler Trommelkreis</title>
-</svelte:head>
 
 <header>
 	<div class="row">
@@ -14,8 +8,8 @@
 			<img src="logo.png" width="300px" class="img-fluid float-end p-3" alt="logo" />
 		</div>
 		<div class="col-6 my-auto text-left">
-			<h1 class="text-truncate">{heading}</h1>
-			<h6 class="text-muted">{subHeading}</h6>
+			<h1 class="text-truncate">{data.heading}</h1>
+			<h6 class="text-muted">{data.subHeading}</h6>
 		</div>
 	</div>
 	<hr />

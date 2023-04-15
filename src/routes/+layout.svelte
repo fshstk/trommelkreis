@@ -1,6 +1,11 @@
 <script>
 	import '../app.scss';
+	import { page } from '$app/stores';
 </script>
+
+<svelte:head>
+	<title>{$page.data.title} | Digitaler Trommelkreis</title>
+</svelte:head>
 
 <nav class="nav container p-1">
 	<a class="nav-link text-dark" href="#" title="Home">
