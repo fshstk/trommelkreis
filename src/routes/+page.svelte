@@ -1,5 +1,7 @@
 <script>
 	import '@fortawesome/fontawesome-free/js/all';
+	import '@fontsource/ubuntu/700.css';
+	import '@fontsource/ubuntu/400.css';
 </script>
 
 <nav class="nav container p-1">
@@ -17,7 +19,7 @@
 <main class="container bg-white p-3">
 	<header>
 		<div class="text-center">
-			<h1 class="font-weight-bold">Digitaler Trommelkreis</h1>
+			<h1>Digitaler Trommelkreis</h1>
 			<h6 class="text-muted">Jeden Montag, 20:00-22:00 Uhr</h6>
 			<img src="logo.png" width="700px" class="img-fluid p-3" alt="logo" />
 		</div>
@@ -28,11 +30,19 @@
 
 <footer class="container text-center p-1 small text-dark">
 	Impressum: &copy; 2023 Fabian Hummel |
-	<a href="https://github.com/fshstk/trommelkreis">github.com/fshstk/trommelkreis</a>
+	<a class="text-decoration-none" href="https://github.com/fshstk/trommelkreis">
+		github.com/fshstk/trommelkreis
+	</a>
 </footer>
 
 <style>
 	:global(body) {
 		background-color: #ddd;
+		font-family: 'Ubuntu', sans-serif;
+	}
+
+	h1,
+	h6 {
+		font-weight: 700;
 	}
 </style>
