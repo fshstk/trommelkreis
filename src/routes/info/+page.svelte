@@ -1,0 +1,152 @@
+<script>
+	let title = 'Info';
+</script>
+
+<svelte:head>
+	<title>{title} | Digitaler Trommelkreis</title>
+</svelte:head>
+
+<main class="container bg-white p-3">
+	<header>
+		<div class="row">
+			<div class="col-6 my-auto text-right">
+				<img src="logo.png" width="300px" class="img-fluid float-end p-3" alt="logo" />
+			</div>
+			<div class="col-6 my-auto text-left">
+				<h1 class="font-weight-bold text-truncate">Infos</h1>
+				<h6 class="text-muted">zum digitalen Trommelkreis</h6>
+			</div>
+		</div>
+		<hr />
+	</header>
+
+	<div class="text-center">
+		<h1>Der erste digitale Trommelkreis</h1>
+
+		<h4 class="text-muted">
+			Für alle, die gerne elektronische Musik produzieren,<br />
+			oder es schon immer mal probieren wollten.
+		</h4>
+	</div>
+
+	<hr />
+
+	<div class="card">
+		<div class="card-body">
+			<h2>Was ist der digitale Trommelkreis?</h2>
+
+			<p>
+				Der digitale Trommelkreis ist eine regelmäßige Veranstaltung zum Thema
+				<em>Musik mit dem Computer machen</em>, und funktioniert so:
+			</p>
+
+			<ul>
+				<li>Jedes Mal gibt es als Vorgabe eine kurze "Challenge".</li>
+
+				<li>
+					Das könnte z.B. ein bestimmtes Sample sein, das man verwenden muss – oder eine
+					stilistische Vorgabe an die man sich halten muss – oder auch alles mögliche! Schau einfach
+					ins
+					<a href="#">Archiv</a>, um dir Beispiele aus der Vergangenheit anzusehen.
+				</li>
+
+				<li>
+					Jede<small class="text-muted">/r</small>
+					Teilnehmer<small class="text-muted">/in</small> hat einen gewissen Zeitrahmen (in der Regel
+					60/90/120 Minuten), um diese Vorgabe in einen kurzen Track zu verwandeln.
+				</li>
+
+				<li>
+					Dieser Beat muss nicht fertig oder poliert oder lang oder gut sein – Bei uns geht es darum
+					zu experimentieren und Spaß zu haben.
+				</li>
+
+				<li>
+					Nach Ablauf der Frist sollte der Beat ins Archiv hochgeladen werden, wo er (auf Wunsch mit
+					deinem Namen oder anonym) öffentlich zugänglich ist.
+				</li>
+
+				<li>
+					Am Schluss hören wir uns gemeinsam die Früchte unserer Arbeit an – entweder in Person oder
+					online.
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body">
+			<h2>Wann und wo?</h2>
+			<p>
+				Der digitale Trommelkreis findet <em>jeden zweiten Montag um 19:30 Uhr</em>
+				statt. In der Regel ist die Deadline für das Hochladen um 22:00 Uhr, und das gemeinsame Hören
+				um 22:30 Uhr auf dem Discord Server der
+				<a href="http://www.klangwerkstatt-graz.at/">Klangwerkstatt Graz</a>.
+			</p>
+			<p>
+				Die Challenge wird meistens pünktlich zu Beginn auf der
+				<a href="/upload">Mitmachen</a> Seite veröffentlicht. Zusätzlich gibt es in unserer WhatsApp
+				Gruppe Updates zu zukünftigen Terminen, und die Möglichkeit, jeder Zeit Fragen zu stellen.
+			</p>
+			<p>
+				Für die Zugangsdaten zu WhatsApp Gruppe und Discord Server, schick einfach eine Mail an
+				<span>mitmachen@trommelkreis.club</span>. Jeder ist willkommen!
+			</p>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body">
+			<h2>Wie kann ich mitmachen?</h2>
+
+			<p>
+				Ganz einfach! Schreib eine Mail an
+				<span>mitmachen@trommelkreis.club</span>, um weitere Infos zu erfahren. Derzeit werden alle
+				unmittelbaren Informationen über eine WhatsApp Gruppe vermittelt. Die Challenges und das
+				Uploadformular findet ihr unter
+				<a href="#">Mitmachen</a>.
+			</p>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body">
+			<h2>Ich bin gar nicht so gut im Musik machen. Kann ich trotzdem mitmachen?</h2>
+
+			<p>
+				<em>Ja, klar!</em> Es geht hier ums gemeinsame Lernen und Spaßhaben. Die meisten Challenges sind
+				so ausgelegt, dass du dafür gar kein fortgeschrittenes Wissen in Produktion oder Musiktheorie
+				brauchst.
+			</p>
+
+			<p class="text-center">
+				<strong>Der digitale Trommelkreis ist kein Wettbewerb!</strong>
+			</p>
+
+			<p>
+				Wir sind eine <em>no-judge-Zone</em>. Wie gut oder professionell dein Track am Schluss
+				klingt, tut nichts zur Sache.
+			</p>
+
+			<p>
+				Es reicht wenn du ein Programm installiert hast, mit dem du Musik machen kannst und das du
+				grundsätzlich bedienen kannst, und motivert bist.
+			</p>
+		</div>
+	</div>
+
+	<hr />
+
+	<div class="text-center">
+		<small class="text-muted">
+			<h6>Für die, die's interessiert:</h6>
+			<p>
+				Diese Webseite basiert auf dem
+				<a href="https://kit.svelte.dev/">SvelteKit</a> Framework.
+				<br />
+				Der Quellcode ist Open-Source und auf
+				<a href="https://github.com/fshstk/trommelkreis">GitHub verfügbar</a>.
+			</p>
+		</small>
+	</div>
+</main>
