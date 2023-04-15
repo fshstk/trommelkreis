@@ -14,7 +14,9 @@
 	</a>
 </nav>
 
-<slot />
+<main class="container bg-white p-3">
+	<slot />
+</main>
 
 <footer class="container text-center p-1 small text-dark">
 	Impressum: &copy; 2023 Fabian Hummel |
