@@ -1,3 +1,11 @@
+<script>
+	let title = 'Home';
+</script>
+
+<svelte:head>
+	<title>{title} | Digitaler Trommelkreis</title>
+</svelte:head>
+
 <main class="container bg-white p-3">
 	<header>
 		<div class="text-center">
