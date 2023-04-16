@@ -8,7 +8,10 @@
 </script>
 
 {#await sessions}
-	<p>Retrieving sessions...</p>
+	<div class="text-center">
+		<div class="spinner" />
+		<p class="text-muted">Loading Sessions…</p>
+	</div>
 {:then result}
 	<ol>
 		{#each result as session}
