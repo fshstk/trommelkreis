@@ -1,9 +1,7 @@
 import { json } from '@sveltejs/kit';
-import moment from 'moment';
 import prisma from './prismaclient';
 import { groupBy, orderBy } from 'lodash';
-
-moment.locale('de');
+import dayjs from 'dayjs';
 
 async function formatSession(session) {
 	let challenge = await prisma.archive_challenge.findUnique({
@@ -20,7 +18,7 @@ async function formatSession(session) {
 
 	return {
 		slug: session.slug,
-		date: moment(session.date).format('YYYY-MM-DD'),
+		date: dayjs(session.date).format('YYYY-MM-DD'),
 		num_entries: fileCount,
 		challenge: {
 			name: challenge.name,
@@ -31,9 +29,9 @@ async function formatSession(session) {
 
 export async function GET() {
 	let sessions = await prisma.archive_session.findMany();
-	let sorted = orderBy(sessions, (session) => moment(session.date).format('YYYY-MM-DD'), ['desc']);
+	let sorted = orderBy(sessions, 'date', ['desc']);
 	let formatted = await Promise.all(sorted.map(formatSession));
-	let grouped = groupBy(formatted, (session) => moment(session.date).format('YYYY-MM'));
+	let grouped = groupBy(formatted, (session) => dayjs(session.date).format('YYYY-MM'));
 	console.log(grouped);
 	return json(grouped);
 }

@@ -1,14 +1,17 @@
 <script>
-	import moment from 'moment';
-
-	console.log(moment.locale('de'));
+	import dayjs from 'dayjs';
+	import 'dayjs/locale/de';
 
 	function getMonth(date) {
-		return moment(date).format('MMMM');
+		return dayjs(date).locale('de').format('MMMM');
 	}
 
 	function getYear(date) {
-		return moment(date).format('YYYY');
+		return dayjs(date).format('YYYY');
+	}
+
+	function getDate(date) {
+		return dayjs(date).format('DD.MM.YYYY');
 	}
 
 	async function getSessions() {
@@ -29,7 +32,7 @@
 		{#each Object.entries(result) as [yearAndMonth, sessions]}
 			<li>{getYear(yearAndMonth)} - {getMonth(yearAndMonth)}</li>
 			{#each sessions as session}
-				<li>{session.date} - {session.challenge.name} ({session.num_entries} Einträge)</li>
+				<li>{getDate(session.date)} - {session.challenge.name} ({session.num_entries} Einträge)</li>
 			{/each}
 		{/each}
 	</ol>
