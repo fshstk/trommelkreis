@@ -34,7 +34,5 @@ export async function GET() {
 	let allSessions = await prisma.archive_session.findMany();
 	let parsedSessions = await Promise.all(allSessions.map(formatSession));
 
-	console.log(parsedSessions[0]);
-
 	return json(parsedSessions);
 }
