@@ -10,7 +10,7 @@
 {#await sessions}
 	<div class="text-center">
 		<div class="spinner" />
-		<p class="text-muted">Loading Sessions…</p>
+		<p class="text-muted">Sessions werden geladen…</p>
 	</div>
 {:then result}
 	<ol>
