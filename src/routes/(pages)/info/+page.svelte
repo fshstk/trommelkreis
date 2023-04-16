@@ -24,7 +24,7 @@
 			<li>
 				Das könnte z.B. ein bestimmtes Sample sein, das man verwenden muss – oder eine stilistische
 				Vorgabe an die man sich halten muss – oder auch alles mögliche! Schau einfach ins
-				<a href="#">Archiv</a>, um dir Beispiele aus der Vergangenheit anzusehen.
+				<a href="/archiv">Archiv</a>, um dir Beispiele aus der Vergangenheit anzusehen.
 			</li>
 
 			<li>
@@ -80,8 +80,7 @@
 			Ganz einfach! Schreib eine Mail an
 			<span>mitmachen@trommelkreis.club</span>, um weitere Infos zu erfahren. Derzeit werden alle
 			unmittelbaren Informationen über eine WhatsApp Gruppe vermittelt. Die Challenges und das
-			Uploadformular findet ihr unter
-			<a href="#">Mitmachen</a>.
+			Uploadformular findet ihr unter <a href="/upload">Mitmachen</a>.
 		</p>
 	</div>
 </div>
