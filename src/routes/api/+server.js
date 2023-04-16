@@ -32,6 +32,5 @@ export async function GET() {
 	let sorted = orderBy(sessions, 'date', ['desc']);
 	let formatted = await Promise.all(sorted.map(formatSession));
 	let grouped = groupBy(formatted, (session) => dayjs(session.date).format('YYYY-MM'));
-	console.log(grouped);
 	return json(grouped);
 }
