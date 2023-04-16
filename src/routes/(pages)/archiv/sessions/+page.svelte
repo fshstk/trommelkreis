@@ -19,5 +19,12 @@
 		{/each}
 	</ol>
 {:catch error}
-	<p>We had an error: {error.message}</p>
+	<div class="text-center text-danger">
+		<i class="fa-solid fa-exclamation-triangle display-4" />
+		<p class="pt-3">
+			Oje, da ist etwas schiefgelaufen. Bitte schicke diese Fehlernachricht an
+			mitmachen@trommelkreis.club:
+		</p>
+		<pre><code>{error.message}</code></pre>
+	</div>
 {/await}
