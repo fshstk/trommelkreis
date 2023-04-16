@@ -10,7 +10,11 @@
 {#await sessions}
 	<p>Retrieving sessions...</p>
 {:then result}
-	<p>Retrieved {result} sessions</p>
+	<ol>
+		{#each result as session}
+			<li>{session.date} - {session.challenge.name} ({session.num_entries} Einträge)</li>
+		{/each}
+	</ol>
 {:catch error}
 	<p>We had an error: {error.message}</p>
 {/await}
