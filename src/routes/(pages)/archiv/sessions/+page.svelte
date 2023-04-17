@@ -1,5 +1,6 @@
 <script>
 	import SessionList from './SessionList.svelte';
+	import Spinner from '$lib/Spinner.svelte';
 
 	async function getSessions() {
 		const response = await fetch('/api');
@@ -11,7 +12,7 @@
 
 {#await sessions}
 	<div class="text-center">
-		<div class="spinner" />
+		<Spinner />
 		<p class="text-muted">Sessions werden geladen…</p>
 	</div>
 {:then result}
