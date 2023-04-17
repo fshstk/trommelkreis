@@ -1,12 +1,16 @@
 <script>
+	import showdown from 'showdown';
 	import FileItem from './FileItem.svelte';
 
 	export let data;
+
+	let converter = new showdown.Converter();
+	let description = converter.makeHtml(data.session.challenge.description);
 </script>
 
 <div class="card">
 	<div class="card-body">
-		{data.session.challenge.description}
+		{@html description}
 	</div>
 </div>
 
