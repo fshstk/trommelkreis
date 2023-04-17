@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import prisma from './prismaclient';
+import prisma from '$lib/server/prismaclient';
 import { groupBy, orderBy } from 'lodash';
 import dayjs from 'dayjs';
 
