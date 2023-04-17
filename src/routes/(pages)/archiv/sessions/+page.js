@@ -1,9 +1,9 @@
-async function getSessions() {
-	const response = await fetch('/api');
-	return await response.json();
-}
+export async function load({ fetch }) {
+	async function getSessions() {
+		const response = await fetch('/api');
+		return await response.json();
+	}
 
-export async function load() {
 	return {
 		title: 'Sessions',
 		heading: 'Archiv',
