@@ -1,6 +1,6 @@
 export async function load({ fetch }) {
 	async function getSessions() {
-		const response = await fetch('/api');
+		const response = await fetch('/api/sessions/all');
 		return await response.json();
 	}
 
