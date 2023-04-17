@@ -31,6 +31,7 @@ async function formatSession(session) {
 
 	return {
 		date: dayjs(session.date).format('YYYY-MM-DD'),
+		slug: session.slug,
 		challenge: {
 			name: challenge.name,
 			blurb: challenge.blurb,
