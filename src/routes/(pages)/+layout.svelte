@@ -1,5 +1,6 @@
 <script>
-	import { page } from '$app/stores';
+	import { page, navigating } from '$app/stores';
+	import Spinner from '$lib/Spinner.svelte';
 </script>
 
 <header>
@@ -15,4 +16,8 @@
 	<hr />
 </header>
 
-<slot />
+{#if $navigating}
+	<Spinner />
+{:else}
+	<slot />
+{/if}
