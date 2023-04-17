@@ -16,7 +16,6 @@ export async function load({ fetch, params }) {
 	}
 
 	let date = dayjs(session.date).format('DD.MM.YYYY');
-	console.log(session);
 
 	return {
 		title: `Challenge vom ${date}`,
