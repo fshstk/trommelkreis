@@ -1,18 +1,5 @@
 <script>
-	import dayjs from 'dayjs';
-	import 'dayjs/locale/de';
-
-	function getMonth(date) {
-		return dayjs(date).locale('de').format('MMMM');
-	}
-
-	function getYear(date) {
-		return dayjs(date).format('YYYY');
-	}
-
-	function getDate(date) {
-		return dayjs(date).format('DD.MM.YYYY');
-	}
+	import SessionList from './SessionList.svelte';
 
 	async function getSessions() {
 		const response = await fetch('/api');
@@ -28,14 +15,9 @@
 		<p class="text-muted">Sessions werden geladen…</p>
 	</div>
 {:then result}
-	<ol>
-		{#each Object.entries(result) as [yearAndMonth, sessions]}
-			<li>{getYear(yearAndMonth)} - {getMonth(yearAndMonth)}</li>
-			{#each sessions as session}
-				<li>{getDate(session.date)} - {session.challenge.name} ({session.num_entries} Einträge)</li>
-			{/each}
-		{/each}
-	</ol>
+	{#each Object.entries(result) as [yearAndMonth, sessions]}
+		<SessionList {yearAndMonth} {sessions} />
+	{/each}
 {:catch error}
 	<div class="text-center text-danger">
 		<i class="fa-solid fa-exclamation-triangle display-4" />
