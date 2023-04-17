@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>{$page.data.title} | Digitaler Trommelkreis</title>
+	<title>{$page.data.title ?? 'Fehler'} | Digitaler Trommelkreis</title>
 </svelte:head>
 
 <nav class="nav container p-1">
