@@ -1,4 +1,11 @@
-<div class="spinner" />
+<script>
+	export let text = 'Bitte warten…';
+</script>
+
+<div class="text-center">
+	<div class="spinner" />
+	<p class="text-muted">{text}</p>
+</div>
 
 <style lang="scss">
 	$spinner-color: $text-muted;

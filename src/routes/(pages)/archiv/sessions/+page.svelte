@@ -11,10 +11,7 @@
 </script>
 
 {#await sessions}
-	<div class="text-center">
-		<Spinner />
-		<p class="text-muted">Sessions werden geladen…</p>
-	</div>
+	<Spinner text="Sessions werden geladen…" />
 {:then result}
 	{#each Object.entries(result) as [yearAndMonth, sessions]}
 		<SessionList {yearAndMonth} {sessions} />
