@@ -1,5 +1,6 @@
 <script>
 	import SessionList from './SessionList.svelte';
+	import ErrorMessage from '$lib/ErrorMessage.svelte';
 	import Spinner from '$lib/Spinner.svelte';
 
 	async function getSessions() {
@@ -17,12 +18,5 @@
 		<SessionList {yearAndMonth} {sessions} />
 	{/each}
 {:catch error}
-	<div class="text-center text-danger">
-		<i class="fa-solid fa-exclamation-triangle display-4" />
-		<p class="pt-3">
-			Oje, da ist etwas schiefgelaufen. Bitte schicke diese Fehlernachricht an
-			mitmachen@trommelkreis.club:
-		</p>
-		<pre><code>{error.message}</code></pre>
-	</div>
+	<ErrorMessage text={error.message} />
 {/await}
