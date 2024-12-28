@@ -3,6 +3,7 @@
 ################################################################################
 
 FROM nikolaik/python-nodejs:python3.12-nodejs23
+ARG POETRY_VERSION=1.8.5
 
 USER pn
 WORKDIR /home/pn/app
@@ -19,7 +20,7 @@ ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:5000", "trommelkreis.wsgi"]
 # Python / Node
 ################################################################################
 
-RUN pip install --no-cache-dir poetry==1.4.2
+RUN pip install --no-cache-dir poetry==${POETRY_VERSION}
 COPY pyproject.toml poetry.lock ./
 RUN poetry export -f requirements.txt | pip install -r /dev/stdin
 
