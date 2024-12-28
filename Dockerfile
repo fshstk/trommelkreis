@@ -1,38 +1,16 @@
-################################################################################
-# Base Setup
-################################################################################
-
-FROM nikolaik/python-nodejs:python3.12-nodejs23
+FROM nikolaik/python-nodejs:python3.12-nodejs23 AS develop
 ARG POETRY_VERSION=1.8.5
-
 USER pn
-WORKDIR /home/pn/app
-
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/home/pn/.local/bin:/home/pn/app/node_modules/.bin:${PATH}"
-
-EXPOSE 5000
-ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:5000", "trommelkreis.wsgi"]
-
-
-################################################################################
-# Python / Node
-################################################################################
-
+    PATH="/home/pn/.local/bin:/home/pn/app/node_modules/.bin:${PATH}" \
+    PORT=5001
+EXPOSE ${PORT}
 RUN pip install --no-cache-dir poetry==${POETRY_VERSION}
-COPY pyproject.toml poetry.lock ./
-RUN poetry export -f requirements.txt | pip install -r /dev/stdin
+ENTRYPOINT ["bash"]
 
-COPY package.json package-lock.json ./
-RUN npm ci
-
-
-################################################################################
-# Django
-################################################################################
-
+FROM develop AS deploy
+WORKDIR /home/pn/app
 COPY --chown=pn . .
-
-RUN python manage.py collectstatic --noinput \
-    && python manage.py compress --force
+RUN npm ci
+ENTRYPOINT ["npm", "start"]

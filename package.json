@@ -13,5 +13,11 @@
     "gulp-cli": "^2.3.0",
     "jquery": "^3.6.1",
     "ubuntu-fontface": "^0.1.13"
+  },
+  "scripts": {
+    "preinstall": "poetry export -f requirements.txt | pip install -r /dev/stdin",
+    "prestart": "python manage.py collectstatic --noinput && python manage.py compress --force",
+    "clean": "rm -rf _fonts _scripts staticfiles node_modules",
+    "start": "gunicorn -b 0.0.0.0:${PORT} trommelkreis.wsgi"
   }
 }
