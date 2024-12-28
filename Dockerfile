@@ -2,7 +2,7 @@
 # Base Setup
 ################################################################################
 
-FROM nikolaik/python-nodejs:python3.11-nodejs19
+FROM nikolaik/python-nodejs:python3.12-nodejs23
 
 USER pn
 WORKDIR /home/pn/app
