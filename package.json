@@ -15,9 +15,10 @@
     "ubuntu-fontface": "^0.1.13"
   },
   "scripts": {
-    "preinstall": "poetry export -f requirements.txt | pip install -r /dev/stdin",
-    "prestart": "python manage.py collectstatic --noinput && python manage.py compress --force",
-    "clean": "rm -rf _fonts _scripts staticfiles node_modules",
-    "start": "gunicorn -b 0.0.0.0:${PORT} trommelkreis.wsgi"
+    "preinstall": "poetry install",
+    "prestart": "poetry run python manage.py collectstatic --noinput && poetry run python manage.py compress --force",
+    "start": "poetry run gunicorn -b 0.0.0.0:${PORT} trommelkreis.wsgi",
+    "dev": "poetry run python manage.py runserver",
+    "clean": "rm -rf _fonts _scripts staticfiles node_modules"
   }
 }
