@@ -3,9 +3,8 @@ ARG POETRY_VERSION=1.8.5
 USER pn
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/home/pn/.local/bin:/home/pn/app/node_modules/.bin:${PATH}" \
-    PORT=5001
-EXPOSE ${PORT}
+    PATH="/home/pn/.local/bin:/home/pn/app/node_modules/.bin:${PATH}"
+EXPOSE 8000
 RUN pip install --no-cache-dir poetry==${POETRY_VERSION}
 ENTRYPOINT ["bash"]
 
