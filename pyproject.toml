@@ -6,7 +6,7 @@ name = "trommelkreis"
 version = "2.3.0"
 
 [tool.poetry.dependencies]
-Django = "3.2.15"
+Django = "^4.2.8"
 Markdown = "^3.7"
 dj-database-url = "^2.0"
 django-compressor = "^4.0"
