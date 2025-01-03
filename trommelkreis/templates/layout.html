@@ -27,11 +27,11 @@
 			<header>
 				{% block header %}
 				<div class="row">
-					<div class="col-6 my-auto text-right">
+					<div class="col-6 my-auto text-end">
 						<img src="{% static "img/logo.png" %}" width="300px" class="img-fluid p-3" alt="logo">
 					</div>
-					<div class="col-6 my-auto text-left">
-						<h1 class="font-weight-bold text-truncate">{% block heading %}{% endblock %}</h1>
+					<div class="col-6 my-auto text-start">
+						<h1 class="fw-bold text-truncate">{% block heading %}{% endblock %}</h1>
 						<h6 class="text-muted">{% block subheading %}{% endblock %}</h6>
 					</div>
 				</div>
@@ -45,7 +45,7 @@
 
 		<footer>
 			{% block footer %}
-			Impressum: &copy; {% now "Y" %} Fabian Hummel | <a href="https://github.com/fshstk/trommelkreis">github.com/fshstk/trommelkreis</a>
+			Impressum: &copy; {% now "Y" %} Fabian Hummel | <a class="text-decoration-none" href="https://github.com/fshstk/trommelkreis">github.com/fshstk/trommelkreis</a>
 			{% endblock %}
 		</footer>
 
