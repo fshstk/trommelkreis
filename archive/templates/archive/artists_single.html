@@ -7,9 +7,9 @@
 
 {% block main %}
 
-<div id="sessionlist" class="list-group text-left">
+<div id="sessionlist" class="list-group text-start">
 	{% for file in files %}
-	<a href="#{{ file.slug|css_friendly_id }}" class="list-group-item list-group-item-action" data-toggle="collapse">
+	<a href="#{{ file.slug|css_friendly_id }}" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
 		<div class="d-flex justify-content-between">
 			<h5 class="mb-1">{{ file.name }}</h5>
 			<small class="text-muted">{{ file|duration }}</small>
@@ -23,7 +23,7 @@
 			<small class="text-muted">{{ file.session|dateformat }}</small>
 		</div>
 	</a>
-	<div class="collapse" id="{{ file.slug|css_friendly_id }}" data-parent="#sessionlist">
+	<div class="collapse" id="{{ file.slug|css_friendly_id }}" data-bs-parent="#sessionlist">
 		<div class="card card-body">
 			<audio src="{{ file.url }}" style="width: 100%;" preload="none" controls>
 				<p>Dein browser unterstützt das <em>audio</em> Element nicht.</p>

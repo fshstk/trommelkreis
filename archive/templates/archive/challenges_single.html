@@ -26,9 +26,9 @@
 
 <hr>
 
-<div id="sessionlist" class="list-group text-left">
+<div id="sessionlist" class="list-group text-start">
 	{% for file in files %}
-	<a href="#{{ file.name }}" class="list-group-item list-group-item-action" data-toggle="collapse">
+	<a href="#{{ file.name }}" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
 		<div class="d-flex justify-content-between">
 			<h5 class="mb-1">{{ file.name }}</h5>
 			<small class="text-muted">{{ file|duration }}</small>
@@ -38,7 +38,7 @@
 			<small class="text-muted">{{ file.filesize|filesizeformat }}</small>
 		</div>
 	</a>
-	<div class="collapse" id="{{ file.name }}" data-parent="#sessionlist">
+	<div class="collapse" id="{{ file.name }}" data-bs-parent="#sessionlist">
 		<div class="card card-body">
 			<audio src="{{ file.url }}" style="width: 100%;" preload="none" controls>
 				<p>Dein browser unterstützt das <em>audio</em> Element nicht.</p>
