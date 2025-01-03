@@ -5,7 +5,7 @@ function copy_fonts() {
         "node_modules/@fortawesome/fontawesome-free/webfonts/*",
         "node_modules/ubuntu-fontface/fonts/*",
     ];
-    return src(files).pipe(dest("_fonts"));
+    return src(files, {encoding: false}).pipe(dest("_fonts"));
 }
 
 function copy_scripts() {
