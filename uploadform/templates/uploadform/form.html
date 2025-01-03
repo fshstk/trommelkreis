@@ -1,56 +1,33 @@
-<form enctype="multipart/form-data" action="/upload/" method="POST" id="upload-form" class="d-flex flex-column" novalidate>
+<form enctype="multipart/form-data" action="/upload/" method="POST" novalidate>
+    <h2>Teile deinen Track:</h2>
     {% csrf_token %}
-    <h2 class="pb-2">Teile deinen Track:</h2>
-
-    <div>
-        {{ form.password.errors }}
-        {{ form.password }}
-        <p class="invalid-feedback mb-0">Falsches Passwort</p>
-    </div>
-
-    <div>
-        {{ form.data.errors }}
-        <div class="custom-file mt-2 mb-2">
-            {{ form.data }}
-            <label class="custom-file-label" for="customFile">Dein Track… (nur MP3 erlaubt)</label>
-            <p class="invalid-feedback">Wähle eine MP3 Datei aus</p>
-        </div>
-    </div>
-
     {{ form.name.as_hidden }}
-
-    <div>
+    <div class="mb-3">
+        {{ form.data.errors }}
+        <div class="input-group">
+            {{ form.data }}
+            <span id="track-name" class="input-group-text">Dein Track</span>
+        </div>
+        <div class="invalid-feedback">Wähle eine MP3 Datei aus</div>
+        <div class="form-text">Nur MP3 erlaubt.</div>
+    </div>
+    <div class="mb-3">
         {{ form.artist.errors }}
         {{ form.artist }}
-        <small class="form-text text-muted pb-3">Lass das Feld leer, um anonym zu bleiben.</small>
+        <div class="form-text">Lass das Feld leer, um anonym zu bleiben.</div>
     </div>
-
-    <div class="form-check mb-3">
+    <div class="mb-3">
+        {{ form.password.errors }}
+        {{ form.password }}
+        <div class="invalid-feedback">Falsches Passwort</div>
+        <div class="form-text">Das Passwort wird kurz vor Ende der Session in unserer Gruppe gepostet.</div>
+    </div>
+    <div class="mb-3 form-check">
+        <label class="form-check-label" for="id_tos">Mein Track darf vom digitalen Trommelkreis genutzt und veröffentlicht werden.</label>
         {{ form.tos.errors }}
         {{ form.tos }}
-        <label class="form-check-label" for="tos">
-{% comment %} 
-            Mein Track ist <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de">CC-BY-NC-SA</a> lizensiert.
- {% endcomment %}
-            Mein Track darf vom digitalen Trommelkreis genutzt und veröffentlicht werden.
-        </label>
-
-        <p class="invalid-feedback mb-0">
-{% comment %} 
-            Du kannst nur CC-lizensierte Tracks hochladen
- {% endcomment %}
-            Du kannst nur Tracks hochladen, die vom digitalen Trommelkreis verwendet werden dürfen
-        </p>
-
-        <small class="form-text text-muted">
-            Nach dem Hochladen sind die Tracks für jeden abspielbar und herunterladbar, und werden ggf. als Material
-            für zukünftige Trommelkreise (z.B. Remixes) verwendet.
-{% comment %} 
-            <br>
-            Durch die CC-BY-NC-SA Lizenz teilst du uns mit, dass das für dich okay ist.
- {% endcomment %}
-        </small>
+        <div class="invalid-feedback">Du kannst nur Tracks hochladen, die vom digitalen Trommelkreis verwendet werden dürfen</div>
+        <div class="form-text">Nach dem Hochladen sind die Tracks für jeden abspielbar und herunterladbar, und werden ggf. als Material für zukünftige Trommelkreise (z.B. Remixes) verwendet.</div>
     </div>
-
     <button id="upload-button" type="submit" style="width: 100%;" class="btn btn-primary">Upload</button>
 </form>

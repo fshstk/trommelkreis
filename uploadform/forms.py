@@ -56,17 +56,20 @@ class UploadForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["artist"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Dein Name"}
-        )
-        self.fields["password"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Passwort"}
-        )
-        self.fields["name"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Name deines Tracks"}
-        )
-        self.fields["data"].widget.attrs.update({"class": "custom-file-input"})
-        self.fields["tos"].widget.attrs.update({"class": "form-check-input"})
+        self.fields["artist"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Dein Name",
+        })
+        self.fields["password"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Upload Passwort",
+        })
+        self.fields["data"].widget.attrs.update({
+            "class": "form-control",
+        })
+        self.fields["tos"].widget.attrs.update({
+            "class": "form-check-input",
+        })
 
     def save(self, commit=True):
         config = UploadFormVars.get_solo()

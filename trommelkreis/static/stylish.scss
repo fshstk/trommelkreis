@@ -5,7 +5,6 @@
 $fa-font-path: "/static";
 $UbuntuFontsPath: "/static";
 
-$body-bg: #ddd;
 $font-family-sans-serif: "Ubuntu", sans-serif;
 
 $enable-responsive-font-sizes: true;
@@ -24,13 +23,18 @@ $enable-responsive-font-sizes: true;
 // Custom Styling
 ////////////////////////////////////////////////////////////////////////////////
 
+body {
+  background-color: #ddd;
+}
+
 nav {
+  max-width: 1140px;
   @extend .nav;
   @extend .container;
   @extend .p-1;
   a {
     @extend .nav-link;
-    @extend .text-dark;
+    @extend .link-dark;
   }
 
   .home {
@@ -43,7 +47,7 @@ nav {
     }
   }
   .subscribe {
-    @extend .ml-auto;
+    @extend .ms-auto;
     span {
       @extend %fa-icon;
       @extend .fas;
@@ -53,11 +57,12 @@ nav {
     }
   }
   .upload {
-    @extend .text-primary;
+    @extend .link-primary;
   }
 }
 
 main {
+  max-width: 1140px;
   @extend .container;
   @extend .bg-white;
   @extend .p-3;
@@ -75,7 +80,7 @@ main {
     // }
     // .list {
     //     @extend list-group;
-    //     @extend text-left;
+    //     @extend text-start;
     // a {
     //     @extend list-group-item;
     //     @extend list-group-item-action;
@@ -83,7 +88,7 @@ main {
     // }
   }
   .download-link {
-    @extend .ml-auto;
+    @extend .ms-auto;
     span {
       // @extend %fa-icon;
       @extend .fas;

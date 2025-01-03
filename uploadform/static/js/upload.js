@@ -34,7 +34,7 @@ $("form").submit(function (event) {
   $("form").addClass("was-validated");
 });
 
-$(".custom-file-input").on("change", function () {
+$("#id_data").on("change", function () {
   let file = $(this).prop("files")[0];
 
   if (file.name.match(/\.[^/.]+$/) == ".mp3") {
@@ -59,7 +59,7 @@ $(".custom-file-input").on("change", function () {
       $("#id_name").val(title);
       $("#id_artist").val(tags.artist);
       // Display the file name in input field if one is selected:
-      $(".custom-file-label").html(title);
+      $("#track-name").html(title);
     },
     { dataReader: ID3.FileAPIReader(file) }
   );
