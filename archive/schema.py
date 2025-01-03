@@ -30,7 +30,7 @@ class AudioFileType(DjangoObjectType):
     artist = graphene.String()
 
     def resolve_url(parent, info):
-        return f"{base_link}{parent.url}"
+        return parent.url
 
     def resolve_duration(parent, info):
         # TODO: this is defined multiple times now. refactor as model property!
