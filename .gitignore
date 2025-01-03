@@ -17,3 +17,5 @@ _scripts
 .vscode/
 
 docker-compose.yml
+
+.DS_Store
