@@ -7,6 +7,7 @@ from datetime import datetime
 from itertools import groupby
 from mutagen.mp3 import EasyMP3
 import os.path
+from io import BytesIO
 
 from uploadform.models import UploadFormVars
 from archive.MP3Field import MP3Field
@@ -168,12 +169,17 @@ class AudioFile(SlugIncluded):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        # NOTE: this will fail when using storage backends that don't support
-        # file paths (e.g. AWS S3):
-        mp3 = EasyMP3(self.data.path)
+
+        with self.data.open("rb") as file:
+            tempfile = BytesIO(file.read())
+
+        mp3 = EasyMP3(tempfile)
         if self.name:
             mp3["title"] = self.name
         if self.artist:
             mp3["artist"] = self.artist.name
         mp3["album"] = f"Digitaler Trommelkreis | {self.session.slug}"
-        mp3.save()
+        mp3.save(tempfile)
+
+        self.data.storage.delete(self.data.name)
+        self.data.save(os.path.basename(self.data.name), tempfile, save=False)
