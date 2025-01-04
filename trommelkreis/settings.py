@@ -91,7 +91,15 @@ STATICFILES_FINDERS = [
 ]
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Compressed assets (CSS) will fail to be generated before running the server
 # unless manage.py compress is run. The following line ensures that NOT running
@@ -119,7 +127,6 @@ ALLOWED_HOSTS = [".localhost", "127.0.0.1", ".trommelkreis.club"]
 CSRF_TRUSTED_ORIGINS = ["https://trommelkreis.club", "https://*.trommelkreis.club"]
 
 AWS_S3_FILE_OVERWRITE = False
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "_")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "_")
