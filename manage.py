@@ -4,6 +4,22 @@ import os
 import sys
 
 
+def dev():
+    os.system("python manage.py runserver")
+
+
+def clean():
+    os.system("rm -rf staticfiles")
+
+
+def collectstatic():
+    os.system("python manage.py collectstatic --noinput")
+
+
+def start():
+    os.system("gunicorn trommelkreis.wsgi")
+
+
 def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "trommelkreis.settings")
     try:

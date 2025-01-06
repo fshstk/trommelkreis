@@ -1,10 +1,13 @@
-FROM nikolaik/python-nodejs:python3.12-nodejs23 AS develop
-USER pn
+FROM python:3.12 AS develop
+ENV POETRY_HOME=/usr/local
+RUN curl -sSL https://install.python-poetry.org | python
+RUN useradd --create-home --shell /usr/bin/bash trommelkreis
+USER trommelkreis
+WORKDIR /home/trommelkreis/app
 EXPOSE 8000
 ENTRYPOINT ["bash"]
 
 FROM develop AS deploy
-WORKDIR /home/pn/app
-COPY --chown=pn . .
-RUN npm ci
-ENTRYPOINT ["npm", "start"]
+COPY . .
+RUN poetry install && poetry run collectstatic
+ENTRYPOINT ["poetry", "run", "start"]

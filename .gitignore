@@ -8,8 +8,6 @@ node_modules
 # All (collected) static files, archive, etc.
 /media
 /staticfiles
-_fonts
-_scripts
 
 # Misc. stuff & sensitive info:
 .env

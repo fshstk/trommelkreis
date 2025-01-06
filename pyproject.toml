@@ -5,13 +5,17 @@ license = "GPL v3.0"
 name = "trommelkreis"
 version = "2.3.0"
 
+[tool.poetry.scripts]
+dev = "manage:dev"
+clean = "manage:clean"
+collectstatic = "manage:collectstatic"
+start = "manage:start"
+
 [tool.poetry.dependencies]
 Django = "^5.0"
 Markdown = "^3.7"
 dj-database-url = "^2.0"
 django-compressor = "^4.0"
-django-gulp = "^4.1.0"
-django-libsass = "^0.9"
 django-pagedown = "^2.2.1"
 django-solo = "^2.0"
 graphene = "^3.0"
@@ -23,8 +27,6 @@ python = "~3.12"
 whitenoise = "^6.0"
 django-storages = "^1.14.4"
 boto3 = "^1.35.90"
-
-[tool.poetry.dev-dependencies]
 
 [build-system]
 build-backend = "poetry.core.masonry.api"

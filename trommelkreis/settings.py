@@ -15,7 +15,6 @@ DEBUG = os.environ.get("DEBUG", "0") == "1"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 INSTALLED_APPS = [
-    "django_gulp",
     "archive",
     "uploadform.apps.UploadFormConfig",
     "pagedown.apps.PagedownConfig",
@@ -80,8 +79,6 @@ USE_TZ = True
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "trommelkreis", "static"),
-    os.path.join(BASE_DIR, "_fonts"),
-    os.path.join(BASE_DIR, "_scripts"),
 ]
 
 STATICFILES_FINDERS = [
@@ -89,8 +86,6 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
-
-COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 STORAGES = {
     "default": {
