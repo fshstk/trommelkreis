@@ -7,23 +7,63 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="icon" type="image/png" href="{% static "img/favicon.png" %}">
-		{% compress css %}
-		<link rel="stylesheet" href="{% static "stylish.scss" %}" type="text/x-scss">
-		{% endcompress %}
-
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/fontawesome.min.css">
+		<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/ubuntu">
+		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/ubuntu@5.1.1/400.min.css"> -->
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/solid.min.css"> -->
+		<style>
+		.loading {
+		  background-image: linear-gradient(
+  			45deg,
+		    rgba(255, 255, 255, 0.15) 25%,
+				transparent 25%,
+				transparent 50%,
+				rgba(255, 255, 255, 0.15) 50%,
+				rgba(255, 255, 255, 0.15) 75%,
+				transparent 75%,
+				transparent);
+		  background-size: 40px 40px;
+  		animation: progress-bar-stripes 2s linear infinite;
+		}
+		@keyframes progress-bar-stripes {
+			from {background-position: 40px 0;}
+			to {background-position: 0 0;}
+		}
+		blockquote {
+			color: var(--bs-secondary-color);
+			margin-left: 20px;
+			padding: 1em;
+			border-left: 5px solid var(--bs-secondary-color);
+		}
+		.embed-container {
+			position: relative;
+			padding-bottom: 56.25%;
+			margin-bottom: 10px;
+			height: 0;
+			overflow: hidden;
+			max-width: 100%;
+		}
+		.embed-container iframe, .embed-container object, .embed-container embed {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+	  }
+		</style>
 		<title>{% block title %}Home{% endblock %} | Digitaler Trommelkreis</title>
 	</head>
 
-	<body>
-		<nav>
-			<a class="home" href="{% url "home" %}" title="Home"><span></span></a>
-			<a class="info" href="{% url "info" %}">Info</a>
-			<a class="archive" href="{% url "archive:index" %}">Archiv</a>
-			<a class="upload" href="{% url "upload:index" %}">Mitmachen</a>
-			<a class="subscribe" href="{% url "subscribe" %}" title="Newsletter"><span></span></a>
+	<body style="background-color: #ddd; font-family: 'Ubuntu', sans-serif">
+		<nav class="nav container p-1" style="max-width: 1140px;">
+			<a class="nav-link link-dark home" href="{% url 'home' %}" title="Home"><i class="fa fa-home"></i></a>
+			<a class="nav-link link-dark" href="{% url 'info' %}">Info</a>
+			<a class="nav-link link-dark" href="{% url 'archive:index' %}">Archiv</a>
+			<a class="nav-link link-primary" href="{% url 'upload:index' %}">Mitmachen</a>
 		</nav>
 
-		<main>
+		<main class="container bg-white p-3" style="max-width: 1140px;">
 			<header>
 				{% block header %}
 				<div class="row">
@@ -43,16 +83,16 @@
 			{% endblock %}
 		</main>
 
-		<footer>
+		<footer class="container text-center p-1 text-dark">
 			{% block footer %}
-			Impressum: &copy; {% now "Y" %} Fabian Hummel | <a class="text-decoration-none" href="https://github.com/fshstk/trommelkreis">github.com/fshstk/trommelkreis</a>
+			<small>Impressum: &copy; {% now "Y" %} Fabian Hummel | <a class="text-decoration-none" href="https://github.com/fshstk/trommelkreis">github.com/fshstk/trommelkreis</a></small>
 			{% endblock %}
 		</footer>
 
 		{% block scripts %}
-		<script src="{% static "jquery.min.js" %}"></script>
-		<script src="{% static "bootstrap.min.js" %}"></script>
-		<script src="{% static "js/responsive-embeds.js" %}"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+		<script src="{% static 'js/responsive-embeds.js' %}"></script>
 		{% endblock %}
 	</body>
 </html>

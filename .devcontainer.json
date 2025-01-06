@@ -3,7 +3,7 @@
     "dockerfile": "Dockerfile",
     "target": "develop"
   },
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "poetry install",
   "runArgs": [
     "--env-file",
     ".env"
