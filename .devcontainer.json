@@ -13,7 +13,8 @@
       "extensions": [
         "ms-python.python",
         "batisteo.vscode-django",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens"
       ]
     }
   }
