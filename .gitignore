@@ -1,19 +1,5 @@
-node_modules
-**/__pycache__
-
-# Compiled CSS:
-*.css
-*.map
-
-# All (collected) static files, archive, etc.
-/media
-/staticfiles
-
-# Misc. stuff & sensitive info:
-.env
-/ignore
-.vscode/
-
-docker-compose.yml
-
+__pycache__
 .DS_Store
+.env
+.vscode
+staticfiles
