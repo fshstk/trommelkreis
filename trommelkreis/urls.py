@@ -27,7 +27,6 @@ urlpatterns = [
     path("home/", views.home, name="home"),
     path("info/", views.info, name="info"),
     path("upload/", include("uploadform.urls")),
-    path("abo/", views.subscribe, name="subscribe"),
     path("archiv/", include("archive.urls")),
     path("admin/", admin.site.urls),
     path("api", csrf_exempt(GraphQLView.as_view(graphiql=settings.DEBUG))),
