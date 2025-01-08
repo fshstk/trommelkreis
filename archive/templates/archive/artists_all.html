@@ -9,7 +9,7 @@
 
 <div id="sessionlist" class="list-group text-start">
     <div class="list-group text-start">
-    	{% for artist in artists %}
+        {% for artist in artists %}
         <a href="{% url "archive:single_artist" artist.slug %}" class="list-group-item list-group-item-action">
             <h5 class="mb-1 text-truncate">{{ artist.name }}</h5>
             <small class="text-muted">{{ artist|filecount }}</small>
