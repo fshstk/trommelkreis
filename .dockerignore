@@ -1,27 +1,6 @@
-.dockerignore
-.gitignore
-
 .DS_Store
-.git
-.github
-
-Dockerfile
-LICENSE
-README.md
-
-ignore
-.vscode
 .env
-
-node_modules
+.git
+.vscode
 **/__pycache__
-
-# Compiled CSS:
-*.css
-*.map
-
-# All (collected) static files, archive, etc.
-media
 staticfiles
-
-docker-compose.yml
