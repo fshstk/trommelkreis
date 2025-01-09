@@ -8,14 +8,14 @@
 {% block main %}
 
 <div id="sessionlist" class="list-group text-start">
-    <div class="list-group text-start">
-        {% for artist in artists %}
-        <a href="{% url "archive:single_artist" artist.slug %}" class="list-group-item list-group-item-action">
-            <h5 class="mb-1 text-truncate">{{ artist.name }}</h5>
-            <small class="text-muted">{{ artist|filecount }}</small>
-        </a>
-        {% endfor %}
-    </div>
+  <div class="list-group text-start">
+    {% for artist in artists %}
+    <a href="{% url "archive:single_artist" artist.slug %}" class="list-group-item list-group-item-action">
+      <h5 class="mb-1 text-truncate">{{ artist.name }}</h5>
+      <small class="text-muted">{{ artist|filecount }}</small>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}
@@ -23,13 +23,13 @@
 {% block scripts %}
 <script>
 $(function () {
-    // When section is collapsed, pause audio player:
-    $(".collapse").each(function (index, element) {
-        var player = $(element).find("audio")[0];
-        $(element).on("hidden.bs.collapse", function () {
-            player.pause();
-        });
+  // When section is collapsed, pause audio player:
+  $(".collapse").each(function (index, element) {
+    var player = $(element).find("audio")[0];
+    $(element).on("hidden.bs.collapse", function () {
+      player.pause();
     });
+  });
 });
 </script>
 {% endblock %}

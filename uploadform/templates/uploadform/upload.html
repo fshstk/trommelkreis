@@ -8,22 +8,22 @@
 
 {% block main %}
 <div class="card">
-    <div class="card-body">
-        <div class="text-center">
-            <h1 class="card-title">
-                {{ today.challenge.name }}
-            </h1>
-            <h3 class="card-subtitle mb-2 text-muted">
-                {{ today.challenge.blurb }}
-            </h3>
-        </div>
-        <div id="challenge-description">
-            {{ today.challenge.description|markdownify|safe }}
-        </div>
-        <div class="alert alert-success text-center">
-            {{ info|markdownify|safe }}
-        </div>
+  <div class="card-body">
+    <div class="text-center">
+      <h1 class="card-title">
+        {{ today.challenge.name }}
+      </h1>
+      <h3 class="card-subtitle mb-2 text-muted">
+        {{ today.challenge.blurb }}
+      </h3>
     </div>
+    <div id="challenge-description">
+      {{ today.challenge.description|markdownify|safe }}
+    </div>
+    <div class="alert alert-success text-center">
+      {{ info|markdownify|safe }}
+    </div>
+  </div>
 </div>
 
 <hr>

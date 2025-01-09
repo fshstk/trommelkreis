@@ -7,11 +7,11 @@
 
 {% block main %}
 <div class="card">
-    <div class="card-body">
-        <div id="challenge-description">
-            {{ challenge.description|markdownify|safe }}
-        </div>
+  <div class="card-body">
+    <div id="challenge-description">
+      {{ challenge.description|markdownify|safe }}
     </div>
+  </div>
 </div>
 
 <hr>
@@ -51,13 +51,13 @@
 {% block scripts %}
 <script>
 $(function () {
-    // When section is collapsed, pause audio player:
-    $(".collapse").each(function (index, element) {
-        var player = $(element).find("audio")[0];
-        $(element).on("hidden.bs.collapse", function () {
-            player.pause();
-        });
+  // When section is collapsed, pause audio player:
+  $(".collapse").each(function (index, element) {
+    var player = $(element).find("audio")[0];
+    $(element).on("hidden.bs.collapse", function () {
+      player.pause();
     });
+  });
 });
 </script>
 {% endblock %}
