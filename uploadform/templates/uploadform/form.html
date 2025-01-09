@@ -1,33 +1,33 @@
 <form enctype="multipart/form-data" action="/upload/" method="POST" novalidate>
-    <h2>Teile deinen Track:</h2>
-    {% csrf_token %}
-    {{ form.name.as_hidden }}
-    <div class="mb-3">
-        {{ form.data.errors }}
-        <div class="input-group">
-            {{ form.data }}
-            <span id="track-name" class="input-group-text">Dein Track</span>
-        </div>
-        <div class="invalid-feedback">Wähle eine MP3 Datei aus</div>
-        <div class="form-text">Nur MP3 erlaubt.</div>
+  <h2>Teile deinen Track:</h2>
+  {% csrf_token %}
+  {{ form.name.as_hidden }}
+  <div class="mb-3">
+    {{ form.data.errors }}
+    <div class="input-group">
+      {{ form.data }}
+      <span id="track-name" class="input-group-text">Dein Track</span>
     </div>
-    <div class="mb-3">
-        {{ form.artist.errors }}
-        {{ form.artist }}
-        <div class="form-text">Lass das Feld leer, um anonym zu bleiben.</div>
-    </div>
-    <div class="mb-3">
-        {{ form.password.errors }}
-        {{ form.password }}
-        <div class="invalid-feedback">Falsches Passwort</div>
-        <div class="form-text">Das Passwort wird kurz vor Ende der Session in unserer Gruppe gepostet.</div>
-    </div>
-    <div class="mb-3 form-check">
-        <label class="form-check-label" for="id_tos">Mein Track darf vom digitalen Trommelkreis genutzt und veröffentlicht werden.</label>
-        {{ form.tos.errors }}
-        {{ form.tos }}
-        <div class="invalid-feedback">Du kannst nur Tracks hochladen, die vom digitalen Trommelkreis verwendet werden dürfen</div>
-        <div class="form-text">Nach dem Hochladen sind die Tracks für jeden abspielbar und herunterladbar, und werden ggf. als Material für zukünftige Trommelkreise (z.B. Remixes) verwendet.</div>
-    </div>
-    <button id="upload-button" type="submit" style="width: 100%;" class="btn btn-primary">Upload</button>
+    <div class="invalid-feedback">Wähle eine MP3 Datei aus</div>
+    <div class="form-text">Nur MP3 erlaubt.</div>
+  </div>
+  <div class="mb-3">
+    {{ form.artist.errors }}
+    {{ form.artist }}
+    <div class="form-text">Lass das Feld leer, um anonym zu bleiben.</div>
+  </div>
+  <div class="mb-3">
+    {{ form.password.errors }}
+    {{ form.password }}
+    <div class="invalid-feedback">Falsches Passwort</div>
+    <div class="form-text">Das Passwort wird kurz vor Ende der Session in unserer Gruppe gepostet.</div>
+  </div>
+  <div class="mb-3 form-check">
+    <label class="form-check-label" for="id_tos">Mein Track darf vom digitalen Trommelkreis genutzt und veröffentlicht werden.</label>
+    {{ form.tos.errors }}
+    {{ form.tos }}
+    <div class="invalid-feedback">Du kannst nur Tracks hochladen, die vom digitalen Trommelkreis verwendet werden dürfen</div>
+    <div class="form-text">Nach dem Hochladen sind die Tracks für jeden abspielbar und herunterladbar, und werden ggf. als Material für zukünftige Trommelkreise (z.B. Remixes) verwendet.</div>
+  </div>
+  <button id="upload-button" type="submit" style="width: 100%;" class="btn btn-primary">Upload</button>
 </form>

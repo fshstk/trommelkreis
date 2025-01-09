@@ -7,68 +7,49 @@
 
 {% block main %}
 <div class="card">
-    <div class="card-body">
-{% comment %} 
-        <h1 class="card-title">
-            {{ session.challenge.blurb }}
-        </h1>
-
-        <h3 class="card-subtitle mb-2 text-muted">
-            {{ session.challenge.blurb }}
-        </h3>
-{% endcomment %}
-
-				<div id="challenge-description">
-            {{ challenge.description|markdownify|safe }}
-        </div>
+  <div class="card-body">
+    <div id="challenge-description">
+      {{ challenge.description|markdownify|safe }}
     </div>
+  </div>
 </div>
-
 <hr>
-
 <div id="sessionlist" class="list-group text-start">
-	{% for file in files %}
-	<a href="#{{ file.name }}" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-		<div class="d-flex justify-content-between">
-			<h5 class="mb-1">{{ file.name }}</h5>
-			<small class="text-muted">{{ file|duration }}</small>
-		</div>
-		<div class="d-flex justify-content-between">
-			<p class="mb-1 text-muted">{{ file.artist|default:"Anonym" }}</p>
-			<small class="text-muted">{{ file.filesize|filesizeformat }}</small>
-		</div>
-	</a>
-	<div class="collapse" id="{{ file.name }}" data-bs-parent="#sessionlist">
-		<div class="card card-body">
-			<audio src="{{ file.url }}" style="width: 100%;" preload="none" controls>
-				<p>Dein browser unterstützt das <em>audio</em> Element nicht.</p>
-				<p>Du kannst stattdessen die <a href="{{ file.url }}">Datei Herunterladen</a>.</p>
-			</audio>
-			{# <a href="{{ session.slug }}/{{ file.slug }}" class="btn btn-secondary text-light m-3" download>Download</a> #}
-		</div>
-		<hr>
-	</div>
-	{% endfor %}
+  {% for file in files %}
+  <a href="#{{ file.name }}" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+    <div class="d-flex justify-content-between">
+      <h5 class="mb-1">{{ file.name }}</h5>
+      <small class="text-muted">{{ file|duration }}</small>
+    </div>
+    <div class="d-flex justify-content-between">
+      <p class="mb-1 text-muted">{{ file.artist|default:"Anonym" }}</p>
+      <small class="text-muted">{{ file.filesize|filesizeformat }}</small>
+    </div>
+  </a>
+  <div class="collapse" id="{{ file.name }}" data-bs-parent="#sessionlist">
+    <div class="card card-body">
+      <audio src="{{ file.url }}" style="width: 100%;" preload="none" controls>
+        <p>Dein browser unterstützt das <em>audio</em> Element nicht.</p>
+        <p>Du kannst stattdessen die <a href="{{ file.url }}">Datei Herunterladen</a>.</p>
+      </audio>
+    </div>
+    <hr>
+  </div>
+  {% endfor %}
 </div>
-
 <hr>
-
 <div class="d-flex justify-content-between">
-	<span><a href="{% url "archive:index" %}">Archiv</a> / <a href="{% url "archive:sessions" %}">Sessions</a> / {{ session.slug }}</span>
+  <span><a href="{% url "archive:index" %}">Archiv</a> / <a href="{% url "archive:sessions" %}">Sessions</a> / {{ session.slug }}</span>
 </div>
 {% endblock %}
 
 {% block scripts %}
-{{ block.super }}
 <script>
-$(function () {
-    // When section is collapsed, pause audio player:
-    $(".collapse").each(function (index, element) {
-        var player = $(element).find("audio")[0];
-        $(element).on("hidden.bs.collapse", function () {
-            player.pause();
-        });
-    });
+$(() => {
+  $(".collapse").each((index, element) => {
+    let player = $(element).find("audio")[0];
+    $(element).on("hidden.bs.collapse", () => player.pause());
+  });
 });
 </script>
 {% endblock %}
