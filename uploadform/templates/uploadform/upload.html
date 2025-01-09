@@ -10,12 +10,8 @@
 <div class="card">
   <div class="card-body">
     <div class="text-center">
-      <h1 class="card-title">
-        {{ today.challenge.name }}
-      </h1>
-      <h3 class="card-subtitle mb-2 text-muted">
-        {{ today.challenge.blurb }}
-      </h3>
+      <h1 class="card-title">{{ today.challenge.name }}</h1>
+      <h3 class="card-subtitle mb-2 text-muted">{{ today.challenge.blurb }}</h3>
     </div>
     <div id="challenge-description">
       {{ today.challenge.description|markdownify|safe }}
@@ -25,16 +21,13 @@
     </div>
   </div>
 </div>
-
 <hr>
-
 <div class="d-flex justify-content-center">
-{% include "uploadform/form.html"%}
+  {% include 'uploadform/form.html' %}
 </div>
-
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static "js/id3-minimized.js" %}"></script>
-<script src="{% static "js/upload.js" %}"></script>
+<script src="{% static 'js/id3-minimized.js' %}"></script>
+<script src="{% static 'js/upload.js' %}"></script>
 {% endblock %}
