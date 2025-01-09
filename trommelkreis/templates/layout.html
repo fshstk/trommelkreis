@@ -12,23 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/solid.min.css">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/ubuntu">
     <style>
-    .loading {
-      background-image: linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.15) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.15) 75%,
-        transparent 75%,
-        transparent);
-      background-size: 40px 40px;
-      animation: progress-bar-stripes 2s linear infinite;
-    }
-    @keyframes progress-bar-stripes {
-      from {background-position: 40px 0;}
-      to {background-position: 0 0;}
-    }
     blockquote {
       color: var(--bs-secondary-color);
       margin-left: 20px;
@@ -51,6 +34,8 @@
       height: 100%;
     }
     </style>
+    {% block styles %}
+    {% endblock %}
     <title>{% block title %}Home{% endblock %} | Digitaler Trommelkreis</title>
   </head>
 
