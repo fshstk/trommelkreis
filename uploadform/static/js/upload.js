@@ -36,31 +36,21 @@ $("form").submit(function (event) {
 
 $("#id_data").on("change", function () {
   let file = $(this).prop("files")[0];
-
-  if (file.name.match(/\.[^/.]+$/) == ".mp3") {
-    this.setCustomValidity("");
-  } else {
+  if (!file.name.endsWith(".mp3")) {
     this.setCustomValidity("Datei endet nicht in .mp3");
+    return;
   }
-
-  ID3.loadTags(
-    file.name,
-    function () {
-      let tags = ID3.getAllTags(file.name);
-      if (tags.title) {
-        var title = tags.title;
-      } else {
-        // Strip file suffix:
-        var title = file.name.replace(/\.mp3$/, "");
-        // Underscores to spaces:
-        title = title.replace(/_/g, " ");
-      }
-      // Populate title/artist fields with ID3 tags of selected file:
-      $("#id_name").val(title);
-      $("#id_artist").val(tags.artist);
-      // Display the file name in input field if one is selected:
-      $("#track-name").html(title);
-    },
-    { dataReader: ID3.FileAPIReader(file) }
-  );
+  this.setCustomValidity("");
+  const setFormValues = (title, artist) => {
+    const stripSuffix = str => str.substring(0, file.name.lastIndexOf("."));
+    title = title || stripSuffix(file.name).replace("_", " ");
+    $("#id_name").val(title);
+    $("#track-name").html(title);
+    if(artist)
+      $("#id_artist").val(artist);
+  };
+  jsmediatags.read(file, {
+    onSuccess: res => setFormValues(res.tags.title, res.tags.artist),
+    onError: _ => setFormValues("", ""),
+  });
 });
