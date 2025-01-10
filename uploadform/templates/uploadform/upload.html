@@ -108,12 +108,13 @@ $("form").submit(evt => {
 });
 
 $("#id_data").on("change", () => {
-  let file = $(this).prop("files")[0];
+  const elem = $("#id_data");
+  let file = elem.prop("files")[0];
   if (!file.name.endsWith(".mp3")) {
-    this.setCustomValidity("Datei endet nicht in .mp3");
+    elem[0].setCustomValidity("Datei endet nicht in .mp3");
     return;
   }
-  this.setCustomValidity("");
+  elem[0].setCustomValidity("");
   const setFormValues = (title, artist) => {
     const stripSuffix = str => str.substring(0, file.name.lastIndexOf("."));
     title = title || stripSuffix(file.name).replace("_", " ");
