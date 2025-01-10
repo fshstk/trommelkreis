@@ -45,11 +45,88 @@
 </div>
 <hr>
 <div class="d-flex justify-content-center">
-  {% include 'uploadform/form.html' %}
+  <form enctype="multipart/form-data" action="/upload/" method="POST" novalidate>
+    <h2>Teile deinen Track:</h2>
+    {% csrf_token %}
+    {{ form.name.as_hidden }}
+    <div class="mb-3">
+      {{ form.data.errors }}
+      <div class="input-group">
+        {{ form.data }}
+        <span id="track-name" class="input-group-text">Dein Track</span>
+      </div>
+      <div class="invalid-feedback">Wähle eine MP3 Datei aus</div>
+      <div class="form-text">Nur MP3 erlaubt.</div>
+    </div>
+    <div class="mb-3">
+      {{ form.artist.errors }}
+      {{ form.artist }}
+      <div class="form-text">Lass das Feld leer, um anonym zu bleiben.</div>
+    </div>
+    <div class="mb-3">
+      {{ form.password.errors }}
+      {{ form.password }}
+      <div class="invalid-feedback">Falsches Passwort</div>
+      <div class="form-text">Das Passwort wird kurz vor Ende der Session in unserer Gruppe gepostet.</div>
+    </div>
+    <div class="mb-3 form-check">
+      <label class="form-check-label" for="id_tos">Mein Track darf vom digitalen Trommelkreis genutzt und veröffentlicht werden.</label>
+      {{ form.tos.errors }}
+      {{ form.tos }}
+      <div class="invalid-feedback">Du kannst nur Tracks hochladen, die vom digitalen Trommelkreis verwendet werden dürfen</div>
+      <div class="form-text">Nach dem Hochladen sind die Tracks für jeden abspielbar und herunterladbar, und werden ggf. als Material für zukünftige Trommelkreise (z.B. Remixes) verwendet.</div>
+    </div>
+    <button id="upload-button" type="submit" style="width: 100%;" class="btn btn-primary">Upload</button>
+  </form>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/id3-minimized.js' %}"></script>
-<script src="{% static 'js/upload.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.7/dist/jsmediatags.min.js" integrity="sha384-/HtQsmr4qprqyW2pdIdKjGKdCqYIP6GwQslxLlyxwmYquLZM/SQ1+1sVQbuZyxGH" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.typewatch@3.0.2/jquery.typewatch.js" integrity="sha384-M3F0r+5fODgrMgkWX1b3MqmT8qEVsaH3tw+kXAaeebhzd5/so41ZiV52twvBYOSS" crossorigin="anonymous"></script>
+<script>
+$(document).ready(() => {
+  $("#id_password")[0].setCustomValidity("Kein Passwort");
+});
+
+$("#id_password").typeWatch({
+  callback: str => $.post(
+    "/upload/checkpassword/",
+    { password: str },
+    res => $("#id_password")[0].setCustomValidity(res.valid ? "" : "Passwort falsch"),
+    "json"
+  ),
+  wait: 200,
+});
+
+$("form").submit(evt => {
+  if (!$("form")[0].checkValidity())
+    evt.preventDefault();
+  else
+    $("#upload-button").addClass("disabled loading").attr("disabled", true).text("Dein Track lädt hoch…");
+  $("form").addClass("was-validated");
+});
+
+$("#id_data").on("change", () => {
+  const elem = $("#id_data");
+  let file = elem.prop("files")[0];
+  if (!file.name.endsWith(".mp3")) {
+    elem[0].setCustomValidity("Datei endet nicht in .mp3");
+    return;
+  }
+  elem[0].setCustomValidity("");
+  const setFormValues = (title, artist) => {
+    const stripSuffix = str => str.substring(0, file.name.lastIndexOf("."));
+    title = title || stripSuffix(file.name).replace("_", " ");
+    $("#id_name").val(title);
+    $("#track-name").html(title);
+    if(artist)
+      $("#id_artist").val(artist);
+  };
+  jsmediatags.read(file, {
+    onSuccess: res => setFormValues(res.tags.title, res.tags.artist),
+    onError: _ => setFormValues("", ""),
+  });
+});
+</script>
 {% endblock %}
