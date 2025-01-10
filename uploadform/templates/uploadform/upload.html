@@ -85,7 +85,9 @@
 <script src="https://cdn.jsdelivr.net/npm/jsmediatags@3.9.7/dist/jsmediatags.min.js" integrity="sha384-/HtQsmr4qprqyW2pdIdKjGKdCqYIP6GwQslxLlyxwmYquLZM/SQ1+1sVQbuZyxGH" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.typewatch@3.0.2/jquery.typewatch.js" integrity="sha384-M3F0r+5fODgrMgkWX1b3MqmT8qEVsaH3tw+kXAaeebhzd5/so41ZiV52twvBYOSS" crossorigin="anonymous"></script>
 <script>
-$(() => $("#id_password")[0].setCustomValidity("Kein Passwort"));
+$(document).ready(() => {
+  $("#id_password")[0].setCustomValidity("Kein Passwort");
+});
 
 $("#id_password").typeWatch({
   callback: str => $.post(
@@ -105,7 +107,7 @@ $("form").submit(evt => {
   $("form").addClass("was-validated");
 });
 
-$("#id_data").on("change", function () {
+$("#id_data").on("change", () => {
   let file = $(this).prop("files")[0];
   if (!file.name.endsWith(".mp3")) {
     this.setCustomValidity("Datei endet nicht in .mp3");
