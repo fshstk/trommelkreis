@@ -1,36 +1,20 @@
-"use strict";
+$(() => $("#id_password")[0].setCustomValidity("Kein Passwort"));
 
-function validatePassword() {
-  let field = $("#id_password")[0];
-  let password = $("#id_password").val();
-
-  $.post(
+$("#id_password").typeWatch({
+  callback: str => $.post(
     "/upload/checkpassword/",
-    { password: password },
-    function (response) {
-      if (response.valid) {
-        // Password correct :)
-        field.setCustomValidity("");
-      } else {
-        // Password incorrect :(
-        field.setCustomValidity("Passwort falsch");
-      }
-    },
+    { password: str },
+    res => $("#id_password")[0].setCustomValidity(res.valid ? "" : "Passwort falsch"),
     "json"
-  );
-}
+  ),
+  wait: 200,
+});
 
-// Validate form when clicking submit:
-$("form").submit(function (event) {
-  validatePassword();
-
-  if ($("form")[0].checkValidity() === false) {
-    event.preventDefault();
-    event.stopPropagation();
-  } else {
-    $("#upload-button").addClass("disabled loading").attr("disabled", true)
-    $("#upload-button").text("Dein Track lädt hoch…");
-  }
+$("form").submit(evt => {
+  if (!$("form")[0].checkValidity())
+    evt.preventDefault();
+  else
+    $("#upload-button").addClass("disabled loading").attr("disabled", true).text("Dein Track lädt hoch…");
   $("form").addClass("was-validated");
 });
 
