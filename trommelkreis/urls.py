@@ -17,8 +17,6 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from graphene_django.views import GraphQLView
-from django.views.decorators.csrf import csrf_exempt
 
 from trommelkreis import views
 
@@ -29,5 +27,4 @@ urlpatterns = [
     path("upload/", include("uploadform.urls")),
     path("archiv/", include("archive.urls")),
     path("admin/", admin.site.urls),
-    path("api", csrf_exempt(GraphQLView.as_view(graphiql=settings.DEBUG))),
 ]
