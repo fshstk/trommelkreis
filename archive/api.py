@@ -1,9 +1,11 @@
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.views.decorators.http import require_safe
 from archive.models import Session
 
 
+@require_safe
 def sessions_single(request, session):
     try:
         session = Session.objects.get(slug=session)
