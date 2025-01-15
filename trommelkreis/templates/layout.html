@@ -51,10 +51,6 @@
         theme = newTheme;
         localStorage.theme = theme;
         $("html").attr("data-bs-theme", theme);
-        if (theme === "dark")
-          $("#theme-switcher i").addClass("fa-sun").removeClass("fa-moon");
-        else 
-          $("#theme-switcher i").addClass("fa-moon").removeClass("fa-sun");
         $("#theme-switcher").blur();
       }
       setTheme(theme);
