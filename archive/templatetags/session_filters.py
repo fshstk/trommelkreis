@@ -8,7 +8,7 @@ register = template.Library()
 
 @register.filter
 def filecount(num_files):
-    return "1 Eintrag" if num_files is 1 else f"{num_files} Einträge"
+    return "1 Eintrag" if (num_files == 1) else f"{num_files} Einträge"
 
 
 @register.filter
