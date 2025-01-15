@@ -71,7 +71,7 @@
         .contents()
         .filter((_, el) => el.nodeType === Node.TEXT_NODE)
         .replaceWith(function() {
-          return this.textContent.replace(/(\w+)\*(\w+)/g, '$1<small class="text-muted">*$2</small>');
+          return this.textContent.replace(/\b(\w{3,20})\*(\w{1,10})\b/g, '$1<small class="text-muted">*$2</small>');
       });
     </script>
     {% block scripts %}
