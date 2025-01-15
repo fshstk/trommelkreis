@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models.functions import TruncMonth, TruncYear
 from django.http import HttpResponse
+from django.views.decorators.http import require_safe
 from django.views.decorators.cache import never_cache
 from django.db.models import Count, F
 
@@ -33,6 +34,7 @@ def sessions(request):
     return render(request, "archive/sessions_all.html", {"archive": archive})
 
 
+@require_safe
 def single_session_if_no_copyright(request, slug):
     session = get_object_or_404(Session, slug=slug)
     if not session.challenge.copyright_issues:
@@ -42,6 +44,7 @@ def single_session_if_no_copyright(request, slug):
         return render(request, "archive/cannot_show.html", context)
 
 
+@require_safe
 def single_session_unconditional(request, slug):
     session = get_object_or_404(Session, slug=slug)
     return single_session(request, session)
