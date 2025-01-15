@@ -3,12 +3,14 @@
 
 {% block main %}
 {{ session.challenge.description|markdownify|safe }}
-<hr>
-<div class="text-center alert alert-danger">
+<div class="text-center alert alert-warning">
   <p>
     Diese Session kann leider nicht öffentlich zugänglich gemacht werden, da darin kopiergeschützte
     Elemente vorkommen.
   </p>
+  <p>
+    Du kannst die Session aber über unseren Discord Bot anhören!<br>
+    Gib dafür <code>/sesh {{ session.slug }}</code> in den Chat ein.
+  </p>
 </div>
-<hr>
 {% endblock %}

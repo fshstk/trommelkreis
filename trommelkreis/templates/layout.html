@@ -1,75 +1,79 @@
-{% load static %}
-{% load compress %}
-
 <!doctype html>
 <html lang="de">
+  {% load static %}
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/halfmoon@2/css/halfmoon.min.css" id="css-framework">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/brands.min.css">
     <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/ubuntu">
-    <style>
-    blockquote {
-      color: var(--bs-secondary-color);
-      margin-left: 20px;
-      padding: 1em;
-      border-left: 5px solid var(--bs-secondary-color);
-    }
-    .embed-container {
-      position: relative;
-      padding-bottom: 56.25%;
-      margin-bottom: 10px;
-      height: 0;
-      overflow: hidden;
-      max-width: 100%;
-    }
-    .embed-container iframe, .embed-container object, .embed-container embed {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    </style>
     {% block styles %}
     {% endblock %}
     <title>{% block title %}Home{% endblock %} | Digitaler Trommelkreis</title>
   </head>
-
-  <body style="background-color: #ddd; font-family: 'Ubuntu', sans-serif">
-    <nav class="nav container p-1" style="max-width: 1140px;">
-      <a class="nav-link link-dark home" href="{% url 'home' %}" title="Home"><i class="fa-solid fa-house"></i></i></a>
-      <a class="nav-link link-dark" href="{% url 'info' %}">Info</a>
-      <a class="nav-link link-dark" href="{% url 'archive:index' %}">Archiv</a>
-      <a class="nav-link link-primary" href="{% url 'upload:index' %}">Mitmachen</a>
-    </nav>
-    <main class="container bg-white p-3" style="max-width: 1140px;">
-      <header>
-        {% block header %}
-        <div class="row">
-          <div class="col-6 my-auto text-end">
-            <img src="{% static 'img/logo.png' %}" width="300px" class="img-fluid p-3" alt="logo">
-          </div>
-          <div class="col-6 my-auto text-start">
-            <h1 class="fw-bold text-truncate">{% block heading %}{% endblock %}</h1>
-            <h6 class="text-muted">{% block subheading %}{% endblock %}</h6>
-          </div>
+  <body class="bg-body-tertiary" style="font-family: Ubuntu, sans-serif;">
+    <header class="container p-3">
+      {% block header %}
+      <div class="row">
+        <div class="col-6 text-end">
+          <img src="{% static 'img/logo.svg' %}" width="200px" class="img-fluid" alt="logo">
         </div>
-        <hr>
-        {% endblock %}
-      </header>
+        <div class="col-6 text-start">
+          <h1 class="fw-bold">{% block heading %}{% endblock %}</h1>
+          <h2 class="h6 text-muted">{% block subheading %}{% endblock %}</h2>
+        </div>
+      </div>
+      {% endblock %}
+    </header>
+    <nav class="nav container p-1">
+      <a class="nav-link link-secondary" href="{% url 'home' %}" title="Home"><i class="fa-solid fa-house"></i></a>
+      <a class="nav-link link-secondary" href="{% url 'info' %}">Info</a>
+      <a class="nav-link link-secondary" href="{% url 'archive:index' %}">Archiv</a>
+      <a class="nav-link link-primary" href="{% url 'upload:index' %}">Mitmachen</a>
+      <a class="nav-link link-secondary ms-auto" href="#" id="theme-switcher"><i class="fa-solid fa-moon"></i></a>
+    </nav>
+    <main class="container bg-body p-3">
       {% block main %}
       {% endblock %}
     </main>
-    <footer class="container text-center p-1 text-dark">
-      <small>Impressum: &copy; {% now "Y" %} Fabian Hummel | <a class="text-decoration-none" href="https://github.com/fshstk/trommelkreis">github.com/fshstk/trommelkreis</a></small>
+    <footer class="container text-center p-1">
+      <small>Impressum: &copy; {% now "Y" %} Fabian Hummel <div class="vr mx-1"></div> <a class="text-decoration-none" href="https://github.com/fshstk/trommelkreis">github.com/fshstk/trommelkreis</a></small>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="{% static 'js/responsive-embeds.js' %}"></script>
+    <script>
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      let theme = localStorage.theme || systemTheme;
+      function setTheme(newTheme) {
+        theme = newTheme;
+        localStorage.theme = theme;
+        $("html").attr("data-bs-theme", theme);
+        if (theme === "dark")
+          $("#theme-switcher i").addClass("fa-sun").removeClass("fa-moon");
+        else 
+          $("#theme-switcher i").addClass("fa-moon").removeClass("fa-sun");
+        $("#theme-switcher").blur();
+      }
+      setTheme(theme);
+      $("#theme-switcher").click(evt => {
+        setTheme(theme === "dark" ? "light" : "dark");
+        evt.preventDefault();
+      });
+    </script>
+    <script>
+      // Add small tag to gendered German word endings:
+      // (e.g. "Teilnehmer*innen" -> Teilnehmer<small>*innen</small>)
+      $("body *")
+        .not("script, style, title, textarea, pre")
+        .contents()
+        .filter((_, el) => el.nodeType === Node.TEXT_NODE)
+        .replaceWith(function() {
+          return this.textContent.replace(/(\w+)\*(\w+)/g, '$1<small class="text-muted">*$2</small>');
+      });
+    </script>
     {% block scripts %}
     {% endblock %}
   </body>

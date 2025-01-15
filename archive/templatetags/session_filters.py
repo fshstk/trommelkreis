@@ -7,24 +7,13 @@ register = template.Library()
 
 
 @register.filter
-def filecount(session):
-    filecount = len(session.files)
-    if filecount == 0:
-        return "Keine Einträge"
-    elif filecount == 1:
-        return "1 Eintrag"
-    else:
-        return "{} Einträge".format(filecount)
+def filecount(num_files):
+    return "1 Eintrag" if num_files is 1 else f"{num_files} Einträge"
 
 
 @register.filter
 def dateformat(session):
     return session.date.strftime("%d.%m.%Y")
-
-
-@register.filter
-def duration(file):
-    return "{:02d}:{:02d}".format(file.duration // 60, file.duration % 60)
 
 
 @register.filter
@@ -42,11 +31,3 @@ def month(session):
 def year(session):
     # return session.date.strftime("%Y")
     return django_date(session.date, "Y")
-
-
-@register.filter
-def css_friendly_id(id):
-    # CSS IDs cannot start with a digit
-    if id[0].isdigit():
-        return "_" + id
-    return id

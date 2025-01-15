@@ -72,32 +72,9 @@ class Session(SlugIncluded):
     def slug_basename(self):
         return self.date.strftime("%Y%m%d")
 
-    @classmethod
-    def grouped_by_month(cls):
-        sessions = cls.objects.order_by("date").annotate(month=TruncMonth("date"))
-        grouped_sessions = []
-        for _, group in groupby(sessions, key=lambda x: x.month):
-            grouped_sessions.append(list(group))
-        return grouped_sessions
-
     @property
     def files(self):
         return self.tracks.all()
-
-    @property
-    def copyright_issues(self):
-        return self.challenge.copyright_issues
-
-    @property
-    def files_by_subsection(self):
-        grouped_files = []
-        for _, group in groupby(
-            self.tracks.order_by("session_subsection"),
-            key=lambda x: x.session_subsection,
-        ):
-            filelist = sorted(list(group), key=lambda x: x.name.lower())
-            grouped_files.append(filelist)
-        return grouped_files
 
 
 class Artist(SlugIncluded):

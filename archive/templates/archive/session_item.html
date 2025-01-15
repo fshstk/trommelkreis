@@ -1,15 +1,15 @@
 {% load session_filters %}
 
-<a href="{% url "archive:single_session" session.slug %}" class="list-group-item list-group-item-action">
+<a href="{% url 'archive:single_session' session.slug %}" class="list-group-item list-group-item-action">
   <div class="d-flex justify-content-between">
-    <h5 class="mb-1 text-truncate">{{ session.challenge.name }}</h5>
+    <h5 class="mb-1 text-truncate">{{ session.challenge_name }}</h5>
     <small class="text-muted">{{ session|dateformat }}</small>
   </div>
-  <p style="height: 20px;" class="mb-1 text-truncate">{{ session.challenge.blurb }}</p>
+  <p style="height: 20px;" class="mb-1 text-truncate">{{ session.blurb }}</p>
   <div class="d-flex justify-content-between">
-    <small class="text-muted">{{ session|filecount }}</small>
-    {% if session.copyright_issues %}
-    <small><i class="fa-solid fa-lock"></i></i></small>
+    <small class="text-muted">{{ session.num_tracks|filecount }}</small>
+    {% if session.restricted %}
+    <small><i class="fa-solid fa-lock"></i></small>
     {% endif %}
   </div>
 </a>

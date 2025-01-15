@@ -5,66 +5,143 @@
 {% block heading %}{{ session.challenge.name }}{% endblock %}
 {% block subheading %}{{ session|dateformat }}{% endblock %}
 
+{% block styles %}
+<style>
+  blockquote {
+    color: var(--bs-secondary-color);
+    margin-left: 20px;
+    padding: 1em;
+    border-left: 5px solid var(--bs-secondary-color);
+  }
+  .embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    margin-bottom: 10px;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  .embed-container iframe,
+  .embed-container object,
+  .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .tk-text-amber, .tk-btn-amber {color: var(--bs-amber-500);}
+  .tk-bg-amber {background-color: var(--bs-amber-500);}
+  .tk-btn-amber:hover {color: var(--bs-amber-300);}
+  .tk-btn-amber:active {color: var(--bs-amber-200);}
+</style>
+{% endblock %}
+
 {% block main %}
-<div class="card">
-  <div class="card-body">
-    <div id="challenge-description">
-      {{ session.challenge.description|markdownify|safe }}
-    </div>
-  </div>
+<div>
+  {{ session.challenge.description|markdownify|safe }}
 </div>
-<hr>
-{% for subsection in files %}
-{% if subsection.0.session_subsection %}
-<h3>{{ subsection.0.session_subsection }}</h3>
-{% endif %}
-<div id="sessionlist" class="list-group text-start">
-  {% for file in subsection %}
-  {% if file.filesize == 0 %}
-  <a href="#" class="list-group-item disabled bg-secondary">
-    <div class="d-flex justify-content-between"><h5 class="mb-1 text-truncate text-white">{{ file.name }}</h5></div>
-    <div class="d-flex justify-content-between">
-      <p class="mb-1 text-truncate text-white">{{ file.artist|default:"Anonym" }}</p>
-      <small class="text-warning">verloren</small>
+<div class="list-group">
+  {% for file in files %}
+  <div class="list-group-item">
+    <div class="d-flex align-items-center mb-2">
+      <a id="button-{{ file.slug }}" href="#" class="display-1 me-3 tk-btn-amber"><i class="fa-solid fa-circle-play"></i></a>
+      <div id="player-{{ file.slug }}" class="w-100"></div>
+      <div id="loading-{{ file.slug }}" class="progress w-100 rounded-0 d-none" role="progressbar">
+        <div class="progress-bar placeholder-wave tk-bg-amber"></div>
+      </div>
     </div>
-  </a>
-  {% else %}
-  <a href="#{{ file.slug|css_friendly_id }}" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
     <div class="d-flex justify-content-between">
       <h5 class="mb-1 text-truncate">{{ file.name }}</h5>
-      <small class="text-muted">{{ file|duration }}</small>
+      {% if file.subsection %}<small class="text-primary">{{ file.subsection }}</small>{% endif %}
     </div>
     <div class="d-flex justify-content-between">
       <p class="mb-1 text-muted text-truncate">{{ file.artist|default:"Anonym" }}</p>
-      <small class="text-muted">{{ file.filesize|filesizeformat }}</small>
+      <div><span id="time-{{ file.slug }}" class="small tk-text-amber">-:--</span><span class="px-1 text-muted">/</span><span id="duration-{{ file.slug }}" class="small text-muted">0:00</span></div>
     </div>
-  </a>
-  <div class="collapse" id="{{ file.slug|css_friendly_id }}" data-bs-parent="#sessionlist">
-    <div class="card card-body">
-      <audio src="{{ file.url }}" style="width: 100%;" preload="none" controls>
-        <p>Dein browser unterstützt das <em>audio</em> Element nicht.</p>
-        <p>Du kannst stattdessen die <a href="{{ file.url }}">Datei Herunterladen</a>.</p>
-      </audio>
-    </div>
-    <hr>
   </div>
-  {% endif %}
   {% endfor %}
-</div>
-<hr>
-{% endfor %}
-<div class="d-flex justify-content-between">
-  <span><a href="{% url 'archive:index' %}" class="text-decoration-none">Archiv</a> / <a href="{% url 'archive:sessions' %}" class="text-decoration-none">Sessions</a> / {{ session.slug }}</span>
 </div>
 {% endblock %}
 
 {% block scripts %}
+{{ files|json_script:"files-urls" }}
+<script src="https://cdn.jsdelivr.net/npm/wavesurfer.js@7.8.16/dist/wavesurfer.min.js" integrity="sha384-kroCQFeLaw0Cx4vf/ZgSTS4bC+7PY7pu/plkIT8Fg2jvnwquObN9GidYw53b6ywT" crossorigin="anonymous"></script>
 <script>
-$(() => {
-  $(".collapse").each((index, element) => {
-    let player = $(element).find("audio")[0];
-    $(element).on("hidden.bs.collapse", () => player.pause());
+  const tracks = JSON.parse($("#files-urls").text()).map(t => {
+    const player = WaveSurfer.create({
+      placeholder: true,
+      height: 80,
+      container: `#player-${t.slug}`,
+      barWidth: 2,
+      barGap: 2,
+      cursorWidth: 0,
+      interact: false,
+      waveColor: "rgba(128, 128, 128, 0.2)",
+    });
+    player.load("", [Array(1000).fill().map(() => Math.random() * 0.5 + 0.2)], 1);
+    return {...t, player};
   });
-});
+  function createPlayer(track) {
+    track.player.destroy(); // Destroy placeholder player
+    track.player = WaveSurfer.create({
+      height: 80,
+      container: `#player-${track.slug}`,
+      url: track.url, 
+      progressColor: getComputedStyle(document.documentElement).getPropertyValue("--bs-amber-500"),
+      dragToSeek: true,
+      barWidth: 2,
+      barGap: 2,
+    });
+    track.player.on("loading", percent => {
+      $(`#player-${track.slug}`).addClass("d-none");
+      $(`#loading-${track.slug}`).removeClass("d-none");
+      $(`#loading-${track.slug} .progress-bar`).css("width", `${percent}%`);
+    });
+    track.player.on("ready", () => {
+      $(`#player-${track.slug}`).removeClass("d-none");
+      $(`#loading-${track.slug}`).addClass("d-none");
+      $(`#button-${track.slug} i`).removeClass("fa-compact-disc fa-spin");
+      play(track);
+    });
+    track.player.on("decode", duration => $(`#duration-${track.slug}`).text(formatTime(duration)));
+    track.player.on("timeupdate", currentTime => $(`#time-${track.slug}`).text(formatTime(currentTime)));
+  }
+  function pause(track) {
+    track.player.pause();
+    $(`#button-${track.slug} i`).addClass("fa-circle-play").removeClass("fa-circle-pause");
+  }
+  function play(track) {
+    if (track.player.options.placeholder) {
+      $(`#button-${track.slug} i`).removeClass("fa-circle-play").addClass("fa-compact-disc fa-spin");
+      createPlayer(track);
+    } else {
+      tracks.forEach(t => pause(t));
+      track.player.play();
+      $(`#button-${track.slug} i`).addClass("fa-circle-pause").removeClass("fa-circle-play");
+    }
+  }
+  tracks.forEach(t => {
+    $(`#button-${t.slug}`).click(evt => {
+      t.player?.isPlaying() ? pause(t) : play(t);
+      $(`#button-${t.slug}`).blur();
+      evt.preventDefault();
+    });
+  });
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secondsRemainder = Math.round(seconds) % 60;
+    const paddedSeconds = `0${secondsRemainder}`.slice(-2);
+    return `${minutes}:${paddedSeconds}`;
+  }
+</script>
+<script>
+  $("youtube").each(() => {
+    $(this).replaceWith(`
+      <div class="embed-container">
+        <iframe src="https://www.youtube.com/embed/${$(this).text()}" frameborder="0" allowfullscreen></iframe>
+      </div>
+    `);
+  });
 </script>
 {% endblock %}
