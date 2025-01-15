@@ -6,9 +6,9 @@ from archive.models import Session
 
 
 @require_safe
-def sessions_single(request, session):
+def sessions_single(request, slug):
     try:
-        session = Session.objects.get(slug=session)
+        session = Session.objects.get(slug=slug)
     except Session.DoesNotExist:
         return HttpResponse(f"Session '{session}' not found", status=404)
 
