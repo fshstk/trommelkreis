@@ -126,6 +126,22 @@ rcssmin = "1.1.2"
 rjsmin = "1.2.2"
 
 [[package]]
+name = "django-debug-toolbar"
+version = "5.0.1"
+description = "A configurable set of panels that display various debug information about the current request/response."
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "django_debug_toolbar-5.0.1-py3-none-any.whl", hash = "sha256:7456cc2e951db37dab335686db7803c4a0ecb6736d120705f6668db9548bf49f"},
+    {file = "django_debug_toolbar-5.0.1.tar.gz", hash = "sha256:296f6f18a80710e84fbb8361538ae5ec522a75ebe9ab67db34bcf1026cbeb420"},
+]
+
+[package.dependencies]
+django = ">=4.2.9"
+sqlparse = ">=0.2"
+
+[[package]]
 name = "django-pagedown"
 version = "2.2.1"
 description = "A Django app that allows the easy addition of Stack Overflow's 'PageDown' markdown editor to a django form field"
@@ -597,4 +613,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "~3.12"
-content-hash = "6591865290038f86f2188e929caa6453def16fb5c563b1561ffa5e9e3b00cadd"
+content-hash = "bc5f3476674910431594cfe6b5759367384f90041309df104be6bf67ea1a6eb4"

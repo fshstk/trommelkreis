@@ -124,3 +124,9 @@ AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL", "_")
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", "_")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Debug toolbar:
+INSTALLED_APPS += ["debug_toolbar"]
+MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+INTERNAL_IPS = ["127.0.0.1"]
+DEBUG_TOOLBAR_CONFIG = {"TOOLBAR_LANGUAGE": "en-us"}
