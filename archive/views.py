@@ -56,7 +56,7 @@ def single_session(request, session):
         "files": [{
             "name": file.name,
             "slug": file.slug,
-            "artist": file.artist.name,
+            "artist": file.artist.name if file.artist else "Anonym",
             "url": file.url,
             "subsection": file.session_subsection
         } for file in session.tracks.select_related("artist").all()],
