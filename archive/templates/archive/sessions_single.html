@@ -106,6 +106,7 @@
     });
     track.player.on("decode", duration => $(`#duration-${track.slug}`).text(formatTime(duration)));
     track.player.on("timeupdate", currentTime => $(`#time-${track.slug}`).text(formatTime(currentTime)));
+    track.player.on("finish", () => pause(track));
   }
   function pause(track) {
     track.player.pause();
