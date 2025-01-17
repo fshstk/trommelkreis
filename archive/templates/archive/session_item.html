@@ -8,8 +8,5 @@
   <p style="height: 20px;" class="mb-1 text-truncate">{{ session.blurb }}</p>
   <div class="d-flex justify-content-between">
     <small class="text-muted">{{ session.num_tracks|filecount }}</small>
-    {% if session.restricted %}
-    <small><i class="fa-solid fa-lock"></i></small>
-    {% endif %}
   </div>
 </a>

@@ -3,7 +3,6 @@ The following env variables should be set:
 SECRET_KEY:             [Unique secret key for Django app]
 DATABASE_URL:           [mysql://db_user:db_password@db_host:db_port/db_name]
 DEBUG:                  [Enable debug mode (1 or 0)]
-MEDIA_PASSWORD:         [URL Suffix for copyrighted sessions]
 PREVIEW_PASSWORD:       [URL Suffix for previewing unpublished challenges]
 """
 
@@ -102,9 +101,6 @@ COMPRESS_OFFLINE = True
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 os.makedirs(STATIC_ROOT, exist_ok=True)
-
-# Password for unlocking copyrighted media:
-MEDIA_PASSWORD = os.environ.get("MEDIA_PASSWORD", "_")
 
 # Password for previewing challenge before uploads are open:
 PREVIEW_PASSWORD = os.environ.get("PREVIEW_PASSWORD", "_")

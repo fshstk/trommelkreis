@@ -42,7 +42,6 @@ You must make sure the following env variables are set in your app dashboard.
 
 ### Media
 
-- `MEDIA_PASSWORD` (secret URL suffix for viewing copyright-protected sessions)
 - `PREVIEW_PASSWORD` (secret URL suffix for viewing unpublished sessions)
 
 ### Storage

@@ -35,22 +35,8 @@ def sessions(request):
 
 
 @require_safe
-def single_session_if_no_copyright(request, slug):
+def single_session(request, slug):
     session = get_object_or_404(Session, slug=slug)
-    if not session.challenge.copyright_issues:
-        return single_session(request, session)
-    else:
-        context = {"session": session}
-        return render(request, "archive/cannot_show.html", context)
-
-
-@require_safe
-def single_session_unconditional(request, slug):
-    session = get_object_or_404(Session, slug=slug)
-    return single_session(request, session)
-
-
-def single_session(request, session):
     return render(request, "archive/sessions_single.html", {
         "session": session,
         "files": [{
