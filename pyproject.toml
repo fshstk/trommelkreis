@@ -3,7 +3,7 @@ authors = ["Fabian Hummel <fshstk@fshstk.com>"]
 description = "Django-based website for 'Digitaler Trommelkreis' – a social music production project"
 license = "GPL v3.0"
 name = "trommelkreis"
-version = "2.3.0"
+version = "3.0.0"
 
 [tool.poetry.scripts]
 dev = "manage:dev"
