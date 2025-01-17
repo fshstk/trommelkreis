@@ -2,84 +2,103 @@
 {% load static %}
 
 {% block title %}Info{% endblock %}
-{% block heading %}Infos{% endblock %}
-{% block subheading %}zum digitalen Trommelkreis{% endblock %}
+{% block heading %}Digitaler Trommelkreis{% endblock %}
+{% block subheading %}gemeinsam Musik produzieren{% endblock %}
 
 {% block main %}
-<h2>Was ist der digitale Trommelkreis?</h2>
-<p>
-  Der digitale Trommelkreis ist eine regelmäßige Veranstaltung zum Thema
-  <em>Musik mit dem Computer machen</em>, und funktioniert so:
-</p>
-<ul>
-  <li>Jedes Mal gibt es als Vorgabe eine kurze "Challenge".</li>
-  <li>
-    Das könnte z.B. ein bestimmtes Sample sein, das man verwenden muss &mdash; oder eine
-    stilistische Vorgabe an die man sich halten muss &mdash; oder auch alles mögliche! Schau einfach
-    ins <a href="{% url 'archive:index' %}">Archiv</a>, um dir Beispiele aus der Vergangenheit
-    anzusehen.
-  </li>
-  <li>
-    Jede*r Teilnehmer*in hat einen gewissen Zeitrahmen (in der Regel 60/90/120 Minuten), um diese
-    Vorgabe in einen kurzen Track zu verwandeln.
-  </li>
-  <li>
-    Dieser Beat muss nicht fertig oder poliert oder lang oder gut sein &mdash; Bei uns geht es
-    darum zu experimentieren und Spaß zu haben.
-  </li>
-  <li>
-    Nach Ablauf der Frist sollte der Beat ins Archiv hochgeladen werden, wo er (auf Wunsch mit
-    deinem Namen oder anonym) öffentlich zugänglich ist.
-  </li>
-  <li>
-    Am Schluss hören wir uns gemeinsam die Früchte unserer Arbeit an &mdash; entweder in Person
-    oder online.
-  </li>
-</ul>
+<div class="text-center">
+  <p class="lead mb-2">
+    Der digitale Trommelkreis ist ein regelmäßiger Workshop zum Thema
+    <strong>Musik mit dem Computer machen</strong>.
+  </p>
+</div>
 
-<h2>Wann und wo?</h2>
-<p>
-  Der digitale Trommelkreis findet <em>jeden zweiten Montag um 19:30 Uhr</em> statt. In der Regel
-  ist die Deadline für das Hochladen um 22:00 Uhr, und das gemeinsame Hören um 22:30 Uhr auf dem
-  Discord Server der <a href="http://www.klangwerkstatt-graz.at/">Klangwerkstatt Graz</a>.
-</p>
-<p>
-  Die Challenge wird meistens pünktlich zu Beginn auf der
-  <a href="{% url 'upload:index' %}">Mitmachen</a> Seite veröffentlicht. Zusätzlich gibt es in
-  unserer WhatsApp Gruppe Updates zu zukünftigen Terminen, und die Möglichkeit, jeder Zeit Fragen zu
-  stellen.
-</p>
-<p>
-  Für die Zugangsdaten zu WhatsApp Gruppe und Discord Server, schick einfach eine Mail an
-  <a class="mitmachen"></a>. Jede*r ist willkommen!
-</p>
-<h2>Wie kann ich mitmachen?</h2>
-<p>
-  Ganz einfach! Schreib eine Mail an <a class="mitmachen"></a>, um weitere Infos zu erfahren.
-  Derzeit werden alle unmittelbaren Informationen über eine WhatsApp Gruppe vermittelt. Die
-  Challenges und das Uploadformular findet ihr unter
-  <a href="{% url 'upload:index' %}">Mitmachen</a>.
-</p>
-<h2>Ich bin gar nicht so gut im Musik machen. Kann ich trotzdem mitmachen?</h2>
-<p>
-  <em>Ja, klar!</em> Es geht hier ums gemeinsame Lernen und Spaßhaben. Die meisten Challenges sind
-  so ausgelegt, dass du dafür gar kein fortgeschrittenes Wissen in Produktion oder Musiktheorie
-  brauchst.
-</p>
-<p class="text-center fw-bold">Der digitale Trommelkreis ist kein Wettbewerb!</p>
-<p>
-  Wir sind eine <em>no-judge-Zone</em>. Wie gut oder professionell dein Track am Schluss klingt, tut
-  nichts zur Sache.
-</p>
-<p>
-  Es reicht wenn du ein Programm installiert hast, mit dem du Musik machen kannst und dass du
-  grundsätzlich bedienen kannst, und motiviert bist.
-</p>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card my-2">
+      <div class="card-header bg-primary text-white">
+        <h3 class="card-title mb-0">Wann & wo?</h3>
+      </div>
+      <div class="card-body">
+        <ul class="list-unstyled">
+          <li class="m-2 d-flex align-items-start">
+            <i class="me-2 fa-fw fa-solid fa-calendar pt-1"></i>
+            <span>
+              Jeden <em>zweiten</em> Montag<br>
+              <span class="small text-muted">Genaue Termine werden über unsere WhatsApp/Signal Gruppen ausgeschrieben.</span>
+            </span>
+          </li>
+          <li class="m-2"><i class="me-2 fa-fw fa-solid fa-clock"></i></i>20:00 Uhr - 23:00 Uhr</li>
+          <li class="m-2"><i class="me-2 fa-fw fa-solid fa-location-dot"></i><a href="https://klangwerkstatt-graz.at">Klangwerkstatt Graz</a></li>
+          <li class="m-2"><i class="me-2 fa-fw fa-solid fa-couch"></i>Mach gerne auch von zuhause mit</li>
+          <li class="m-2"><i class="me-2 fa-fw fa-solid fa-headphones"></i>Du brauchst nur Laptop & Kopfhörer</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card my-2">
+      <div class="card-header bg-danger text-white">
+        <h3 class="card-title mb-0">Ready to join?</h3>
+      </div>
+      <div class="card-body text-center">
+        <p class="card-text">Schick uns ein Email um mitzumachen:</p>
+        <a class="btn btn-primary btn-lg mitmachen" href="mailto:spam@protected.com">Contact Us</a>
+        <p class="mt-3 small">Du bekommst Invite Links zu unseren WhatsApp & Signal Gruppen</p>
+        <p class="mb-0">
+          <span class="badge bg-success mx-1">No experience required</span>
+          <span class="badge bg-success mx-1">No judgment zone</span>
+          <span class="badge bg-success mx-1">Just bring enthusiasm!</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 d-flex">
+    <div class="card my-2 align-self-stretch w-100">
+      <div class="card-header tk-bg-amber text-white">
+        <h3 class="card-title mb-0">So funktioniert's</h3>
+      </div>
+      <div class="card-body">
+        <ol class="list-unstyled">
+          <li>
+            <span class="h6 text-muted">19:30 Uhr</span>
+            <h5>Challenge veröffentlicht</h5>
+            <p>
+              Jede Session beginnt mit einer <em>Challenge</em><br>
+              <span class="small text-muted">
+                Schau gerne ins <a href="{% url 'archive:index' %}">Archiv</a>, um dir vergangene Challenges anzuschauen.
+              </span>
+            </p>
+          </li>
+          <li>
+            <span class="h6 text-muted">20:00 Uhr</span>
+            <h5>Musik machen</h5>
+            <p>Du hast zwei Stunden Zeit, um einen Track zu basteln</p>
+          </li>
+          <li>
+            <span class="h6 text-muted">22:00 Uhr</span>
+            <h5>Upload</h5>
+            <p>
+              Teile deinen Track mit uns auf der Webseite<br>
+              <span class="small text-muted">Egal ob fertig oder nicht, egal ob gut oder schlecht!</span>
+            </p>
+          </li>
+          <li>
+            <span class="h6 text-muted">22:30 Uhr</span>
+            <h5>Gemeinsam anhören</h5>
+            <p>
+              Hör dir mit uns im Klangwerkstatt Studio die Tracks an<br>
+              <span class="small text-muted">…oder klink dich von zuhause über Discord ein.</span>
+            </p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
   const mail = "mitmachen" + "@" + "trommelkreis.club";
-  $("a.mitmachen").replaceWith(`<a href="mailto:${mail}">${mail}</a>`);
+  $("a.mitmachen").replaceWith(`<a class="btn btn-primary btn-lg" href="mailto:${mail}">${mail}</a>`);
 </script>
 {% endblock %}
