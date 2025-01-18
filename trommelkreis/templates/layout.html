@@ -20,6 +20,7 @@
     {% endblock %}
     <title>{% block title %}Home{% endblock %} | Digitaler Trommelkreis</title>
     {% if not debug %}
+    <!-- Analytics script. SRI omitted here as script has potentially dynamic content (and is hosted on the same server anyway): -->
     <script defer src="https://umami.tofu.fshstk.com/script.js" data-website-id="f6813507-b9df-4693-a59c-c1958e3a7073"></script>
     {% endif %}
   </head>
