@@ -3,7 +3,6 @@ The following env variables should be set:
 SECRET_KEY:             [Unique secret key for Django app]
 DATABASE_URL:           [mysql://db_user:db_password@db_host:db_port/db_name]
 DEBUG:                  [Enable debug mode (1 or 0)]
-MEDIA_PASSWORD:         [URL Suffix for copyrighted sessions]
 PREVIEW_PASSWORD:       [URL Suffix for previewing unpublished challenges]
 """
 
@@ -103,9 +102,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 os.makedirs(STATIC_ROOT, exist_ok=True)
 
-# Password for unlocking copyrighted media:
-MEDIA_PASSWORD = os.environ.get("MEDIA_PASSWORD", "_")
-
 # Password for previewing challenge before uploads are open:
 PREVIEW_PASSWORD = os.environ.get("PREVIEW_PASSWORD", "_")
 
@@ -124,3 +120,9 @@ AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL", "_")
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", "_")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Debug toolbar:
+INSTALLED_APPS += ["debug_toolbar"]
+MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+INTERNAL_IPS = ["127.0.0.1"]
+DEBUG_TOOLBAR_CONFIG = {"TOOLBAR_LANGUAGE": "en-us"}

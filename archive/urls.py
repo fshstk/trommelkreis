@@ -8,7 +8,6 @@ app_name = "archive"
 urlpatterns = [
     path("", views.index, name="index"),
     path("sessions/", views.sessions, name="sessions"),
-    path("sessions/<session>/", views.single_session_if_no_copyright, name="single_session"),
-    path("sessions/<session>/" + settings.MEDIA_PASSWORD, views.single_session_unconditional),
-    path("api/sessions/<session>/", api.sessions_single),
+    path("sessions/<slug>/", views.single_session, name="single_session"),
+    path("api/sessions/<slug>/", api.sessions_single),
 ]

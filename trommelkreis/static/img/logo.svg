@@ -1,0 +1,18 @@
+<svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    <!-- Values taken from Halfmoon CSS palette -->
+    .blue  { fill: hsl(216, 100%, 50%); }
+    .red   { fill: hsl(0,  67.5%, 50%); }
+    .amber { fill: hsl(38,   92%, 50%); }
+    .green { fill: hsl(145,  52%, 34%); }
+  </style>
+  <defs>
+    <clipPath id="half"><rect x="0" y="0" width="50" height="100"/></clipPath>
+  </defs>
+  <circle cx="0"  cy="50" r="50" clip-path="url(#half)" transform="translate(0)"   class="blue" />
+  <circle cx="0"  cy="50" r="50" clip-path="url(#half)" transform="translate(50)"  class="red"  />
+  <circle cx="0"  cy="50" r="50" clip-path="url(#half)" transform="translate(100)" class="amber"/>
+  <circle cx="50" cy="50" r="50" clip-path="url(#half)" transform="translate(150)" class="green"/>
+  <circle cx="50" cy="50" r="50" clip-path="url(#half)" transform="translate(200)" class="blue" />
+  <circle cx="50" cy="50" r="50" clip-path="url(#half)" transform="translate(250)" class="amber"/>
+</svg>

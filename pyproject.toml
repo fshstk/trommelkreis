@@ -3,7 +3,7 @@ authors = ["Fabian Hummel <fshstk@fshstk.com>"]
 description = "Django-based website for 'Digitaler Trommelkreis' – a social music production project"
 license = "GPL v3.0"
 name = "trommelkreis"
-version = "2.3.0"
+version = "3.0.0"
 
 [tool.poetry.scripts]
 dev = "manage:dev"
@@ -25,6 +25,7 @@ python = "~3.12"
 whitenoise = "^6.0"
 django-storages = "^1.14.4"
 boto3 = "^1.35.90"
+django-debug-toolbar = "^5.0.1"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"

@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}Fehler{% endblock %}
-{% block heading %}404 <i class="fa-solid fa-face-frown-open"></i>{% endblock %}
-{% block subheading %}Seite nicht gefunden…{% endblock %}
+{% block heading %}Fehler{% endblock %}
+{% block subheading %}Da ist was schief gelaufen{% endblock %}
+
+{% block main %}
+<div class="alert alert-danger">
+  <h3 class="alert-heading"><i class="fa-solid fa-face-frown-open"></i> 404</h3>
+  <p>Falls du einen Fehler bei der Webseite gefunden hast, schreib bitte eine Nachricht in die Gruppe!</p>
+</div>
+{% endblock %}
