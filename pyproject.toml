@@ -12,7 +12,7 @@ collectstatic = "manage:collectstatic"
 start = "manage:start"
 
 [tool.poetry.dependencies]
-Django = "^5.0"
+Django = "^5.1"
 Markdown = "^3.7"
 dj-database-url = "^2.0"
 django-compressor = "^4.0"
