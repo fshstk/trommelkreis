@@ -24,7 +24,7 @@ def sessions(request):
         challenge_name=F("challenge__name"),
         blurb=F("challenge__blurb"),
         restricted=F("challenge__copyright_issues"),
-    )
+    ).filter(num_tracks__gt=0)
     archive = [list(group) for _, group in groupby(sessions, key=lambda x: x.month)]
     archive = [
         [month[:ceil(len(month) / 2)],
