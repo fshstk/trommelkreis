@@ -156,7 +156,11 @@ class AudioFile(SlugIncluded):
         if self.artist:
             mp3["artist"] = self.artist.name
         mp3["album"] = f"Digitaler Trommelkreis | {self.session.slug}"
+
+        tempfile.seek(0) # May cause issues if not done before saving mp3
         mp3.save(tempfile)
 
         self.data.storage.delete(self.data.name)
+
+        tempfile.seek(0) # May cause issues if not done before saving mp3
         self.data.save(os.path.basename(self.data.name), tempfile, save=False)
