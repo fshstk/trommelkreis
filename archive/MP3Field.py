@@ -19,10 +19,10 @@ class MP3File(File):
         return self._duration_cache
 
     def _calculate_duration(self):
-        from mutagen.mp3 import EasyMP3
-
-        mp3 = EasyMP3(self)
-        return round(mp3.info.length)
+        # Quick and dirty fix as we no longer support looking up duration on the server side.
+        # At some point it might be nice to store this in the db.
+        # See https://github.com/fshstk/trommelkreis/issues/103
+        return 0
 
 
 class MP3FileDescriptor(FileDescriptor):
