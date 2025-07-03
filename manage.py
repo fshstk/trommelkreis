@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
+
 import os
 import sys
 
 
 def dev():
-    os.system("python manage.py runserver")
+    os.system("python manage.py runserver 0.0.0.0:8000")
 
 
 def clean():
@@ -17,7 +18,7 @@ def collectstatic():
 
 
 def start():
-    os.system("gunicorn trommelkreis.wsgi")
+    os.system("gunicorn -b 0.0.0.0:8000 trommelkreis.wsgi")
 
 
 def main():

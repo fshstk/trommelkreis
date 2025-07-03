@@ -1,13 +1,18 @@
-FROM python:3.12 AS develop
-ENV POETRY_HOME=/usr/local
-RUN curl -sSL https://install.python-poetry.org | python
+FROM ghcr.io/astral-sh/uv:trixie-slim
+
+# All of this is just for mysqlclient... :/
+RUN apt-get update && apt-get install -y build-essential libmariadb-dev pkg-config
+
 RUN useradd --create-home --shell /usr/bin/bash trommelkreis
 USER trommelkreis
 WORKDIR /home/trommelkreis/app
-EXPOSE 8000
-ENTRYPOINT ["bash"]
 
-FROM develop AS deploy
-COPY . .
-RUN poetry install && poetry run collectstatic
-ENTRYPOINT ["poetry", "run", "start"]
+# Copy deps first and cache layer:
+COPY --chown=trommelkreis pyproject.toml uv.lock ./
+RUN uv sync
+
+# Copy rest of app:
+COPY --chown=trommelkreis . .
+RUN uv run collectstatic
+
+ENTRYPOINT ["uv", "run", "start"]

@@ -1,6 +1,6 @@
-.DS_Store
 .env
 .git
-.vscode
-**/__pycache__
+.ignore
+.venv
+__pycache__
 staticfiles
