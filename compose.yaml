@@ -1,5 +1,5 @@
 services:
-  tk-web:
+  web:
     build: .
     ports:
       - ${PORT-8000}:8000
@@ -7,7 +7,7 @@ services:
       - DEBUG=${DEBUG-0}
       - MEDIA_PASSWORD=${MEDIA_PASSWORD}
       - PREVIEW_PASSWORD=${PREVIEW_PASSWORD}
-      - DATABASE_URL=mysql://mariadb:${DB_USER_PASSWORD}@tk-db:3306/default
+      - DATABASE_URL=mysql://mariadb:${DB_USER_PASSWORD}@db:3306/default
       - SECRET_KEY=${SECRET_KEY}
       - MEDIA_ROOT=/mnt/media
     volumes:
@@ -15,9 +15,9 @@ services:
         source: ./volumes/media
         target: /mnt/media
     depends_on:
-      - tk-db
+      - db
     restart: unless-stopped
-  tk-db:
+  db:
     image: mariadb:11
     environment:
       - MARIADB_USER=mariadb
