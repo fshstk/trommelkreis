@@ -3,5 +3,6 @@
 .ignore
 .venv
 __pycache__
+compose.override.yaml
 staticfiles
 volumes
