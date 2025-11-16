@@ -1,7 +1,5 @@
 FROM ghcr.io/astral-sh/uv:trixie-slim
-
-# All of this is just for mysqlclient... :/
-RUN apt-get update && apt-get install -y build-essential libmariadb-dev pkg-config
+RUN apt-get update && apt-get install -y build-essential curl libmariadb-dev pkg-config
 
 RUN useradd --create-home --shell /usr/bin/bash trommelkreis
 USER trommelkreis
@@ -15,4 +13,5 @@ RUN uv sync
 COPY --chown=trommelkreis . .
 RUN uv run collectstatic
 
+HEALTHCHECK CMD curl -f http://localhost:8000/archiv/sessions
 ENTRYPOINT ["uv", "run", "start"]
