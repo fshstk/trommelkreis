@@ -4,6 +4,7 @@ services:
     ports:
       - ${PORT-8000}:8000
     environment:
+      - DEBUG=${DEBUG-0}
       - MEDIA_PASSWORD=${MEDIA_PASSWORD}
       - PREVIEW_PASSWORD=${PREVIEW_PASSWORD}
       - DATABASE_URL=mysql://mariadb:${DB_USER_PASSWORD}@tk-db:3306/default
