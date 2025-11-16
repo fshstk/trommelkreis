@@ -1,7 +1,1 @@
-.env
-.git
-.ignore
-.venv
-__pycache__
-staticfiles
-volumes
+.gitignore
