@@ -1,0 +1,28 @@
+services:
+  tk-web:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - DEBUG:${DEBUG:-0}
+      - MEDIA_PASSWORD=${MEDIA_PASSWORD}
+      - PREVIEW_PASSWORD=${PREVIEW_PASSWORD}
+      - DATABASE_URL=mysql://mariadb:${DB_USER_PASSWORD}@tk-db:3306/default
+      - SECRET_KEY=${SECRET_KEY}
+    # volumes:
+    #   - type: bind
+    #     source: ./volumes/media
+    #     target: /var/lib/media
+    depends_on:
+      - tk-db
+  tk-db:
+    image: mariadb:11
+    environment:
+      - MARIADB_USER=mariadb
+      - MARIADB_DATABASE=default
+      - MARIADB_PASSWORD=${DB_USER_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    volumes:
+      - type: bind
+        source: ./volumes/mysql
+        target: /var/lib/mysql
