@@ -15,8 +15,9 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
+from django.views.static import serve
 from django.conf.urls.static import static
 from debug_toolbar.toolbar import debug_toolbar_urls
 from trommelkreis import views
@@ -29,6 +30,18 @@ urlpatterns = [
     path("archiv/", include("archive.urls")),
     path("admin/", admin.site.urls),
 ]
+
+# Serve MEDIA files through Django.
+# This just does the same thing that static(...) does, but unconditionally.
+# (Whereas static() is a no-op unless DEBUG is set.)
+# Not generally recommended but probably fine here since we're behind CloudFlare:
+urlpatterns += (
+    re_path(
+        r"^%s(?P<path>.*)$" % settings.MEDIA_URL.lstrip("/"),
+        serve,
+        {"document_root": settings.MEDIA_ROOT},
+    ),
+)
 
 # Serve MEDIA files through Django (DEBUG only):
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
