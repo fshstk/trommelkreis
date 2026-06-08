@@ -1,5 +1,8 @@
-__pycache__
-.DS_Store
 .env
-.vscode
+.git
+.ignore
+.venv
+__pycache__
+compose.override.yaml
 staticfiles
+volumes

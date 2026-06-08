@@ -85,7 +85,7 @@ STATICFILES_FINDERS = [
 
 STORAGES = {
     "default": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -98,6 +98,8 @@ STORAGES = {
 # that might go unnoticed):
 COMPRESS_OFFLINE = True
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.environ.get("MEDIA_ROOT")
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 os.makedirs(STATIC_ROOT, exist_ok=True)
@@ -111,13 +113,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "_")
 
 ALLOWED_HOSTS = [".localhost", "127.0.0.1", ".trommelkreis.club"]
 CSRF_TRUSTED_ORIGINS = ["https://trommelkreis.club", "https://*.trommelkreis.club"]
-
-AWS_S3_FILE_OVERWRITE = False
-
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "_")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "_")
-AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL", "_")
-AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", "_")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

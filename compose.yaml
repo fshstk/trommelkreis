@@ -1,0 +1,31 @@
+name: trommelkreis
+
+services:
+  web:
+    build: .
+    ports:
+      - ${HOST_PORT:?}:8000
+    environment:
+      - DEBUG=${DEBUG-0}
+      - MEDIA_PASSWORD=${MEDIA_PASSWORD:?}
+      - PREVIEW_PASSWORD=${PREVIEW_PASSWORD:?}
+      - DATABASE_URL=mysql://mariadb:${DB_USER_PASSWORD:?}@db:3306/default
+      - SECRET_KEY=${SECRET_KEY:?}
+      - MEDIA_ROOT=${MEDIA_ROOT:?}
+    volumes:
+      - ./volumes/media:${MEDIA_ROOT:?}
+    restart: unless-stopped
+
+  db:
+    image: mariadb:11
+    environment:
+      - MARIADB_USER=mariadb
+      - MARIADB_DATABASE=default
+      - MARIADB_PASSWORD=${DB_USER_PASSWORD:?}
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD:?}
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 10s
