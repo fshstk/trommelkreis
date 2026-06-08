@@ -1,7 +1,7 @@
 FROM ghcr.io/astral-sh/uv:trixie-slim
-RUN apt-get update && apt-get install -y build-essential curl libmariadb-dev pkg-config
+RUN apt-get update && apt-get install -y build-essential curl libmariadb-dev pkg-config \
+  && useradd --create-home --shell /usr/bin/bash trommelkreis
 
-RUN useradd --create-home --shell /usr/bin/bash trommelkreis
 USER trommelkreis
 WORKDIR /home/trommelkreis/app
 
