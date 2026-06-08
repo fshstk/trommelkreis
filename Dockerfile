@@ -6,11 +6,11 @@ USER trommelkreis
 WORKDIR /home/trommelkreis/app
 
 # Copy deps first and cache layer:
-COPY --chown=trommelkreis pyproject.toml uv.lock ./
+COPY --chown=root:root --chmod=755 pyproject.toml uv.lock ./
 RUN uv sync
 
 # Copy rest of app:
-COPY --chown=trommelkreis . .
+COPY --chown=root:root --chmod=755 . .
 RUN uv run collectstatic
 
 HEALTHCHECK CMD curl -f http://localhost:8000/archiv/sessions
